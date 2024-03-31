@@ -2,8 +2,9 @@ import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CourseListType } from 'types/plogging'
-import { loadLocalStorage } from 'utils/handleLocalStorage'
+import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 import { PloggingCourseViewer } from '../Create/components/PloggingCourseViewer'
+import { PLOGGING_COURSE_LIST_SAMPLE } from '../Create/constant'
 import { ContentButton, ContentButtonContainer, CourseContainer, Root, TitleContainer, TitleTypo } from './styled'
 
 type PloggingCourseListPageProps = {
@@ -23,6 +24,9 @@ export const PloggingCourseListPage: FC<PloggingCourseListPageProps> = ({ classN
     let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
     if (newCourseList) {
       setCourseList(JSON.parse(newCourseList).courseList)
+    } else {
+      saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(PLOGGING_COURSE_LIST_SAMPLE))
+      setCourseList(PLOGGING_COURSE_LIST_SAMPLE.courseList)
     }
   }, [courseList, setCourseList])
 
