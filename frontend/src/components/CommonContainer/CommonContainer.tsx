@@ -6,8 +6,6 @@ type CommonContainerProps = {
 }
 
 export const CommonContainer: FC<CommonContainerProps> = ({ children }) => {
-  console.log({ children })
-
   return (
     <Root>
       <Container>{children}</Container>
