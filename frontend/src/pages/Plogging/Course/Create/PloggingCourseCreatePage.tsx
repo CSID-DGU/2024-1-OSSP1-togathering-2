@@ -2,18 +2,23 @@
 import { FC, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
 import { CoordinateItemType, CourseItemType } from 'types/plogging'
-import { DEFAULT_KAKAO_MAP_ADDRESS, DEFAULT_KAKAO_MAP_COORDINATE } from './constant'
+import { CREATE_TYPE_SELECT_OPTIONS, DEFAULT_KAKAO_MAP_ADDRESS, DEFAULT_KAKAO_MAP_COORDINATE } from './constant'
 import {
   CourseEditorContainer,
   CourseEditorContentContainer,
   CourseEditorIsFlagContainer,
   CourseEditorWrapper,
+  CreateTypeContainer,
+  CreateTypeSelect,
   InitialAddressSearchBarContainer,
   ResultContainer,
   Root,
   StyledButton,
   StyledInput,
+  TitleContainer,
+  TitleTypo,
 } from './styled'
+import { PloggingCourseCreateType } from './type'
 
 type CourseCreateProps = {
   className?: string
@@ -27,6 +32,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
     useState<CoordinateItemType>(DEFAULT_KAKAO_MAP_COORDINATE)
 
   const [courseCoordinateList, setCourseCoordinateList] = useState<CourseCoordinateListType>([])
+  const [ploggingCourseCreateType, setPloggingCourseCreateType] = useState<PloggingCourseCreateType>()
 
   const onClickSearchInitialAddress = () => {
     if (kakao) {
@@ -67,8 +73,25 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
     )
   }
 
+  const onChangeSelectCreateType = (value: any) => {
+    setPloggingCourseCreateType(value)
+    return
+  }
+
   return (
     <Root className={className}>
+      <TitleContainer>
+        <TitleTypo>나만의 플로깅 코스 만들기</TitleTypo>
+      </TitleContainer>
+      <CreateTypeContainer>
+        <CreateTypeSelect
+          size={'large'}
+          placeholder="코스 제작 방식을 선택해주세요."
+          optionFilterProp="children"
+          onChange={onChangeSelectCreateType}
+          options={CREATE_TYPE_SELECT_OPTIONS}
+        />
+      </CreateTypeContainer>
       <InitialAddressSearchBarContainer>
         <StyledInput
           value={initialAddress}
