@@ -10,9 +10,9 @@ export const Root = styled.div`
 
 export const KakaoMapContainer = styled.div`
   width: 100%;
-  height: 400px;
+  height: 300px;
   border: 1px #eee solid;
-  border-radius: 4px;
+  border-radius: 4px 4px 0 0;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
@@ -42,3 +42,17 @@ export const MapMarkerContentTypo = styled(Typography)`
 `
 
 export const KakaoMapMenuSwitch = styled(Switch)``
+export const MenuContainer = styled.div`
+  width: 100%;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  border: 1px #d9d9d9 solid;
+  border-top: 0;
+  padding: 0 15px;
+`
+
+export const NameTypo = styled(Typography)`
+  font-size: 14px;
+  color: #777;
+`

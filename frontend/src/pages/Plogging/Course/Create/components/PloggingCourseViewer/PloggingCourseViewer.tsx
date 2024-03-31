@@ -8,6 +8,8 @@ import {
   KakaoMapMenuSwitch,
   MapMarkerContentContainer,
   MapMarkerContentTypo,
+  MenuContainer,
+  NameTypo,
   Root,
 } from './styled'
 
@@ -26,6 +28,7 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({ className,
 
   const cameraInitialCoordinate = courseItem.coordinateList[0]
   const courseCoordinateList = courseItem.coordinateList
+  const courseName = courseItem.name
 
   return (
     <Root className={className}>
@@ -68,6 +71,11 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({ className,
           <KakaoMapMenuSwitch value={courseCoordinateFlagActivate} onClick={toggleCourseCoordinateFlagActivate} />
         </KakaoMapMenuContainer>
       </KakaoMapContainer>
+      {courseName && (
+        <MenuContainer>
+          <NameTypo>코스 이름 : {courseName}</NameTypo>
+        </MenuContainer>
+      )}
     </Root>
   )
 }
