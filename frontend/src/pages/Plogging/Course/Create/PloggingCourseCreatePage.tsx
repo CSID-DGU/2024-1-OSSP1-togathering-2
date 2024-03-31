@@ -10,6 +10,7 @@ import { CREATE_TYPE_SELECT_OPTIONS } from './constant'
 import {
   ContentContainer,
   CourseGoBackButton,
+  CourseNameInput,
   CourseResetButton,
   CreateTypeContainer,
   CreateTypeSelect,
@@ -28,6 +29,7 @@ type CourseCreateProps = {
 export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) => {
   const [ploggingCourseCreateType, setPloggingCourseCreateType] = useState<PloggingCourseCreateType>()
 
+  const [courseName, setCourseName] = useState<string>('')
   const navigate = useNavigate()
 
   const onChangeSelectCreateType = (value: any) => {
@@ -47,6 +49,10 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
   }
 
   const onSave = (coordinateList: CourseCoordinateListType) => {
+    if (!courseName) {
+      alert('코스 명을 입력해주세요.')
+      return
+    }
     let currentPloggingCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
     if (currentPloggingCourseList) {
       let newPloggingCourseList: LocalStorageCourseListType = JSON.parse(currentPloggingCourseList)
@@ -58,6 +64,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
       return
     }
     let newPloggingCourseList: LocalStorageCourseListType = {
+      name: courseName,
       courseList: [{ id: 0, coordinateList }],
     }
     saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(newPloggingCourseList))
@@ -69,6 +76,13 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
       <TitleContainer>
         <TitleTypo>나만의 플로깅 코스 만들기</TitleTypo>
       </TitleContainer>
+      <CourseNameInput
+        size={'large'}
+        addonBefore={'코스 이름'}
+        value={courseName}
+        onChange={(e: any) => setCourseName(e.target.value)}
+        placeholder={'플로깅 코스 이름을 입력해주세요.'}
+      />
       <CreateTypeContainer>
         <CreateTypeSelect
           size={'large'}

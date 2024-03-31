@@ -22,5 +22,6 @@ export type CourseItemType = {
 export type CourseListType = CourseItemType[]
 
 export type LocalStorageCourseListType = {
+  name?: string
   courseList: CourseListType
 }

@@ -35,6 +35,7 @@ type PloggingCourseCreateAddressProps = {
 
 export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> = ({ className, onSave }) => {
   const navigate = useNavigate()
+
   const [initialAddressKeyword, setInitialAddressKeyword] = useState<string>('')
   const [initialAddressCoordinate, setInitialAddressCoordinate] = useState<CoordinateItemType | null>(null)
   const [initialAddressSelectOptions, setInitialAddressSelectOptions] = useState<AddressSelectOptionListType>([])

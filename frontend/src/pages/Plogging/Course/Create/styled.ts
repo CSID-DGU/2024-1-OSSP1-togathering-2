@@ -1,4 +1,4 @@
-import { Button, Divider, Select, Typography } from 'antd'
+import { Button, Divider, Input, Select, Typography } from 'antd'
 import styled from 'styled-components'
 
 export const Root = styled.div`
@@ -37,9 +37,11 @@ export const CreateTypeSelect = styled(Select)`
   width: 100%;
 `
 
+export const CourseNameInput = styled(Input)``
+
 export const ContentContainer = styled.div`
   width: 100%;
-  min-height: calc(100vh - 400px);
+  min-height: calc(100vh - 450px);
 `
 
 export const SeparateDivider = styled(Divider)``
