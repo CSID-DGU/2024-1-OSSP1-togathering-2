@@ -1,6 +1,8 @@
+/* eslint-disable */
 import { FC, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
-import { CourseItemType } from 'types/plogging'
+import { CoordinateItemType, CourseItemType } from 'types/plogging'
+import { DEFAULT_KAKAO_MAP_ADDRESS, DEFAULT_KAKAO_MAP_COORDINATE } from './constant'
 import {
   CourseEditorContainer,
   CourseEditorContentContainer,
@@ -20,11 +22,9 @@ type CourseCreateProps = {
 type CourseCoordinateListType = CourseItemType[]
 
 export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) => {
-  const [initialAddress, setInitialAddress] = useState<string>('대전광역시 서구 도산로 11')
-  const [initialAddressCoordinate, setInitialAddressCoordinate] = useState<{ lat: number; lng: number }>({
-    lat: 36.4269265013269,
-    lng: 127.386979426622,
-  })
+  const [initialAddress, setInitialAddress] = useState<string>(DEFAULT_KAKAO_MAP_ADDRESS)
+  const [initialAddressCoordinate, setInitialAddressCoordinate] =
+    useState<CoordinateItemType>(DEFAULT_KAKAO_MAP_COORDINATE)
 
   const [courseCoordinateList, setCourseCoordinateList] = useState<CourseCoordinateListType>([])
 
