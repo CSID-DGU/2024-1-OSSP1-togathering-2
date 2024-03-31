@@ -1,7 +1,17 @@
 import { FC, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
-import styled from 'styled-components'
 import { CourseItemType } from 'types/plogging'
+import {
+  CourseEditorContainer,
+  CourseEditorContentContainer,
+  CourseEditorIsFlagContainer,
+  CourseEditorWrapper,
+  InitialAddressSearchBarContainer,
+  ResultContainer,
+  Root,
+  StyledButton,
+  StyledInput,
+} from './styled'
 
 type CourseCreateProps = {
   className?: string
@@ -116,69 +126,3 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
     </Root>
   )
 }
-
-const Root = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 40px;
-`
-
-const InitialAddressSearchBarContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const StyledInput = styled.input`
-  width: 200px;
-  padding: 4px;
-  border: 1px solid #111;
-  border-radius: 4px;
-`
-
-const StyledButton = styled.button`
-  padding: 4px;
-`
-
-const CourseEditorContainer = styled.div`
-  height: 350px;
-  overflow-y: scroll;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 0 10px;
-  margin-top: 10px;
-`
-
-const CourseEditorWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  padding: 10px;
-  border: 1px #000 solid;
-  border-radius: 4px;
-`
-
-const CourseEditorContentContainer = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const CourseEditorIsFlagContainer = styled.span`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-`
-
-const ResultContainer = styled.p`
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  word-break: break-all;
-`
