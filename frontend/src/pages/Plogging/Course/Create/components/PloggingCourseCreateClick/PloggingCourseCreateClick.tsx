@@ -26,6 +26,7 @@ import {
   MenuContainer,
   Root,
 } from './styled'
+import { tmapRoutePedestrian } from 'apis/tmap/tmapRoutePedestrian'
 
 type PloggingCourseCreateClickProps = {
   className?: string
@@ -104,10 +105,15 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({ 
     const newCourseCoordinateItem = {
       lat: mouseEvent.latLng.getLat(),
       lng: mouseEvent.latLng.getLng(),
-      isFlag: false,
-      isPassed: true,
     }
-    setCourseCoordinateList((prev) => [...prev, newCourseCoordinateItem])
+    
+
+    tmapRoutePedestrian({
+      start: courseCoordinateList[courseCoordinateList.length - 1],
+      end: newCourseCoordinateItem,
+    }).then((response) => {
+      setCourseCoordinateList((prev) => [...prev, ...response])
+    })
   }
 
   const onDeleteCourseCoordinateItem = (id: number) => () => {
