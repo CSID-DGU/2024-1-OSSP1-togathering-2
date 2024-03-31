@@ -205,7 +205,12 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({ 
         </>
       )}
       <MenuContainer>
-        <CourseSaveButton type={'primary'} size={'large'} onClick={onClickButtonSave}>
+        <CourseSaveButton
+          disabled={courseCoordinateList.length <= 1}
+          type={'primary'}
+          size={'large'}
+          onClick={onClickButtonSave}
+        >
           저장하기
         </CourseSaveButton>
       </MenuContainer>
