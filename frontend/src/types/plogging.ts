@@ -12,7 +12,6 @@ export type CourseCoordinateItemType = {
 export type CourseCoordinateListType = CourseCoordinateItemType[]
 
 export type CourseItemType = {
-  id: number
   coordinateList: CourseCoordinateListType
   name?: string
 }
@@ -20,8 +19,5 @@ export type CourseItemType = {
 export type CourseListType = CourseItemType[]
 
 export type LocalStorageCourseListType = {
-  courseList: {
-    name?: string
-    coordinateList: CourseCoordinateListType
-  }[]
+  courseList: CourseListType
 }
