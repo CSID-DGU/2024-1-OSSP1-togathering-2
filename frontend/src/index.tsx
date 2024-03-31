@@ -1,5 +1,6 @@
 import 'antd/dist/reset.css'
 import { CommonContainer } from 'components/CommonContainer'
+import 'global.css'
 import { MainPage } from 'pages/Main'
 import { PloggingCourseCreatePage } from 'pages/Plogging/Course/Create'
 import { PloggingCourseListPage } from 'pages/Plogging/Course/List'
