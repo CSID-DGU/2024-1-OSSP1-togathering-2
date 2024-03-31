@@ -1,10 +1,10 @@
 /* eslint-disable */
+import { tmapRoutePedestrian } from 'apis/tmap/tmapRoutePedestrian'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { FC, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
 import { useNavigate } from 'react-router-dom'
 import { CoordinateItemType, CourseCoordinateListType } from 'types/plogging'
-import { DEFAULT_KAKAO_MAP_COORDINATE } from '../../constant'
 import { AddressSelectOptionListType } from '../../type'
 import {
   CourseEditorAlertTypo,
@@ -12,6 +12,7 @@ import {
   CourseEditorDeleteButton,
   CourseEditorDisplayButton,
   CourseEditorWrapper,
+  CourseSaveButton,
   InitialAddressButton,
   InitialAddressInput,
   InitialAddressInputContainer,
@@ -22,6 +23,7 @@ import {
   KakaoMapMenuSwitch,
   MapMarkerContentContainer,
   MapMarkerContentTypo,
+  MenuContainer,
   Root,
   StopoverCreateButton,
 } from './styled'
@@ -31,7 +33,7 @@ type PloggingCourseCreateAddressProps = {
   onSave: (courseItem: CourseCoordinateListType) => void
 }
 
-export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> = ({ className }) => {
+export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> = ({ className, onSave }) => {
   const navigate = useNavigate()
   const [initialAddressKeyword, setInitialAddressKeyword] = useState<string>('')
   const [initialAddressCoordinate, setInitialAddressCoordinate] = useState<CoordinateItemType | null>(null)
@@ -43,8 +45,6 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
 
   const placesSearchCB = (data: any, status: any) => {
     if (status === kakao.maps.services.Status.OK) {
-      console.log({ data })
-
       setInitialAddressSelectOptions(
         data.map((addressItem: any) => ({
           label: `${addressItem.place_name}(${addressItem.address_name})`,
@@ -97,10 +97,24 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
   const onClickButtonStopoverCreate = () => {
     if (initialAddressCoordinate !== null) {
       let newCoordinate = initialAddressCoordinate
-      setCourseCoordinateList((prev) => [...prev, { ...newCoordinate, isFlag: true, isPassed: true }])
-      setInitialAddressKeyword('')
-      setInitialAddressCoordinate(null)
-      setInitialAddressSelectOptions([])
+
+      if (courseCoordinateList.length === 0) {
+        setCourseCoordinateList((prev) => [...prev, { ...newCoordinate, isFlag: true, isPassed: true }])
+        setInitialAddressKeyword('')
+        setInitialAddressCoordinate(null)
+        setInitialAddressSelectOptions([])
+        return
+      }
+
+      tmapRoutePedestrian({
+        start: courseCoordinateList[courseCoordinateList.length - 1],
+        end: initialAddressCoordinate,
+      }).then((response) => {
+        setCourseCoordinateList((prev) => [...prev, ...response])
+        setInitialAddressKeyword('')
+        setInitialAddressCoordinate(null)
+        setInitialAddressSelectOptions([])
+      })
       return
     }
   }
@@ -109,6 +123,12 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
     if (courseCoordinateList.length > id - 1 && courseCoordinateList[id]?.name) {
       alert(courseCoordinateList[id]?.name)
     }
+  }
+
+  const onClickButtonSave = () => {
+    onSave(courseCoordinateList)
+    navigate('/plogging/course/list', { replace: false })
+    return
   }
 
   return (
@@ -158,7 +178,7 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
         <>
           <KakaoMapContainer>
             <Map
-              center={initialAddressCoordinate ?? DEFAULT_KAKAO_MAP_COORDINATE}
+              center={initialAddressCoordinate ?? courseCoordinateList[courseCoordinateList.length - 1]}
               style={{
                 width: '100%',
                 height: '400px',
@@ -220,6 +240,16 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
           </CourseEditorContainer>
         </>
       )}
+      <MenuContainer>
+        <CourseSaveButton
+          disabled={courseCoordinateList.length <= 1}
+          type={'primary'}
+          size={'large'}
+          onClick={onClickButtonSave}
+        >
+          저장하기
+        </CourseSaveButton>
+      </MenuContainer>
     </Root>
   )
 }
