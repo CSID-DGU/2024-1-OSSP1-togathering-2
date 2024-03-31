@@ -1,4 +1,4 @@
-import { Select, Typography } from 'antd'
+import { Button, Divider, Select, Typography } from 'antd'
 import styled from 'styled-components'
 
 export const Root = styled.div`
@@ -34,5 +34,28 @@ export const CreateTypeContainer = styled.div`
 `
 
 export const CreateTypeSelect = styled(Select)`
+  width: 100%;
+`
+
+export const ContentContainer = styled.div`
+  width: 100%;
+  min-height: calc(100vh - 400px);
+`
+
+export const SeparateDivider = styled(Divider)``
+
+export const MenuContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+`
+
+export const CourseResetButton = styled(Button)`
+  width: 100%;
+`
+
+export const CourseGoBackButton = styled(Button)`
   width: 100%;
 `

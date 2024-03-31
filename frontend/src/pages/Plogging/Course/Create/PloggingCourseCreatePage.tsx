@@ -1,9 +1,24 @@
 /* eslint-disable */
+import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { FC, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { CourseCoordinateListType, LocalStorageCourseListType } from 'types/plogging'
+import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 import { PloggingCourseCreateAddress } from './components/PloggingCourseCreateAddress'
 import { PloggingCourseCreateClick } from './components/PloggingCourseCreateClick'
 import { CREATE_TYPE_SELECT_OPTIONS } from './constant'
-import { CreateTypeContainer, CreateTypeSelect, Root, TitleContainer, TitleTypo } from './styled'
+import {
+  ContentContainer,
+  CourseGoBackButton,
+  CourseResetButton,
+  CreateTypeContainer,
+  CreateTypeSelect,
+  MenuContainer,
+  Root,
+  SeparateDivider,
+  TitleContainer,
+  TitleTypo,
+} from './styled'
 import { PloggingCourseCreateType } from './type'
 
 type CourseCreateProps = {
@@ -13,8 +28,39 @@ type CourseCreateProps = {
 export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) => {
   const [ploggingCourseCreateType, setPloggingCourseCreateType] = useState<PloggingCourseCreateType>()
 
+  const navigate = useNavigate()
+
   const onChangeSelectCreateType = (value: any) => {
     setPloggingCourseCreateType(value)
+    return
+  }
+
+  const onClickButtonReset = () => {
+    if (confirm('정말로 초기화하시겠습니까?? 기존 작업은 전부 삭제됩니다.')) {
+      navigate(0)
+    }
+  }
+  const onClickButtonGoBack = () => {
+    if (confirm('정말로 이동하시겠습니까? 기존 작업은 전부 삭제됩니다.')) {
+      navigate('/plogging/course/list', { replace: true })
+    }
+  }
+
+  const onSave = (coordinateList: CourseCoordinateListType) => {
+    let currentPloggingCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
+    if (currentPloggingCourseList) {
+      let newPloggingCourseList: LocalStorageCourseListType = JSON.parse(currentPloggingCourseList)
+      newPloggingCourseList.courseList = [
+        ...newPloggingCourseList.courseList,
+        { id: newPloggingCourseList.courseList.length, coordinateList },
+      ]
+      saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(newPloggingCourseList))
+      return
+    }
+    let newPloggingCourseList: LocalStorageCourseListType = {
+      courseList: [{ id: 0, coordinateList }],
+    }
+    saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(newPloggingCourseList))
     return
   }
 
@@ -32,8 +78,19 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
           options={CREATE_TYPE_SELECT_OPTIONS}
         />
       </CreateTypeContainer>
-      {ploggingCourseCreateType === 'ADDRESS' && <PloggingCourseCreateAddress />}
-      {ploggingCourseCreateType === 'CLICK' && <PloggingCourseCreateClick />}
+      <ContentContainer>
+        {ploggingCourseCreateType === 'ADDRESS' && <PloggingCourseCreateAddress onSave={onSave} />}
+        {ploggingCourseCreateType === 'CLICK' && <PloggingCourseCreateClick onSave={onSave} />}
+      </ContentContainer>
+      <MenuContainer>
+        <SeparateDivider />
+        <CourseResetButton type={'primary'} size={'large'} danger onClick={onClickButtonReset}>
+          초기화하기
+        </CourseResetButton>
+        <CourseGoBackButton type={'default'} size={'large'} onClick={onClickButtonGoBack}>
+          목록으로
+        </CourseGoBackButton>
+      </MenuContainer>
     </Root>
   )
 }
