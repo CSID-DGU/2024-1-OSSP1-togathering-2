@@ -15,13 +15,13 @@ export type CourseItemType = {
   id: number
   coordinateList: CourseCoordinateListType
   name?: string
-  totalDistance?: number
-  totalWalkingTime?: number
 }
 
 export type CourseListType = CourseItemType[]
 
 export type LocalStorageCourseListType = {
-  name?: string
-  courseList: CourseListType
+  courseList: {
+    name?: string
+    coordinateList: CourseCoordinateListType
+  }[]
 }

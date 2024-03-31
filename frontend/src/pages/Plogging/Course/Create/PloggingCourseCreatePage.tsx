@@ -58,14 +58,21 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
       let newPloggingCourseList: LocalStorageCourseListType = JSON.parse(currentPloggingCourseList)
       newPloggingCourseList.courseList = [
         ...newPloggingCourseList.courseList,
-        { id: newPloggingCourseList.courseList.length, coordinateList },
+        {
+          name: courseName,
+          coordinateList,
+        },
       ]
       saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(newPloggingCourseList))
       return
     }
     let newPloggingCourseList: LocalStorageCourseListType = {
-      name: courseName,
-      courseList: [{ id: 0, coordinateList }],
+      courseList: [
+        {
+          name: courseName,
+          coordinateList,
+        },
+      ],
     }
     saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(newPloggingCourseList))
     return
