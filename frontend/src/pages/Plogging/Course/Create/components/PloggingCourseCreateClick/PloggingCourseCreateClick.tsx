@@ -5,6 +5,7 @@ import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
 import { useNavigate } from 'react-router-dom'
 import { CoordinateItemType, CourseCoordinateListType } from 'types/plogging'
 import { DEFAULT_KAKAO_MAP_COORDINATE } from '../../constant'
+import { AddressSelectOptionListType } from '../../type'
 import {
   CourseEditorAlertTypo,
   CourseEditorContainer,
@@ -25,7 +26,6 @@ import {
   MenuContainer,
   Root,
 } from './styled'
-import { AddressSelectOptionListType } from './type'
 
 type PloggingCourseCreateClickProps = {
   className?: string
@@ -191,19 +191,16 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({ 
               <CourseEditorAlertTypo>지도를 클릭하여 코스를 완성해주세요!</CourseEditorAlertTypo>
             )}
             {courseCoordinateList.length > 1 &&
-              courseCoordinateList.map(
-                (courseCoordinateItem, index) =>
-                  index !== courseCoordinateList.length - 1 && (
-                    <CourseEditorWrapper
-                      key={`course_coordinate_item_${courseCoordinateItem.lat}_${courseCoordinateItem.lng}__${index}`}
-                    >
-                      <CourseEditorDisplayButton>경유지 {index + 1}</CourseEditorDisplayButton>
-                      <CourseEditorDeleteButton type={'primary'} danger onClick={onDeleteCourseCoordinateItem(index)}>
-                        삭제하기
-                      </CourseEditorDeleteButton>
-                    </CourseEditorWrapper>
-                  )
-              )}
+              courseCoordinateList.map((courseCoordinateItem, index) => (
+                <CourseEditorWrapper
+                  key={`course_coordinate_item_${courseCoordinateItem.lat}_${courseCoordinateItem.lng}__${index}`}
+                >
+                  <CourseEditorDisplayButton>경유지 {index + 1}</CourseEditorDisplayButton>
+                  <CourseEditorDeleteButton type={'primary'} danger onClick={onDeleteCourseCoordinateItem(index)}>
+                    삭제하기
+                  </CourseEditorDeleteButton>
+                </CourseEditorWrapper>
+              ))}
           </CourseEditorContainer>
         </>
       )}

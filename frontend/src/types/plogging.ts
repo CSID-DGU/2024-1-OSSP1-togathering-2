@@ -6,6 +6,7 @@ export type CoordinateItemType = {
 export type CourseCoordinateItemType = {
   isFlag: boolean
   isPassed: boolean
+  name?: string
 } & CoordinateItemType
 
 export type CourseCoordinateListType = CourseCoordinateItemType[]
