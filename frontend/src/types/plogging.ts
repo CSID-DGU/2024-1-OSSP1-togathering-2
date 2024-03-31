@@ -3,20 +3,23 @@ export type CoordinateItemType = {
   lng: number
 }
 
-export type CourseItemType = {
+export type CourseCoordinateItemType = {
   isFlag: boolean
   isPassed: boolean
 } & CoordinateItemType
 
-export type RunningCourseItemType = {
+export type CourseCoordinateListType = CourseCoordinateItemType[]
+
+export type CourseItemType = {
   id: number
-  cameraCoordinate: CoordinateItemType
-  courseList: CourseItemType[]
+  coordinateList: CourseCoordinateListType
   name?: string
   totalDistance?: number
   totalWalkingTime?: number
-  tag: string[]
-  level: number
 }
 
-export type CourseType = {}
+export type CourseListType = CourseItemType[]
+
+export type LocalStorageCourseListType = {
+  courseList: CourseListType
+}
