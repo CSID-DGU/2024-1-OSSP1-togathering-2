@@ -6,12 +6,40 @@ services:
       dockerfile: frontend/Dockerfile
     ports:
       - '3000:80'
-    # depends_on:
-    #   - backend
-
-  # backend:
-  #   build:
-  #     context: .
-  #     dockerfile: backend/Dockerfile
-  #   ports:
-  #     - '8080:8080'
+    depends_on:
+      - server
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./db/store:/var/lib/mysql
+    networks:
+      - network
+  server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: ${ENV_SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_DRIVER: ${ENV_SPRING_DATASOURCE_DRIVER}
+      SPRING_DATASOURCE_USERNAME: ${ENV_SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${ENV_SPRING_DATASOURCE_PASSWORD}
+    networks:
+      - network
+  app:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+      args:
+        ENV_SPRING_DATASOURCE_PASSWORD: ${ENV_SPRING_DATASOURCE_PASSWORD}
+        ENV_MYSQL_DATABASE_NAME: ${ENV_MYSQL_DATABASE_NAME}
+networks:
+  network:
