@@ -19,3 +19,5 @@ RUN npm run build
 # Nginx를 사용하여 빌드된 앱 서비스
 FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
+COPY frontend/nginx/nginx.conf /etc/nginx/nginx.conf
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
