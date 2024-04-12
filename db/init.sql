@@ -1,7 +1,7 @@
-CREATE DATABASE opensw;
+CREATE DATABASE IF NOT EXISTS opensw;
 USE opensw;
 
-CREATE TABLE User (
+CREATE TABLE IF NOT EXISTS User (
                       id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                       nickname VARCHAR(50) NOT NULL,
                       email VARCHAR(255) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE User (
                       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE PloggingCourse (
+CREATE TABLE IF NOT EXISTS PloggingCourse (
                                 id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                                 title VARCHAR(50) NOT NULL,
                                 metadata JSON NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE PloggingCourse (
                                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE PloggingGroup (
+CREATE TABLE IF NOT EXISTS PloggingGroup (
                                id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                                course_id BIGINT NOT NULL,
                                address VARCHAR(255) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE PloggingGroup (
                                UNIQUE(course_id)
 );
 
-CREATE TABLE UserPloggingGroupApplyment (
+CREATE TABLE IF NOT EXISTS UserPloggingGroupApplyment (
                                             user_id BIGINT NOT NULL,
                                             plogging_group_id BIGINT NOT NULL,
                                             is_plogging_group_admin TINYINT(1) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE UserPloggingGroupApplyment (
                                             UNIQUE (user_id, plogging_group_id)
 );
 
-CREATE TABLE PloggingGroupReview (
+CREATE TABLE IF NOT EXISTS PloggingGroupReview (
                                      id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                                      user_id BIGINT NOT NULL,
                                      plogging_group_id BIGINT NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE PloggingGroupReview (
                                      FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
 
-CREATE TABLE PloggingGroupReviewPicture (
+CREATE TABLE IF NOT EXISTS PloggingGroupReviewPicture (
                                             id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                                             plogging_group_review_id BIGINT NOT NULL,
                                             image_url VARCHAR(2048) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE PloggingGroupReviewPicture (
                                             FOREIGN KEY (plogging_group_review_id) REFERENCES PloggingGroupReview(id) ON DELETE CASCADE
 );
 
-CREATE TABLE PloggingReviewPicture (
+CREATE TABLE IF NOT EXISTS PloggingReviewPicture (
                                        id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                                        plogging_group_id BIGINT NOT NULL,
                                        image_url VARCHAR(2048) NOT NULL,
