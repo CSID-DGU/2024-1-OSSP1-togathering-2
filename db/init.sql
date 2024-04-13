@@ -1,6 +1,9 @@
+/*
 CREATE DATABASE IF NOT EXISTS opensw;
 USE opensw;
+    */
 
+    /*
 CREATE TABLE IF NOT EXISTS User (
                       id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                       nickname VARCHAR(50) NOT NULL,
@@ -15,7 +18,7 @@ CREATE TABLE IF NOT EXISTS User (
 CREATE TABLE IF NOT EXISTS PloggingCourse (
                                 id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                                 title VARCHAR(50) NOT NULL,
-                                metadata JSON NOT NULL,
+                                metadata TEXT NOT NULL,
                                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                                 updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -25,6 +28,7 @@ CREATE TABLE IF NOT EXISTS PloggingGroup (
                                course_id BIGINT NOT NULL,
                                address VARCHAR(255) NOT NULL,
                                status ENUM('before', 'during', 'after') NOT NULL,
+                               event_date DATE NOT NULL,
                                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                                FOREIGN KEY (course_id) REFERENCES PloggingCourse(id),
@@ -75,3 +79,5 @@ CREATE TABLE IF NOT EXISTS PloggingReviewPicture (
 
 INSERT INTO User (nickname, email, password, profile_image_url, user_address)
 VALUES ('test', 'test@gmail.com', '1234', 'test.jpg', 'test address');
+
+     */
