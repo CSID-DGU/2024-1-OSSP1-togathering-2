@@ -1,0 +1,12 @@
+FROM openjdk:11-jdk-slim
+
+WORKDIR /app
+
+# 소스 파일 복사
+COPY . .
+
+# 실행 권한 부여 및 개행 문자 오류 방지
+RUN sed -i 's/\r$//' gradlew && chmod +x ./gradlew
+
+# ENTRYPOINT 변경
+CMD ["./gradlew", "bootRun", "--continuous"]

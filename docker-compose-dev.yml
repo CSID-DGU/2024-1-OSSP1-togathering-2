@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    restart: always
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
+    networks:
+      - network
+  db:
+    build:
+      context: .
+      dockerfile: db/Dockerfile.dev
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: ${DEV_MYSQL_DATABASE_NAME}
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: ${DEV_SPRING_DATASOURCE_PASSWORD}
+    volumes:
+      - ./db/store:/var/lib/mysql #store는 기본이 ignore이긴 함!
+    networks:
+      - network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+    environment:
+      MYSQL_USER: user
+      SPRING_DATASOURCE_URL: ${DEV_SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_DRIVER: ${DEV_SPRING_DATASOURCE_DRIVER}
+      SPRING_DATASOURCE_USERNAME: ${DEV_SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DEV_SPRING_DATASOURCE_PASSWORD}
+      SPRING_PROFILES_ACTIVE: dev
+    volumes:
+      - ./backend:/app  # 모든 backend 디렉토리를 /app에 마운트
+    networks:
+      - network
+
+networks:
+  network:
