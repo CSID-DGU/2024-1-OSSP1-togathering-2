@@ -17,6 +17,11 @@ type MainPageProps = {
 export const MainPage: FC<MainPageProps> = ({ className }) => {
   const navigate = useNavigate()
 
+  const onClickLoginButton = () => {
+    navigate('/user/login')
+    return
+  }
+
   const onClickButtonPloggingCourseList = () => {
     navigate('/plogging/course/list')
     return
@@ -40,6 +45,9 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
         <ContentButtonContainer>
           <ContentButton type={'dashed'} size={'large'} onClick={onClickButtonPloggingCourseList}>
             플로깅 코스 추천받기
+          </ContentButton>
+          <ContentButton type={'default'} size={'large'} onClick={onClickLoginButton}>
+            로그인
           </ContentButton>
           <ContentButton type={'default'} size={'large'} onClick={onClickButtonPloggingGroupCreate}>
             플로깅 모임 만들기
