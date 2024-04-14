@@ -1,10 +1,16 @@
 import { FC } from 'react'
-import { Root } from './styled'
+import { LogoContainer, Root, LogoTitleTypo } from './styled'
 
 type UserLoginPageProps = {
   className?: string
 }
 
 export const UserLoginPage: FC<UserLoginPageProps> = ({ className }) => {
-  return <Root className={className}>UserLoginPage</Root>
+  return (
+    <Root className={className}>
+      <LogoContainer>
+        <LogoTitleTypo>같이 줍깅</LogoTitleTypo>
+      </LogoContainer>
+    </Root>
+  )
 }
