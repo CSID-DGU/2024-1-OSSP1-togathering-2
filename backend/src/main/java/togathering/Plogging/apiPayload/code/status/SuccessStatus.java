@@ -11,12 +11,12 @@ import togathering.Plogging.apiPayload.code.ReasonDTO;
 public enum SuccessStatus implements BaseCode {
 
     // 일반적인 응답
-    _OK(HttpStatus.OK, "COMMON200", "성공입니다.");
+    _OK(HttpStatus.OK, 200, "성공입니다.");
 
     // ~~~ 관련 응답
 
     private final HttpStatus httpStatus;
-    private final String code;
+    private final int code;
     private final String message;
 
     @Override
