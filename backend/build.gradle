@@ -39,6 +39,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+// 이 설정은 devtools를 다시 패키징하지 않도록 합니다.
+bootJar {
+	enabled = false
+}
 jar {
 	enabled = false
 }

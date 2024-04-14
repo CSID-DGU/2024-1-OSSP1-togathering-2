@@ -41,6 +41,9 @@ services:
       SPRING_DATASOURCE_DRIVER: ${DEV_SPRING_DATASOURCE_DRIVER}
       SPRING_DATASOURCE_USERNAME: ${DEV_SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DEV_SPRING_DATASOURCE_PASSWORD}
+      SPRING_PROFILES_ACTIVE: dev
+    volumes:
+      - ./backend:/app  # 모든 backend 디렉토리를 /app에 마운트
     networks:
       - network
 
