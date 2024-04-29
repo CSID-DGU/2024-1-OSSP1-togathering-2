@@ -1,3 +1,4 @@
+import { COMMON_CONTAINER_MIN_WIDTH, COMMON_CONTAINER_WIDTH } from 'constants/layout'
 import styled from 'styled-components'
 
 export const Root = styled.div`
@@ -9,8 +10,8 @@ export const Root = styled.div`
 `
 
 export const Container = styled.div`
-  width: 500px;
-  min-width: 320px;
+  width: ${COMMON_CONTAINER_WIDTH}px;
+  min-width: ${COMMON_CONTAINER_MIN_WIDTH}px;
   background: white;
   display: flex;
 `
