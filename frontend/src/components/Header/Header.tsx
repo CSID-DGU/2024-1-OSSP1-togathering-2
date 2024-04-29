@@ -78,7 +78,7 @@ const Root = styled.header<{ showBackButton?: boolean }>`
   }
 
   & > h1 {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1.5rem;
     font-weight: 700;
   }

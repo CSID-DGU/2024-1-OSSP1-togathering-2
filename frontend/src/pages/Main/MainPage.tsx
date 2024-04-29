@@ -1,4 +1,6 @@
+import { TeamOutlined, UserOutlined } from '@ant-design/icons'
 import { Header } from 'components/Header'
+import { StartingPointsMap } from 'components/StartingPointsMap'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -10,6 +12,21 @@ import {
   CurrentHistoryCardTitleTypo,
   CurrentHistoryContainer,
   CurrentHistoryTitleTypo,
+  PloggingMapButton,
+  PloggingMapButtonContainer,
+  PloggingMapContainer,
+  PloggingMapTitleContainer,
+  PloggingMapTitleTypo,
+  PloggingMapWrapper,
+  PloggingMeetingCard,
+  PloggingMeetingCardContainer,
+  PloggingMeetingCardContentTypo,
+  PloggingMeetingCardTitleArrowIcon,
+  PloggingMeetingCardTitleContainer,
+  PloggingMeetingCardTitleTypo,
+  PloggingMeetingContainer,
+  PloggingMeetingTitleContainer,
+  PloggingMeetingTitleTypo,
   Root,
   SubtitleTypo,
   TitleContainer,
@@ -32,6 +49,21 @@ const currentHistoryCardDataList = [
   {
     title: '나만의 코스 스크랩',
     content: '4개',
+  },
+]
+
+const ploggingMeetingCardDataList = [
+  {
+    title: '플로깅 집중 모임',
+    content: '4/10',
+  },
+  {
+    title: '젊은이들끼리 즐겨요!',
+    content: '2/2',
+  },
+  {
+    title: '비건들의 모험',
+    content: '1/4',
   },
 ]
 
@@ -72,6 +104,45 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
           ))}
         </CurrentHistoryCardContainer>
       </CurrentHistoryContainer>
+      <PloggingMapContainer>
+        <PloggingMapTitleContainer>
+          <PloggingMapTitleTypo>우리 동네에 예정되어 있는 플로깅</PloggingMapTitleTypo>
+        </PloggingMapTitleContainer>
+        <PloggingMapWrapper>
+          <StartingPointsMap
+            center={{ lat: 37.55954751374675, lng: 126.99813054145416 }}
+            startingPoints={[
+              { lat: 37.55954751374675, lng: 126.99813054145416 },
+              { lat: 37.5580558199932, lng: 126.998311394625 },
+            ]}
+          />
+        </PloggingMapWrapper>
+        <PloggingMapButtonContainer>
+          <PloggingMapButton
+            primary={true}
+            icon={() => <UserOutlined />}
+            text="혼자 시작"
+            href="/plogging/solo-meeting"
+          />
+          <PloggingMapButton primary={true} icon={() => <TeamOutlined />} text="함께 시작" href="/plogging/meeting" />
+        </PloggingMapButtonContainer>
+      </PloggingMapContainer>
+      <PloggingMeetingContainer>
+        <PloggingMeetingTitleContainer>
+          <PloggingMeetingTitleTypo>가장 빨리 시작하는 모임</PloggingMeetingTitleTypo>
+        </PloggingMeetingTitleContainer>
+        <PloggingMeetingCardContainer>
+          {ploggingMeetingCardDataList.map((cardItem, index) => (
+            <PloggingMeetingCard key={`plogging_meeting_card_${index}`}>
+              <PloggingMeetingCardTitleContainer>
+                <PloggingMeetingCardTitleTypo>{cardItem.title}</PloggingMeetingCardTitleTypo>
+                <PloggingMeetingCardTitleArrowIcon />
+              </PloggingMeetingCardTitleContainer>
+              <PloggingMeetingCardContentTypo>{cardItem.content}</PloggingMeetingCardContentTypo>
+            </PloggingMeetingCard>
+          ))}
+        </PloggingMeetingCardContainer>
+      </PloggingMeetingContainer>
     </Root>
   )
 }
