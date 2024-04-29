@@ -78,12 +78,12 @@ const Root = styled.header<{ showBackButton?: boolean }>`
   }
 
   & > h1 {
-    font-size: 24px;
+    font-size: 20px;
     line-height: 1.5rem;
     font-weight: 700;
   }
 
   .logo {
-    color: ${lightTheme.colors.primary['700']};
+    color: ${lightTheme.colors.primary['600']};
   }
 `

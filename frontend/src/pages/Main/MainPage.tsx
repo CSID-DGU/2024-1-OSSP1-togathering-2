@@ -1,9 +1,15 @@
+import { Header } from 'components/Header'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  ContentButton,
-  ContentButtonContainer,
-  ContentContainer,
+  CurrentHistoryCard,
+  CurrentHistoryCardContainer,
+  CurrentHistoryCardContentTypo,
+  CurrentHistoryCardTitleArrowIcon,
+  CurrentHistoryCardTitleContainer,
+  CurrentHistoryCardTitleTypo,
+  CurrentHistoryContainer,
+  CurrentHistoryTitleTypo,
   Root,
   SubtitleTypo,
   TitleContainer,
@@ -13,6 +19,21 @@ import {
 type MainPageProps = {
   className?: string
 }
+
+const currentHistoryCardDataList = [
+  {
+    title: '나의 플로깅 순위는',
+    content: '12.8%',
+  },
+  {
+    title: '4월 플로깅 횟수',
+    content: '2회',
+  },
+  {
+    title: '나만의 코스 스크랩',
+    content: '4개',
+  },
+]
 
 export const MainPage: FC<MainPageProps> = ({ className }) => {
   const navigate = useNavigate()
@@ -32,23 +53,25 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
 
   return (
     <Root className={className}>
+      <Header showLogo={true} />
       <TitleContainer>
-        <TitleTypo>같이줍깅</TitleTypo>
-        <SubtitleTypo>모두가 함께하는 플로깅</SubtitleTypo>
+        <TitleTypo>반가워요, 교수님</TitleTypo>
+        <SubtitleTypo>모두가 함께 건강한 거리를 만들어요!</SubtitleTypo>
       </TitleContainer>
-      <ContentContainer>
-        <ContentButtonContainer>
-          <ContentButton type={'dashed'} size={'large'} onClick={onClickButtonPloggingCourseList}>
-            플로깅 코스 추천받기
-          </ContentButton>
-          <ContentButton type={'default'} size={'large'} onClick={onClickButtonPloggingGroupCreate}>
-            플로깅 모임 만들기
-          </ContentButton>
-          <ContentButton type={'primary'} size={'large'} onClick={onClickButtonPloggingGroupJoin}>
-            플로깅 모임 참여하기
-          </ContentButton>
-        </ContentButtonContainer>
-      </ContentContainer>
+      <CurrentHistoryContainer>
+        <CurrentHistoryTitleTypo>4월</CurrentHistoryTitleTypo>
+        <CurrentHistoryCardContainer>
+          {currentHistoryCardDataList.map((cardItem, index) => (
+            <CurrentHistoryCard key={`current_history_card_${index}`}>
+              <CurrentHistoryCardTitleContainer>
+                <CurrentHistoryCardTitleTypo>{cardItem.title}</CurrentHistoryCardTitleTypo>
+                <CurrentHistoryCardTitleArrowIcon />
+              </CurrentHistoryCardTitleContainer>
+              <CurrentHistoryCardContentTypo>{cardItem.content}</CurrentHistoryCardContentTypo>
+            </CurrentHistoryCard>
+          ))}
+        </CurrentHistoryCardContainer>
+      </CurrentHistoryContainer>
     </Root>
   )
 }
