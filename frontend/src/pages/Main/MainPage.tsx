@@ -1,6 +1,7 @@
 import { TeamOutlined, UserOutlined } from '@ant-design/icons'
 import { Header } from 'components/Header'
 import { StartingPointsMap } from 'components/StartingPointsMap'
+import { TabBar } from 'components/TabBar'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -143,6 +144,7 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
           ))}
         </PloggingMeetingCardContainer>
       </PloggingMeetingContainer>
+      <TabBar />
     </Root>
   )
 }
