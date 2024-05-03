@@ -1,6 +1,7 @@
 package togathering.Plogging.domain;
 
 import lombok.*;
+import togathering.Plogging.app.dto.JoinDTO;
 import togathering.Plogging.domain.common.BaseEntity;
 
 import javax.persistence.*;
@@ -8,7 +9,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @Builder
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // dbms
 @AllArgsConstructor
 public class User extends BaseEntity {
@@ -32,6 +35,18 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String user_address;
 
+    @Column(nullable = false)
+    private String role;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserPloggingGroupApplyment> userPloggingGroupApplyments;
+
+    public static User toUser(JoinDTO joinDTO) {
+        User user = new User();
+        user.setNickname(joinDTO.getNickname());
+        user.setEmail(joinDTO.getEmail());
+        user.setPassword(joinDTO.getPassword());
+        user.setUser_address(joinDTO.getUser_address());
+        return user;
+    }
 }
