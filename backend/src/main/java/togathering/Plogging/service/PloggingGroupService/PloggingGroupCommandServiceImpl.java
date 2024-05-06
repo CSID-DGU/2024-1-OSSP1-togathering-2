@@ -16,6 +16,9 @@ import togathering.Plogging.repository.UserPloggingGroupApplymentRepository.User
 import togathering.Plogging.repository.UserRepository.UserRepository;
 import togathering.Plogging.service.UserPloggingGroupApplymentService.UserPloggingGroupApplymentCommandServiceImpl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandService {
@@ -26,6 +29,14 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
 
     private final UserPloggingGroupApplymentCommandServiceImpl applymentCommandService;
 
+
+    // 플로깅 그룹 조회
+    public List<PloggingGroupResponseDTO.getPloggingGroupListDTO> getPloggingGroupList() {
+        List<PloggingGroup> ploggingGroupList = ploggingGroupRepository.findAll();
+        return ploggingGroupList.stream()
+                .map(PloggingGroupConverter::getPloggingGroupListDTO)
+                .collect(Collectors.toList());
+    }
 
     // 플로깅 그룹 생성
     @Transactional
@@ -51,7 +62,7 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
         applymentCommandService.createApplyment(request.getUserId(), ploggingGroup.getId(), true);
 
         // plogging group 반환
-        return PloggingGroupConverter.toPloggingGroupDTO(ploggingGroup);
+        return PloggingGroupConverter.toCreatePloggingGroupDTO(ploggingGroup);
     }
 
     // 유저가 그룹에 참여
