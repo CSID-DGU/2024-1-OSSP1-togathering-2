@@ -42,4 +42,20 @@ public class UserPloggingGroupApplymentCommandServiceImpl {
         applymentRepository.save(applyment);
         return applyment;
     }
+
+    @Transactional
+    public void exitPloggingGroup(Long userId, Long ploggingGroupId) throws AppHandler {
+        // 사용자와 플로깅 그룹을 ID로 조회
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_USER)); // 존재하지 않는 user
+        PloggingGroup ploggingGroup = ploggingGroupRepository.findById(ploggingGroupId)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_GROUP)); // 존재하지 않는 group
+
+        // applyment 객체 조회
+        UserPloggingGroupApplyment applyment = applymentRepository.findById(new UserPloggingGroupApplymentId(userId, ploggingGroupId))
+                .orElseThrow(() -> new AppHandler(ErrorStatus.ALREADY_EXIT_GROUP)); // 이미 탈퇴한 사용자
+
+        // applyment 객체 삭제
+        applymentRepository.delete(applyment);
+    }
 }

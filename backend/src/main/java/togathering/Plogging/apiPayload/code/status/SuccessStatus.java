@@ -14,7 +14,9 @@ public enum SuccessStatus implements BaseCode {
     _OK(HttpStatus.OK, 200, "성공입니다."),
 
     // 모임 관련
-    PLOGGING_GROUP_CREATE_OK(HttpStatus.OK, 200, "그룹 생성 성공!");
+    PLOGGING_GROUP_CREATE_OK(HttpStatus.OK, 200, "그룹 생성 성공!"),
+    PLOGGING_GROUP_JOIN_OK(HttpStatus.OK, 200, " 그룹 참여 성공!"),
+    PLOGGING_GROUP_EXIT_OK(HttpStatus.OK, 200, "그룹 탈퇴 성공!");
 
     private final HttpStatus httpStatus;
     private final int code;

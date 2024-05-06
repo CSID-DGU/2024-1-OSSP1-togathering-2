@@ -24,8 +24,9 @@ public enum ErrorStatus implements BaseErrorCode {
     NOT_FOUND_GROUP(HttpStatus.BAD_REQUEST, 40402, "존재하지 않는 그룹입니다."),
     NOT_FOUND_COURSE(HttpStatus.BAD_REQUEST, 40403, "존재하지 않는 코스입니다."),
 
-    ALREADY_JOIN_GROUP(HttpStatus.BAD_REQUEST, 40901, "이미 참가 중인 그룹입니다.."),
-    ALREADY_EXIT_GROUP(HttpStatus.BAD_REQUEST, 40902, "이미 탈퇴하였습니다.");
+    ALREADY_JOIN_GROUP(HttpStatus.BAD_REQUEST, 40901, "이미 참가 중인 그룹입니다."),
+    ALREADY_EXIT_GROUP(HttpStatus.BAD_REQUEST, 40902, "이미 탈퇴한 그룹입니다."),
+    ADMIN_CANNOT_EXIT(HttpStatus.BAD_REQUEST, 40903, "그룹장은 탈퇴할 수 없습니다.");
 
 
     // 여기 관련해서 하고싶은 응답들 정의해주세요..
