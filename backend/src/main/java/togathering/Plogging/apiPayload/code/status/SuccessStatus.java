@@ -11,9 +11,10 @@ import togathering.Plogging.apiPayload.code.ReasonDTO;
 public enum SuccessStatus implements BaseCode {
 
     // 일반적인 응답
-    _OK(HttpStatus.OK, 200, "성공입니다.");
+    _OK(HttpStatus.OK, 200, "성공입니다."),
 
-    // ~~~ 관련 응답
+    // 모임 관련
+    PLOGGING_GROUP_CREATE_OK(HttpStatus.OK, 200, "그룹 생성 성공!");
 
     private final HttpStatus httpStatus;
     private final int code;
