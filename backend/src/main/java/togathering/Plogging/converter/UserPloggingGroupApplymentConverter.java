@@ -15,29 +15,5 @@ import javax.persistence.EntityNotFoundException;
 // UserPloggingApplyment 생성
 @Convert
 public class UserPloggingGroupApplymentConverter {
-    private final UserRepository userRepository;
-    private final PloggingGroupRepository ploggingGroupRepository;
 
-    public UserPloggingGroupApplymentConverter(UserRepository userRepository, PloggingGroupRepository ploggingGroupRepository) {
-        this.userRepository = userRepository;
-        this.ploggingGroupRepository = ploggingGroupRepository;
-    }
-
-    public UserPloggingGroupApplyment toEntity(UserPloggingGroupApplymentRequestDTO.PloggingGroupUserDTO dto, PloggingGroup group) {
-        // userId를 사용하여 userRepository에서 User 조회
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + dto.getUserId()));
-        // plogging group id를 사용하여 plogging group 조회
-        PloggingGroup ploggingGroup = ploggingGroupRepository.findById(group.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Group not found with id: " + dto.getUserId()));
-
-        UserPloggingGroupApplymentId id = new UserPloggingGroupApplymentId(dto.getUserId(), group.getId());
-
-        return UserPloggingGroupApplyment.builder()
-                    .id(id)
-                    .user(user)
-                    .ploggingGroup(ploggingGroup)
-                    .isPloggingGroupAdmin(true)
-                    .build();
-    }
 }
