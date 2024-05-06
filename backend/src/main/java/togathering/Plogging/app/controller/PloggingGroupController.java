@@ -20,4 +20,19 @@ public class PloggingGroupController {
         PloggingGroupResponseDTO.CreatePloggingGroupDTO responseDTO = ploggingGroupCommandService.createPloggingGroup(dto);
         return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_CREATE_OK, responseDTO);
     }
+
+    // plogging group 참여
+    @PostMapping("/{groupId}/join")
+    public ApiResponse<String> joinPloggingGroup(@PathVariable Long groupId, @RequestBody PloggingGroupRequestDTO.JoinPloggingGroupDTO dto) {
+        ploggingGroupCommandService.joinPloggingGroup(groupId, dto);
+        return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_JOIN_OK, "");
+    }
+
+    // plogging group 탈퇴
+    @PostMapping("/{groupId}/exit")
+    public ApiResponse<String> exitPloggingGroup(@PathVariable Long groupId, @RequestBody PloggingGroupRequestDTO.ExitPloggingGroupDTO dto) {
+        ploggingGroupCommandService.exitPloggingGroup(groupId, dto);
+        return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_EXIT_OK, "");
+    }
+
 }
