@@ -8,11 +8,20 @@ import togathering.Plogging.app.dto.PloggingGroupRequestDTO;
 import togathering.Plogging.app.dto.PloggingGroupResponseDTO;
 import togathering.Plogging.service.PloggingGroupService.PloggingGroupCommandServiceImpl;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/group")
 @RequiredArgsConstructor
 public class PloggingGroupController {
     private final PloggingGroupCommandServiceImpl ploggingGroupCommandService;
+
+    // plogging group list 조회
+    @GetMapping("/list")
+    public ApiResponse<List<PloggingGroupResponseDTO.getPloggingGroupListDTO>> getPloggingGroupList() {
+        List<PloggingGroupResponseDTO.getPloggingGroupListDTO> ploggingGroups = ploggingGroupCommandService.getPloggingGroupList();
+        return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_LIST_OK, ploggingGroups);
+    }
 
     // plogging group 생성
     @PostMapping("/create")
