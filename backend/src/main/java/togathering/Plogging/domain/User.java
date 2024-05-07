@@ -2,6 +2,7 @@ package togathering.Plogging.domain;
 
 import lombok.*;
 import togathering.Plogging.app.dto.JoinDTO;
+import togathering.Plogging.app.dto.LoginDTO;
 import togathering.Plogging.domain.common.BaseEntity;
 
 import javax.persistence.*;
@@ -23,8 +24,8 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String nickname;
 
-    @Column(nullable = false, length = 50, unique = true)
-    private String email;
+    @Column(nullable = false, length = 50, unique = true, name = "email")
+    private String username;
 
     @Column(nullable = false, length = 70)
     private String password;
@@ -44,9 +45,17 @@ public class User extends BaseEntity {
     public static User toUser(JoinDTO joinDTO) {
         User user = new User();
         user.setNickname(joinDTO.getNickname());
-        user.setEmail(joinDTO.getEmail());
+        user.setUsername(joinDTO.getUsername());
         user.setPassword(joinDTO.getPassword());
         user.setUser_address(joinDTO.getUser_address());
+        return user;
+    }
+
+    public static User toUser(LoginDTO loginDTO) {
+        User user = new User();
+        user.setUsername(loginDTO.getUsername());
+        user.setPassword(loginDTO.getPassword());
+        user.setRole(loginDTO.getRole());
         return user;
     }
 }
