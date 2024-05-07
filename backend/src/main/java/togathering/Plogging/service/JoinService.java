@@ -19,12 +19,12 @@ public class JoinService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
     public boolean joinProcess(JoinDTO joinDTO) {
-        String email = joinDTO.getEmail();
+        String username = joinDTO.getUsername();
         String password = joinDTO.getPassword();
         String encodedPW = bCryptPasswordEncoder.encode(password);
         joinDTO.setPassword(encodedPW);
 
-        boolean isExist = userRepository.existsByEmail(email);
+        boolean isExist = userRepository.existsByUsername(username);
 
         if(isExist) {
             return false;
