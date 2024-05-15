@@ -8,8 +8,11 @@ import { PloggingSoloAlertPage } from 'pages/Plogging/Solo/Alert'
 import { PloggingSoloConfirmPage } from 'pages/Plogging/Solo/Confirm'
 import { PloggingSoloCreatePage } from 'pages/Plogging/Solo/Create'
 import { PloggingSoloProgressPage } from 'pages/Plogging/Solo/Progress'
+import { UserJoinPage } from 'pages/User/Join'
 import { UserLoginPage } from 'pages/User/Login'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as any)
 
