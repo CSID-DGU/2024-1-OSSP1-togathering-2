@@ -3,7 +3,6 @@ import { tmapRoutePedestrian } from 'apis/tmap/tmapRoutePedestrian'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { FC, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
-import { useNavigate } from 'react-router-dom'
 import { CoordinateItemType, CourseCoordinateListType } from 'types/plogging'
 import { DEFAULT_KAKAO_MAP_COORDINATE } from '../../constant'
 import { AddressSelectOptionListType } from '../../type'
@@ -34,7 +33,6 @@ type PloggingCourseCreateClickProps = {
 }
 
 export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({ className, onSave }) => {
-  const navigate = useNavigate()
   const [initialAddressKeyword, setInitialAddressKeyword] = useState<string>('')
   const [initialAddressCoordinate, setInitialAddressCoordinate] =
     useState<CoordinateItemType>(DEFAULT_KAKAO_MAP_COORDINATE)
@@ -121,7 +119,6 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({ 
 
   const onClickButtonSave = () => {
     onSave(courseCoordinateList)
-    navigate('/plogging/course/list', { replace: false })
     return
   }
 

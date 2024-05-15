@@ -125,7 +125,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className 
   useEffect(() => {
     let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
     if (newCourseList) {
-      if (courseList.length !== 0) {
+      if (courseList.length === 0) {
         setCourseList(JSON.parse(newCourseList).courseList)
       }
     } else {
