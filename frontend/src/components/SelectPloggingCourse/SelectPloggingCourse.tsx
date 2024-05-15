@@ -7,6 +7,7 @@ import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { lightTheme } from 'styles/theme'
 import { CourseListType } from 'types/plogging'
+import { getRandomOrder } from 'utils/getRandomOrder'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
   AIContainer,
@@ -56,7 +57,7 @@ const sortConditionList = [
   },
   {
     label: '가까운 거리 순',
-    indexList: [1, 2, 3, 4, 5],
+    indexList: getRandomOrder(100),
   },
   {
     label: '짧은 소요시간 순',
@@ -140,7 +141,9 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className 
   const washedCourseList = (() => {
     let newCourseList: CourseListType = []
     sortConditionList[sortConditionIndex].indexList.forEach((value) => {
-      newCourseList.push(courseList[value])
+      if (value <= courseList.length) {
+        newCourseList.push(courseList[value - 1])
+      }
     })
     return newCourseList
   })()
