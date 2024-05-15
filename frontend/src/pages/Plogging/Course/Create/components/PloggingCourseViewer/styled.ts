@@ -9,11 +9,11 @@ export const Root = styled.div`
   align-items: center;
 `
 
-export const KakaoMapContainer = styled.div`
+export const KakaoMapContainer = styled.div<{ isDetail: boolean }>`
   width: 100%;
-  height: 200px;
+  height: ${(props) => (props.isDetail ? '300px' : '200px')};
   border: 1px #d9d9d9 solid;
-  border-radius: 4px 4px 0 0;
+  border-radius: ${(props) => (props.isDetail ? '4px' : '4px 4px 0 0')};
   box-sizing: border-box;
   overflow: hidden;
   position: relative;

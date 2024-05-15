@@ -18,10 +18,16 @@ import {
 type PloggingCourseViewerProps = {
   className?: string
   courseItem: CourseItemType
+  isDetail?: boolean
   onSelect?: () => void
 }
 
-export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({ className, courseItem, onSelect }) => {
+export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({
+  className,
+  courseItem,
+  onSelect,
+  isDetail = false,
+}) => {
   const { state: courseCoordinateFlagActivate, toggleState: toggleCourseCoordinateFlagActivate } =
     useBooleanState(false)
 
@@ -35,12 +41,12 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({ className,
 
   return (
     <Root className={className}>
-      <KakaoMapContainer>
+      <KakaoMapContainer isDetail={isDetail}>
         <Map
           center={cameraInitialCoordinate}
           style={{
             width: '100%',
-            height: '250px',
+            height: isDetail ? '400px' : '250px',
           }}
           level={4}
         >
@@ -74,7 +80,7 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({ className,
           <KakaoMapMenuSwitch value={courseCoordinateFlagActivate} onClick={toggleCourseCoordinateFlagActivate} />
         </KakaoMapMenuContainer>
       </KakaoMapContainer>
-      {courseName && (
+      {courseName && !isDetail && (
         <MenuContainer>
           <NameTypo>코스 명 : {courseName}</NameTypo>
           {onSelect && (
