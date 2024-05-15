@@ -6,7 +6,7 @@ import { PloggingCourseCreatePage } from 'pages/Plogging/Course/Create'
 import { PloggingCourseListPage } from 'pages/Plogging/Course/List'
 import { PloggingSoloAlertPage } from 'pages/Plogging/Solo/Alert'
 import { PloggingSoloConfirmPage } from 'pages/Plogging/Solo/Confirm'
-import { PloggingSoloCreatePage } from 'pages/Plogging/Solo/Create'
+import { PloggingSoloCoursePage } from 'pages/Plogging/Solo/Course'
 import { PloggingSoloProgressPage } from 'pages/Plogging/Solo/Progress'
 import { PloggingSoloReviewPage } from 'pages/Plogging/Solo/Review'
 import React from 'react'
@@ -23,7 +23,7 @@ root.render(
           <Route path="/plogging/course/list" element={<PloggingCourseListPage />} />
           <Route path="/plogging/course/create" element={<PloggingCourseCreatePage />} />
 
-          <Route path="/plogging/solo/create" element={<PloggingSoloCreatePage />} />
+          <Route path="/plogging/solo/course" element={<PloggingSoloCoursePage />} />
           <Route path="/plogging/solo/confirm" element={<PloggingSoloConfirmPage />} />
           <Route path="/plogging/solo/alert" element={<PloggingSoloAlertPage />} />
           <Route path="/plogging/solo/progress" element={<PloggingSoloProgressPage />} />
