@@ -123,7 +123,7 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
             primary={true}
             icon={() => <UserOutlined />}
             text="혼자 시작"
-            href="/plogging/solo-meeting"
+            href="/plogging/solo/create"
           />
           <PloggingMapButton primary={true} icon={() => <TeamOutlined />} text="함께 시작" href="/plogging/meeting" />
         </PloggingMapButtonContainer>
