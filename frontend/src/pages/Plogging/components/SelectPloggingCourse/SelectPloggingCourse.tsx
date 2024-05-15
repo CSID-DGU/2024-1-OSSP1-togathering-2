@@ -32,6 +32,7 @@ import {
 
 type SelectPloggingCourseProps = {
   className?: string
+  onSelectPloggingCourse: (id: number) => void
 }
 
 const AIQuestionList = [
@@ -79,7 +80,7 @@ const DEFAULT_SELECT_LIST = [
   [false, false, false, false, false, false],
 ]
 
-export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className }) => {
+export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className, onSelectPloggingCourse }) => {
   const navigate = useNavigate()
   const [selectList, setSelectList] = useState<typeof DEFAULT_SELECT_LIST>(DEFAULT_SELECT_LIST)
   const [loading, setLoading] = useState<'NONE' | 'LOADING' | 'DONE'>('NONE')
@@ -113,8 +114,8 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className 
     return
   }
 
-  const onSelectPloggingCourse = (id: number) => () => {
-    navigate('/plogging/solo/confirm', { state: { ploggingCourseId: id } })
+  const onClickSelectPloggingCourseButton = (id: number) => () => {
+    onSelectPloggingCourse(id)
     return
   }
 
@@ -170,7 +171,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className 
             {washedCourseList.map((courseItem) => (
               <PloggingCourseViewer
                 courseItem={courseItem}
-                onSelect={onSelectPloggingCourse(courseItem.id)}
+                onSelect={onClickSelectPloggingCourseButton(courseItem.id)}
                 key={`plogging_course_viewer_${courseItem.id}`}
               />
             ))}
@@ -233,7 +234,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className 
             {washedCourseList.map((courseItem) => (
               <PloggingCourseViewer
                 courseItem={courseItem}
-                onSelect={onSelectPloggingCourse(courseItem.id)}
+                onSelect={onClickSelectPloggingCourseButton(courseItem.id)}
                 key={`plogging_course_viewer_${courseItem.id}`}
               />
             ))}
