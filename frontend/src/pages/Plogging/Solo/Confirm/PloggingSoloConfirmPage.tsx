@@ -51,12 +51,12 @@ export const PloggingSoloConfirmPage: FC<PloggingSoloConfirmPageProps> = ({ clas
       : null
 
   const onClickStartButton = () => {
-    navigate('/plogging/alert', { state: { ploggingCourseId } })
+    navigate('/plogging/solo/alert', { state: { ploggingCourseId } })
   }
 
   return (
     <Root className={className}>
-      <Header title={'플로깅 혼자 진행하기'} showBackButton />
+      <Header title={'플로깅 혼자하기'} showBackButton />
       <SubtitleContainer>
         <SubtitleCircle>
           <SubtitleCircleTypo>2</SubtitleCircleTypo>

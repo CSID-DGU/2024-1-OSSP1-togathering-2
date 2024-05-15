@@ -10,7 +10,7 @@ type PloggingSoloCreatePageProps = {
 export const PloggingSoloCreatePage: FC<PloggingSoloCreatePageProps> = ({ className }) => {
   return (
     <Root className={className}>
-      <Header title={'플로깅 혼자 진행하기'} showBackButton />
+      <Header title={'플로깅 혼자하기'} showBackButton />
       <SubtitleContainer>
         <SubtitleCircle>
           <SubtitleCircleTypo>1</SubtitleCircleTypo>
