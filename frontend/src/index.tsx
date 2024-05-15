@@ -9,6 +9,7 @@ import { PloggingMeetingConfirmPage } from 'pages/Plogging/Meeting/Confirm'
 import { PloggingMeetingCreateCoursePage } from 'pages/Plogging/Meeting/Create/Course'
 import { PloggingMeetingCreateInfoPage } from 'pages/Plogging/Meeting/Create/Info'
 import { PloggingMeetingListPage } from 'pages/Plogging/Meeting/List'
+import { PloggingMeetingProgressPage } from 'pages/Plogging/Meeting/Progress'
 import { PloggingSoloAlertPage } from 'pages/Plogging/Solo/Alert'
 import { PloggingSoloConfirmPage } from 'pages/Plogging/Solo/Confirm'
 import { PloggingSoloCoursePage } from 'pages/Plogging/Solo/Course'
@@ -39,6 +40,7 @@ root.render(
           <Route path="/plogging/meeting/create/info" element={<PloggingMeetingCreateInfoPage />} />
           <Route path="/plogging/meeting/confirm" element={<PloggingMeetingConfirmPage />} />
           <Route path="/plogging/meeting/alert" element={<PloggingMeetingAlertPage />} />
+          <Route path="/plogging/meeting/progress" element={<PloggingMeetingProgressPage />} />
 
           <Route path="/" element={<MainPage />} />
         </Routes>
