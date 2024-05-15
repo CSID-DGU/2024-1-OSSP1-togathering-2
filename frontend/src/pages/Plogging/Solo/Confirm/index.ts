@@ -1,0 +1,1 @@
+export { PloggingSoloConfirmPage } from './PloggingSoloConfirmPage'
