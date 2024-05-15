@@ -22,7 +22,7 @@ export const PloggingCourseListPage: FC<PloggingCourseListPageProps> = ({ classN
 
   useEffect(() => {
     let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
-    if (newCourseList) {
+    if (newCourseList && courseList.length === 0) {
       setCourseList(JSON.parse(newCourseList).courseList)
     } else {
       saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(PLOGGING_COURSE_LIST_SAMPLE))
