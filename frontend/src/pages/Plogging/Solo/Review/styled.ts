@@ -1,4 +1,5 @@
-import { Button, Typography } from 'antd'
+import { IconStarFilled, IconTrash } from '@tabler/icons-react'
+import { Button, Divider, Typography } from 'antd'
 import styled from 'styled-components'
 import { lightTheme } from 'styles/theme'
 
@@ -83,18 +84,65 @@ export const ImageUploadButtonTypo = styled(Typography)`
   color: ${lightTheme.colors.base[50]};
 `
 
-export const StopButton = styled(Button)`
+export const ContentDivider = styled(Divider)`
+  margin: 10px 0;
+`
+
+export const QuestionContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`
+
+export const QuestionItemContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
+export const QuestionItemTitleTypo = styled(Typography)`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${lightTheme.colors.base['700']};
+`
+
+export const QuestionItemRatingContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const QuestionItemRatingIconStarFilled = styled(IconStarFilled)<{ isFilled: boolean }>`
+  color: ${(props) => (props.isFilled ? lightTheme.colors.primary['600'] : lightTheme.colors.base['200'])};
+  cursor: pointer;
+`
+
+export const QuestionItemRatingIconTrashFilled = styled(IconTrash)<{ isFilled: boolean }>`
+  color: ${(props) => (props.isFilled ? lightTheme.colors.primary['600'] : lightTheme.colors.base['200'])};
+  cursor: pointer;
+`
+
+export const QuestionItemContentTypo = styled(Typography)`
+  font-size: 14px;
+  color: ${lightTheme.colors.base['500']};
+  margin-top: 5px;
+`
+
+export const FinishButton = styled(Button)`
   width: 100%;
   height: 50px;
-  background: ${lightTheme.colors.base['50']};
+  background: ${lightTheme.colors.primary['600']};
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
 `
 
-export const StopButtonTypo = styled(Typography)`
+export const FinishButtonTypo = styled(Typography)`
   font-size: 18px;
   font-weight: bold;
-  color: ${lightTheme.colors.base[700]};
+  color: ${lightTheme.colors.base[50]};
 `

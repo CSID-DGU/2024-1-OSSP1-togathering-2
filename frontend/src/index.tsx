@@ -8,6 +8,7 @@ import { PloggingSoloAlertPage } from 'pages/Plogging/Solo/Alert'
 import { PloggingSoloConfirmPage } from 'pages/Plogging/Solo/Confirm'
 import { PloggingSoloCreatePage } from 'pages/Plogging/Solo/Create'
 import { PloggingSoloProgressPage } from 'pages/Plogging/Solo/Progress'
+import { PloggingSoloReviewPage } from 'pages/Plogging/Solo/Review'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -26,6 +27,7 @@ root.render(
           <Route path="/plogging/solo/confirm" element={<PloggingSoloConfirmPage />} />
           <Route path="/plogging/solo/alert" element={<PloggingSoloAlertPage />} />
           <Route path="/plogging/solo/progress" element={<PloggingSoloProgressPage />} />
+          <Route path="/plogging/solo/review" element={<PloggingSoloReviewPage />} />
 
           <Route path="/" element={<MainPage />} />
         </Routes>
