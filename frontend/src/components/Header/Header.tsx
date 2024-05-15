@@ -91,7 +91,6 @@ const Root = styled.header<{ showBackButton?: boolean }>`
     align-items: center;
     text-align: center;
     margin-top: 10px;
-    margin-left: 5px;
   }
 
   .logo {
