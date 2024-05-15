@@ -50,7 +50,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
 
   const onSave = (coordinateList: CourseCoordinateListType) => {
     if (!courseName) {
-      alert('코스 명을 입력해주세요.')
+      alert('코스 이름을 입력해주세요.')
       return
     }
     let currentPloggingCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
