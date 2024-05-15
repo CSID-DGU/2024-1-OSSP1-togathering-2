@@ -40,7 +40,8 @@ export const Header: FC<HeaderProps> = ({ showBackButton, onBackButtonClick, tit
 const Root = styled.header<{ showBackButton?: boolean }>`
   position: fixed;
   z-index: 10;
-  top: 0.5rem;
+  padding-top: 0.5rem;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
 
