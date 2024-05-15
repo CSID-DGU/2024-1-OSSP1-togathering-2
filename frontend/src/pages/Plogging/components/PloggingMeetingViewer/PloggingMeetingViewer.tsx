@@ -84,7 +84,7 @@ export const PloggingMeetingViewer: FC<PloggingMeetingViewerProps> = ({
       {meetingName && !isDetail && (
         <MenuContainer>
           <NameTypo>
-            모임 이름 : {meetingName} <br /> 최대 인원: {maxCount}
+            모임 이름 : {meetingName} <br /> 최대 인원: {maxCount}명
           </NameTypo>
           {onSelect && (
             <SelectButton type={'primary'} onClick={onSelect}>
