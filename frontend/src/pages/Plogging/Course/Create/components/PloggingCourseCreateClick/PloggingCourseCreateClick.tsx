@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { tmapRoutePedestrian } from 'apis/tmap/tmapRoutePedestrian'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { FC, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
@@ -26,7 +27,6 @@ import {
   MenuContainer,
   Root,
 } from './styled'
-import { tmapRoutePedestrian } from 'apis/tmap/tmapRoutePedestrian'
 
 type PloggingCourseCreateClickProps = {
   className?: string
@@ -106,7 +106,6 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({ 
       lat: mouseEvent.latLng.getLat(),
       lng: mouseEvent.latLng.getLng(),
     }
-    
 
     tmapRoutePedestrian({
       start: courseCoordinateList[courseCoordinateList.length - 1],
