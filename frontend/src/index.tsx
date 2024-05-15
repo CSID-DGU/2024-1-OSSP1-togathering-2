@@ -21,7 +21,7 @@ root.render(
           <Route path="/plogging/course/create" element={<PloggingCourseCreatePage />} />
           <Route path="/user/login" element={<UserLoginPage />} />
           <Route path="/user/join" element={<UserJoinPage />} />
-          
+
           <Route path="/" element={<MainPage />} />
         </Routes>
       </CommonContainer>
