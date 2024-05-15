@@ -59,6 +59,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
       newPloggingCourseList = {
         courseList: [
           {
+            id: newPloggingCourseList.courseList.length,
             name: courseName,
             coordinateList,
           },
@@ -71,6 +72,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
       let newPloggingCourseList: LocalStorageCourseListType = {
         courseList: [
           {
+            id: 0,
             name: courseName,
             coordinateList,
           },
