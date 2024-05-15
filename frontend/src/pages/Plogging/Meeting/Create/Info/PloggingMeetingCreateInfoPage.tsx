@@ -55,6 +55,7 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
   }
 
   const onSaveStep3 = () => {
+    navigate(-2)
     return
   }
 
