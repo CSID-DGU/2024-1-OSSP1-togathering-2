@@ -1,6 +1,6 @@
 import { Header } from 'components/Header'
 import { FC } from 'react'
-import { SelectPloggingCourse } from './components/SelectPloggingCourse'
+import { SelectPloggingCourse } from '../../components/SelectPloggingCourse'
 import { ContentContainer, Root, SubtitleCircle, SubtitleCircleTypo, SubtitleContainer, SubtitleTypo } from './styled'
 
 type PloggingSoloCoursePageProps = {
