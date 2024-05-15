@@ -37,7 +37,7 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({ className,
           center={cameraInitialCoordinate}
           style={{
             width: '100%',
-            height: '400px',
+            height: '250px',
           }}
           level={4}
         >

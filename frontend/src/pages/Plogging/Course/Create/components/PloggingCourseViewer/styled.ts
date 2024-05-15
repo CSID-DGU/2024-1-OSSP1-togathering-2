@@ -10,7 +10,7 @@ export const Root = styled.div`
 
 export const KakaoMapContainer = styled.div`
   width: 100%;
-  height: 300px;
+  height: 200px;
   border: 1px #d9d9d9 solid;
   border-radius: 4px 4px 0 0;
   box-sizing: border-box;
