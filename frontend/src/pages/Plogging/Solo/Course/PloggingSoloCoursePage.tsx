@@ -3,11 +3,11 @@ import { SelectPloggingCourse } from 'components/SelectPloggingCourse'
 import { FC } from 'react'
 import { ContentContainer, Root, SubtitleCircle, SubtitleCircleTypo, SubtitleContainer, SubtitleTypo } from './styled'
 
-type PloggingSoloCreatePageProps = {
+type PloggingSoloCoursePageProps = {
   className?: string
 }
 
-export const PloggingSoloCreatePage: FC<PloggingSoloCreatePageProps> = ({ className }) => {
+export const PloggingSoloCoursePage: FC<PloggingSoloCoursePageProps> = ({ className }) => {
   return (
     <Root className={className}>
       <Header title={'플로깅 혼자하기'} showBackButton />
