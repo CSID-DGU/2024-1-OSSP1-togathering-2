@@ -11,14 +11,17 @@ import {
   MenuContainer,
   NameTypo,
   Root,
+  SelectButton,
+  SelectButtonTypo,
 } from './styled'
 
 type PloggingCourseViewerProps = {
   className?: string
   courseItem: CourseItemType
+  onSelect?: () => void
 }
 
-export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({ className, courseItem }) => {
+export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({ className, courseItem, onSelect }) => {
   const { state: courseCoordinateFlagActivate, toggleState: toggleCourseCoordinateFlagActivate } =
     useBooleanState(false)
 
@@ -73,7 +76,12 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({ className,
       </KakaoMapContainer>
       {courseName && (
         <MenuContainer>
-          <NameTypo>코스 이름 : {courseName}</NameTypo>
+          <NameTypo>코스 명 : {courseName}</NameTypo>
+          {onSelect && (
+            <SelectButton type={'primary'} onClick={onSelect}>
+              <SelectButtonTypo>코스 선택</SelectButtonTypo>
+            </SelectButton>
+          )}
         </MenuContainer>
       )}
     </Root>

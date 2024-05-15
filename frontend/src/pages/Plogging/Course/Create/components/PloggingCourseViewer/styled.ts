@@ -1,5 +1,6 @@
-import { Switch, Typography } from 'antd'
+import { Button, Switch, Typography } from 'antd'
 import styled from 'styled-components'
+import { lightTheme } from 'styles/theme'
 
 export const Root = styled.div`
   width: 100%;
@@ -46,13 +47,21 @@ export const MenuContainer = styled.div`
   width: 100%;
   height: 45px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   border: 1px #d9d9d9 solid;
   border-top: 0;
-  padding: 0 15px;
+  padding: 0 10px;
 `
 
 export const NameTypo = styled(Typography)`
   font-size: 14px;
   color: #777;
+`
+
+export const SelectButton = styled(Button)`
+  background: ${lightTheme.colors.primary['600']};
+`
+export const SelectButtonTypo = styled(Typography)`
+  color: ${lightTheme.colors.base['50']};
 `
