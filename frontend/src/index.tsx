@@ -4,6 +4,7 @@ import 'global.css'
 import { MainPage } from 'pages/Main'
 import { PloggingCourseCreatePage } from 'pages/Plogging/Course/Create'
 import { PloggingCourseListPage } from 'pages/Plogging/Course/List'
+import { PloggingMeetingCreateCoursePage } from 'pages/Plogging/Meeting/Create/Course'
 import { PloggingMeetingListPage } from 'pages/Plogging/Meeting/List'
 import { PloggingSoloAlertPage } from 'pages/Plogging/Solo/Alert'
 import { PloggingSoloConfirmPage } from 'pages/Plogging/Solo/Confirm'
@@ -31,6 +32,7 @@ root.render(
           <Route path="/plogging/solo/review" element={<PloggingSoloReviewPage />} />
 
           <Route path="/plogging/meeting/list" element={<PloggingMeetingListPage />} />
+          <Route path="/plogging/meeting/create/course" element={<PloggingMeetingCreateCoursePage />} />
 
           <Route path="/" element={<MainPage />} />
         </Routes>
