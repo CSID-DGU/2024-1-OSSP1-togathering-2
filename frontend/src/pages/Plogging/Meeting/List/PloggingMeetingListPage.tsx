@@ -1,6 +1,6 @@
 import { Header } from 'components/Header'
+import { SelectPloggingMeeting } from 'pages/Plogging/components/SelectPloggingMeeting'
 import { FC } from 'react'
-import { SelectPloggingMeeting } from './components/SelectPloggingMeeting'
 import { ContentContainer, Root, SubtitleContainer, SubtitleTypo } from './styled'
 
 type PloggingMeetingListPageProps = {
@@ -8,14 +8,21 @@ type PloggingMeetingListPageProps = {
 }
 
 export const PloggingMeetingListPage: FC<PloggingMeetingListPageProps> = ({ className }) => {
+  const onSelectPloggingMeeting = (id: number) => () => {
+    console.log({ id })
+  }
+
   return (
     <Root className={className}>
       <Header title={'플로깅 함께하기'} showBackButton />
       <SubtitleContainer>
-        <SubtitleTypo>어떤 모임에서 플로깅을 즐겨볼까요?</SubtitleTypo>
+        {/* <SubtitleCircle>
+          <SubtitleCircleTypo>*</SubtitleCircleTypo>
+        </SubtitleCircle> */}
+        <SubtitleTypo>어떤 플로깅 모임에 참여하고 싶으신가요?</SubtitleTypo>
       </SubtitleContainer>
       <ContentContainer>
-        <SelectPloggingMeeting />
+        <SelectPloggingMeeting onSelectPloggingMeeting={onSelectPloggingMeeting} />
       </ContentContainer>
     </Root>
   )
