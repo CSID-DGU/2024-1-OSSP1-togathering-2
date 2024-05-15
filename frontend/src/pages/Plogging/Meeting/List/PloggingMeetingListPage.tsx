@@ -1,6 +1,7 @@
 import { Header } from 'components/Header'
 import { FC } from 'react'
-import { Root, SubtitleContainer, SubtitleTypo } from './styled'
+import { SelectPloggingMeeting } from './components/SelectPloggingMeeting'
+import { ContentContainer, Root, SubtitleContainer, SubtitleTypo } from './styled'
 
 type PloggingMeetingListPageProps = {
   className?: string
@@ -13,6 +14,9 @@ export const PloggingMeetingListPage: FC<PloggingMeetingListPageProps> = ({ clas
       <SubtitleContainer>
         <SubtitleTypo>어떤 모임에서 플로깅을 즐겨볼까요?</SubtitleTypo>
       </SubtitleContainer>
+      <ContentContainer>
+        <SelectPloggingMeeting />
+      </ContentContainer>
     </Root>
   )
 }
