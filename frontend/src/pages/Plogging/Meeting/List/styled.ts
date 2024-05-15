@@ -23,3 +23,9 @@ export const SubtitleTypo = styled(Typography)`
   font-weight: 500;
   color: ${lightTheme.colors.base['700']};
 `
+
+export const ContentContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`
