@@ -1,4 +1,4 @@
-import { IconCheck, IconPhoto } from '@tabler/icons-react'
+import { IconCheck, IconPhoto, IconThumbDown, IconThumbUp } from '@tabler/icons-react'
 import { Header } from 'components/Header'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -15,6 +15,9 @@ import {
   InfoItemContentTypo,
   InfoItemTitleTypo,
   QuestionContainer,
+  QuestionItemButton,
+  QuestionItemButtonContainer,
+  QuestionItemButtonTypo,
   QuestionItemContainer,
   QuestionItemContentTypo,
   QuestionItemRatingContainer,
@@ -25,17 +28,21 @@ import {
   SubtitleTypo,
 } from './styled'
 
-type PloggingSoloReviewPageProps = {
+type PloggingMeetingReviewPageProps = {
   className?: string
 }
 
-export const PloggingSoloReviewPage: FC<PloggingSoloReviewPageProps> = ({ className }) => {
+export const PloggingMeetingReviewPage: FC<PloggingMeetingReviewPageProps> = ({ className }) => {
   const navigate = useNavigate()
-  const [ratingList, setRatingList] = useState<[number, number]>([0, 0])
+  const [ratingList, setRatingList] = useState<[number, number, number]>([0, 0, 0])
 
   const onChangeRating = (id: number, value: number) => () => {
     setRatingList((prevRatingList) => {
-      return prevRatingList.map((prevRatingItem, index) => (id === index ? value : prevRatingItem)) as [number, number]
+      return prevRatingList.map((prevRatingItem, index) => (id === index ? value : prevRatingItem)) as [
+        number,
+        number,
+        number
+      ]
     })
   }
 
@@ -45,9 +52,9 @@ export const PloggingSoloReviewPage: FC<PloggingSoloReviewPageProps> = ({ classN
 
   return (
     <Root className={className}>
-      <Header title={'플로깅 혼자하기 결과'} />
+      <Header title={'플로깅 함께하기 결과'} />
       <SubtitleTypo>
-        오늘의 플로깅으로 <br />
+        우리의 모임으로 <br />
         내일의 거리가 더욱 깨끗해졌어요!
       </SubtitleTypo>
       <ContentContainer>
@@ -106,6 +113,19 @@ export const PloggingSoloReviewPage: FC<PloggingSoloReviewPageProps> = ({ classN
               ))}
               <QuestionItemContentTypo>적음</QuestionItemContentTypo>
             </QuestionItemRatingContainer>
+          </QuestionItemContainer>
+          <QuestionItemContainer>
+            <QuestionItemTitleTypo>오늘의 리더를 다음에도 만나고 싶으신가요?</QuestionItemTitleTypo>
+            <QuestionItemButtonContainer>
+              <QuestionItemButton type={'default'} isFilled={ratingList[2] === 1} onClick={onChangeRating(2, 1)}>
+                <IconThumbUp size={16} />
+                <QuestionItemButtonTypo isFilled={ratingList[2] === 1}> 좋아요</QuestionItemButtonTypo>
+              </QuestionItemButton>
+              <QuestionItemButton type={'default'} isFilled={ratingList[2] === 2} onClick={onChangeRating(2, 2)}>
+                <IconThumbDown size={16} />
+                <QuestionItemButtonTypo isFilled={ratingList[2] === 2}>싫어요</QuestionItemButtonTypo>
+              </QuestionItemButton>
+            </QuestionItemButtonContainer>
           </QuestionItemContainer>
         </QuestionContainer>
       </ContentContainer>
