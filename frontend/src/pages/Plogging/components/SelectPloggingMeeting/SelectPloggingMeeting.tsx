@@ -18,7 +18,7 @@ import {
 
 type SelectPloggingMeetingProps = {
   className?: string
-  onSelectPloggingMeeting: (id: number) => void
+  onSelectPloggingMeeting: (id: number) => () => void
 }
 
 const sortConditionList = [
@@ -49,11 +49,6 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
     setSortConditionIndex((prev) => {
       return id
     })
-    return
-  }
-
-  const onClickSelectPloggingMeetingButton = (id: number) => () => {
-    onSelectPloggingMeeting(id)
     return
   }
 
@@ -95,7 +90,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
         {washedMeetingList.map((meetingItem) => (
           <PloggingMeetingViewer
             meetingItem={meetingItem}
-            onSelect={onClickSelectPloggingMeetingButton(meetingItem.id)}
+            onSelect={onSelectPloggingMeeting(meetingItem.id)}
             key={`plogging_meeting_viewer_${meetingItem.id}`}
           />
         ))}

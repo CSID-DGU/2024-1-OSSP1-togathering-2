@@ -1,6 +1,7 @@
 import { Header } from 'components/Header'
 import { SelectPloggingMeeting } from 'pages/Plogging/components/SelectPloggingMeeting'
 import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ContentContainer, Root, SubtitleContainer, SubtitleTypo } from './styled'
 
 type PloggingMeetingListPageProps = {
@@ -8,8 +9,10 @@ type PloggingMeetingListPageProps = {
 }
 
 export const PloggingMeetingListPage: FC<PloggingMeetingListPageProps> = ({ className }) => {
+  const navigate = useNavigate()
+
   const onSelectPloggingMeeting = (id: number) => () => {
-    console.log({ id })
+    navigate('/plogging/meeting/confirm', { state: { ploggingMeetingId: id } })
   }
 
   return (
