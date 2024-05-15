@@ -36,6 +36,10 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className 
     }
   }, [courseList, setCourseList])
 
+  if (courseList.length === 0) {
+    return <span />
+  }
+
   return (
     <Root className={className}>
       <CourseContainer>
