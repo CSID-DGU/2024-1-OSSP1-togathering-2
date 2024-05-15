@@ -82,7 +82,7 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({
       </KakaoMapContainer>
       {courseName && !isDetail && (
         <MenuContainer>
-          <NameTypo>코스 명 : {courseName}</NameTypo>
+          <NameTypo>코스 이름 : {courseName}</NameTypo>
           {onSelect && (
             <SelectButton type={'primary'} onClick={onSelect}>
               <SelectButtonTypo>코스 선택</SelectButtonTypo>

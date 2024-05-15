@@ -69,7 +69,7 @@ export const PloggingSoloConfirmPage: FC<PloggingSoloConfirmPageProps> = ({ clas
           <ContentContainer>
             <InfoContainer>
               <InfoItemContainer>
-                <InfoItemTitleTypo>코스 명</InfoItemTitleTypo>
+                <InfoItemTitleTypo>코스 이름</InfoItemTitleTypo>
                 <InfoItemContentTypo>{selectedPloggingCourseItem.name}</InfoItemContentTypo>
               </InfoItemContainer>
             </InfoContainer>
