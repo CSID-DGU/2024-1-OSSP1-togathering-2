@@ -11,7 +11,6 @@ import {
   CreateCourseButtonTypo,
   Root,
   SortConditionChip,
-  SortConditionChipIconSparkles,
   SortConditionChipTypo,
   SortConditionContainer,
 } from './styled'
@@ -79,7 +78,6 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
             key={`sort_condition_${index}`}
             onClick={onClickSortConditionButton(index)}
           >
-            {index === 0 && <SortConditionChipIconSparkles size={16} isSelected={sortConditionIndex === index} />}
             <SortConditionChipTypo isSelected={sortConditionIndex === index}>
               {sortConditionItem.label}
             </SortConditionChipTypo>
