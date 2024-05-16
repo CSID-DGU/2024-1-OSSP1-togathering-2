@@ -1,6 +1,7 @@
 import { IconCheck, IconPhoto } from '@tabler/icons-react'
 import { Header } from 'components/Header'
 import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
+import { useBooleanState } from 'hooks/useBooleanState'
 import { PloggingCourseViewer } from 'pages/Plogging/Course/Create/components/PloggingCourseViewer'
 import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
 import { FC, useEffect, useState } from 'react'
@@ -31,6 +32,7 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
   const { ploggingCourseId } = state
   const navigate = useNavigate()
   const [courseList, setCourseList] = useState<CourseListType>([])
+  const { state: isSimulating, setTrue: startSimulate, setFalse: stopSimulate } = useBooleanState(false)
 
   useEffect(() => {
     let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
@@ -48,8 +50,13 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
       ? courseList.filter((courseItem) => courseItem.id === ploggingCourseId)[0]
       : null
 
+  const onClickTestButton = () => {
+    startSimulate()
+    return
+  }
   const onClickButtonPloggingDone = () => {
     navigate('/plogging/solo/review')
+    return
   }
 
   return (
@@ -62,7 +69,12 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
       </SubtitleTypo>
       {selectedPloggingCourseItem && (
         <ContentContainer>
-          <PloggingCourseViewer isDetail={true} courseItem={selectedPloggingCourseItem} />
+          <PloggingCourseViewer
+            isDetail={true}
+            courseItem={selectedPloggingCourseItem}
+            isSimulating={isSimulating}
+            stopSimulate={stopSimulate}
+          />
           <InfoContainer>
             <InfoItemContainer isDivided>
               <InfoItemTitleTypo>이동한 거리</InfoItemTitleTypo>
@@ -84,7 +96,7 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
             </InfoItemContainer>
           </InfoContainer>
           <ButtonContainer>
-            <ImageUploadButton type={'primary'}>
+            <ImageUploadButton type={'primary'} onClick={onClickTestButton}>
               <IconPhoto />
               <ImageUploadButtonTypo>인증 사진 업로드</ImageUploadButtonTypo>
             </ImageUploadButton>

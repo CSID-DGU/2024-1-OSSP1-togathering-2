@@ -1,5 +1,5 @@
 import { useBooleanState } from 'hooks/useBooleanState'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
 import { CourseItemType } from 'types/plogging'
 import {
@@ -20,16 +20,62 @@ type PloggingCourseViewerProps = {
   courseItem: CourseItemType
   isDetail?: boolean
   onSelect?: () => void
+  isSimulating?: boolean
+  stopSimulate?: () => void
 }
+
+let timer: any
 
 export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({
   className,
   courseItem,
   onSelect,
   isDetail = false,
+  isSimulating = false,
+  stopSimulate,
 }) => {
+  const [isPassedCount, setIsPassedCount] = useState<number>(0)
+  const [loading, setLoading] = useState<'DONE' | 'LOADING'>('DONE')
   const { state: courseCoordinateFlagActivate, toggleState: toggleCourseCoordinateFlagActivate } =
     useBooleanState(false)
+
+  const isPassedRunningCourseList = courseItem.coordinateList
+
+  const onClickButtonIsPassedCount = () => {
+    timer = setInterval(() => {
+      setIsPassedCount((prev) => prev + 1)
+    }, 100)
+    setIsPassedCount(0)
+    setLoading('LOADING')
+  }
+
+  useEffect(() => {
+    if (isSimulating) {
+      if (loading === 'DONE') {
+        onClickButtonIsPassedCount()
+      }
+      if (loading === 'LOADING' && isPassedCount === isPassedRunningCourseList.length) {
+        clearInterval(timer)
+        setLoading('DONE')
+        stopSimulate && stopSimulate()
+      }
+    }
+  }, [isPassedCount, isSimulating, isPassedRunningCourseList.length, loading, stopSimulate])
+
+  useEffect(() => {
+    return () => clearInterval(timer)
+  }, [])
+
+  const washedIsPassedRunningCourseList = (() => {
+    if (!isSimulating && isPassedCount === 0) {
+      return []
+    }
+    return isPassedRunningCourseList.filter((_value, index) => index < isPassedCount)
+  })()
+
+  const isPassedLastCoordinate =
+    washedIsPassedRunningCourseList.length > 0 &&
+    washedIsPassedRunningCourseList[washedIsPassedRunningCourseList.length - 1]
 
   if (!courseItem) {
     return <div>올바르지 않은 접근입니다.</div>
@@ -76,6 +122,24 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({
                 </MapMarker>
               )
           )}
+
+          <Polyline
+            path={washedIsPassedRunningCourseList}
+            strokeWeight={5}
+            strokeColor={'#4d7c0f'}
+            strokeOpacity={1.0}
+            strokeStyle={'solid'}
+          />
+          {isPassedLastCoordinate && (
+            <MapMarker
+              position={isPassedLastCoordinate}
+              clickable={true}
+              title="현재 위치"
+              image={{ src: '/images/pin.svg', options: { offset: { x: 12, y: 20 } }, size: { width: 40, height: 40 } }}
+            >
+              {/* <StyledFont>현재 위치</StyledFont> */}
+            </MapMarker>
+          )}
         </Map>
         <KakaoMapMenuContainer>
           <KakaoMapMenuSwitch value={courseCoordinateFlagActivate} onClick={toggleCourseCoordinateFlagActivate} />
@@ -83,7 +147,7 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({
       </KakaoMapContainer>
       {courseName && !isDetail && (
         <MenuContainer>
-          <NameTypo>코스 이름 : {courseName}</NameTypo>
+          <NameTypo>코스 이름: {courseName}</NameTypo>
           {onSelect && (
             <SelectButton type={'primary'} onClick={onSelect}>
               <SelectButtonTypo>코스 선택</SelectButtonTypo>
