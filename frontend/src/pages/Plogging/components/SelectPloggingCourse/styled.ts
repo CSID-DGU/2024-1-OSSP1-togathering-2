@@ -1,4 +1,4 @@
-import { IconSparkles } from '@tabler/icons-react'
+import { IconSparkles, IconStarFilled, IconTrash } from '@tabler/icons-react'
 import { Button, Typography } from 'antd'
 import styled from 'styled-components'
 import { lightTheme } from 'styles/theme'
@@ -136,4 +136,69 @@ export const AISubmitButtonTypo = styled(Typography)<{ isLoading?: boolean }>`
   font-size: 16px;
   font-weight: 500;
   color: ${(props) => (props.isLoading ? lightTheme.colors.base['700'] : lightTheme.colors.base['50'])};
+`
+export const QuestionContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 10px 0;
+`
+
+export const QuestionItemContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
+export const QuestionItemTitleTypo = styled(Typography)`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${lightTheme.colors.base['700']};
+`
+
+export const QuestionItemRatingContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const QuestionItemRatingIconStarFilled = styled(IconStarFilled)<{ isFilled: boolean }>`
+  color: ${(props) => (props.isFilled ? lightTheme.colors.primary['600'] : lightTheme.colors.base['200'])};
+  cursor: pointer;
+`
+
+export const QuestionItemRatingIconTrashFilled = styled(IconTrash)<{ isFilled: boolean }>`
+  color: ${(props) => (props.isFilled ? lightTheme.colors.primary['600'] : lightTheme.colors.base['200'])};
+  cursor: pointer;
+`
+
+export const QuestionItemContentTypo = styled(Typography)`
+  font-size: 14px;
+  color: ${lightTheme.colors.base['500']};
+  margin-top: 5px;
+`
+
+export const QuestionItemButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+`
+
+export const QuestionItemButton = styled(Button)<{ isFilled?: boolean }>`
+  width: calc(50% - 10px);
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border: 3px ${(props) => (props.isFilled ? lightTheme.colors.primary['600'] : lightTheme.colors.base['200'])} solid;
+`
+
+export const QuestionItemButtonTypo = styled(Typography)<{ isFilled?: boolean }>`
+  font-size: 16px;
+  font-weight: 500;
 `

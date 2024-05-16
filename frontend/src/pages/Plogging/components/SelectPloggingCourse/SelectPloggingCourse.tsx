@@ -1,4 +1,5 @@
 import { LoadingOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { IconThumbDown, IconThumbUp } from '@tabler/icons-react'
 import { Spin } from 'antd'
 import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { PloggingCourseViewer } from 'pages/Plogging/Course/Create/components/PloggingCourseViewer'
@@ -23,6 +24,12 @@ import {
   CourseContainer,
   CreateCourseButton,
   CreateCourseButtonTypo,
+  QuestionContainer,
+  QuestionItemButton,
+  QuestionItemButtonContainer,
+  QuestionItemButtonTypo,
+  QuestionItemContainer,
+  QuestionItemTitleTypo,
   Root,
   SortConditionChip,
   SortConditionChipIconSparkles,
@@ -86,6 +93,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
   const [loading, setLoading] = useState<'NONE' | 'LOADING' | 'DONE'>('NONE')
   const [sortConditionIndex, setSortConditionIndex] = useState(1)
   const [courseList, setCourseList] = useState<CourseListType>([])
+  const [isSatisfied, setIsSatisfied] = useState<boolean>()
 
   const onClickSelectList = (id: number, id2: number) => () => {
     setSelectList((prev) =>
@@ -239,6 +247,29 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
               />
             ))}
           </CourseContainer>
+          <QuestionContainer>
+            <QuestionItemContainer>
+              <QuestionItemTitleTypo>검색 결과에 만족하시나요?</QuestionItemTitleTypo>
+              <QuestionItemButtonContainer>
+                <QuestionItemButton
+                  type={'default'}
+                  isFilled={isSatisfied === true}
+                  onClick={() => setIsSatisfied(true)}
+                >
+                  <IconThumbUp size={16} />
+                  <QuestionItemButtonTypo isFilled={isSatisfied === true}> 좋아요</QuestionItemButtonTypo>
+                </QuestionItemButton>
+                <QuestionItemButton
+                  type={'default'}
+                  isFilled={isSatisfied === false}
+                  onClick={() => setIsSatisfied(false)}
+                >
+                  <IconThumbDown size={16} />
+                  <QuestionItemButtonTypo isFilled={isSatisfied === false}>별로에요</QuestionItemButtonTypo>
+                </QuestionItemButton>
+              </QuestionItemButtonContainer>
+            </QuestionItemContainer>
+          </QuestionContainer>
           <CreateCourseButton type={'primary'} onClick={onClickCreateCourseButton}>
             <PlusCircleOutlined />
             <CreateCourseButtonTypo>나만의 플로깅 코스 만들기</CreateCourseButtonTypo>
