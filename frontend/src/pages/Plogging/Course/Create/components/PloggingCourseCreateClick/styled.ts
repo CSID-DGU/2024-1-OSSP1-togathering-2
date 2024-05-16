@@ -1,5 +1,6 @@
 import { Button, Input, Select, Space, Switch, Typography } from 'antd'
 import styled from 'styled-components'
+import { lightTheme } from 'styles/theme'
 
 export const Root = styled.div`
   width: 100%;
@@ -22,7 +23,9 @@ export const InitialAddressInputContainer = styled(Space.Compact)`
 `
 
 export const InitialAddressInput = styled(Input)``
-export const InitialAddressButton = styled(Button)``
+export const InitialAddressButton = styled(Button)`
+  background: ${lightTheme.colors.primary['600']};
+`
 
 export const InitialAddressSelect = styled(Select)`
   width: 100%;
@@ -112,4 +115,5 @@ export const MenuContainer = styled.div`
 
 export const CourseSaveButton = styled(Button)`
   width: 100%;
+  background: ${lightTheme.colors.primary['600']};
 `
