@@ -16,16 +16,29 @@ import { PloggingSoloConfirmPage } from 'pages/Plogging/Solo/Confirm'
 import { PloggingSoloCoursePage } from 'pages/Plogging/Solo/Course'
 import { PloggingSoloProgressPage } from 'pages/Plogging/Solo/Progress'
 import { PloggingSoloReviewPage } from 'pages/Plogging/Solo/Review'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as any)
+
+const ScrollControl = () => {
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname) {
+      window.scrollTo({ top: 0 })
+    }
+  }, [location.pathname])
+
+  return null
+}
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <CommonContainer>
+        <ScrollControl />
         <Routes>
           <Route path="/plogging/course/list" element={<PloggingCourseListPage />} />
           <Route path="/plogging/course/create" element={<PloggingCourseCreatePage />} />
