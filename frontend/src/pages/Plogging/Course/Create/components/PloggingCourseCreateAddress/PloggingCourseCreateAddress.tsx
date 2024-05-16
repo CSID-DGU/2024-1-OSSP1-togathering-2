@@ -144,7 +144,7 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
             onKeyPress={onKeyPressEnterInitialAddress}
           />
           <InitialAddressButton size={'large'} type="primary" onClick={onClickSearchInitialAddress}>
-            입력
+            검색
           </InitialAddressButton>
         </InitialAddressInputContainer>
         {initialAddressSelectOptions.length > 0 && (
@@ -165,7 +165,7 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
               type={'primary'}
               onClick={onClickButtonStopoverCreate}
             >
-              추가하기
+              경로 추가하기
             </StopoverCreateButton>
           </>
         )}
@@ -237,16 +237,18 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
           </CourseEditorContainer>
         </>
       )}
-      <MenuContainer>
-        <CourseSaveButton
-          disabled={courseCoordinateList.length <= 1}
-          type={'primary'}
-          size={'large'}
-          onClick={onClickButtonSave}
-        >
-          저장하기
-        </CourseSaveButton>
-      </MenuContainer>
+      {courseCoordinateList.length > 1 && (
+        <MenuContainer>
+          <CourseSaveButton
+            disabled={courseCoordinateList.length <= 1}
+            type={'primary'}
+            size={'large'}
+            onClick={onClickButtonSave}
+          >
+            저장하기
+          </CourseSaveButton>
+        </MenuContainer>
+      )}
     </Root>
   )
 }
