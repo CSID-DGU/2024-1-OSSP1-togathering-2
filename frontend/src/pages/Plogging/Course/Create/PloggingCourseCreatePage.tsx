@@ -9,6 +9,14 @@ import { PloggingCourseCreateAddress } from './components/PloggingCourseCreateAd
 import { PloggingCourseCreateClick } from './components/PloggingCourseCreateClick'
 import { CREATE_TYPE_SELECT_OPTIONS, PLOGGING_COURSE_LIST_SAMPLE } from './constant'
 import {
+  AIContainer,
+  AIQuestionContainer,
+  AIQuestionItemButton,
+  AIQuestionItemButtonContainer,
+  AIQuestionItemButtonTypo,
+  AIQuestionItemContainer,
+  AIQuestionItemTitleTypo,
+  AITitleTypo,
   ContentContainer,
   CourseNameInput,
   CreateTypeContainer,
@@ -28,11 +36,35 @@ type CourseCreateProps = {
   className?: string
 }
 
+const AIQuestionList = [
+  {
+    title: '누구와 함께 할까요?',
+    selectList: ['혼자', '친구', '애인', '부모님'],
+  },
+
+  {
+    title: '어떤 특징이 있나요?',
+    selectList: ['편안한 산책로', '쓰레기통 많은', '역사적 의미가 있는', '자연 경관이 아름다운'],
+  },
+  {
+    title: '어떤 단점이 있나요?',
+    selectList: ['사람 많은 곳', '가로등 적은 곳', '가로수 적은 곳', '복잡한 길', '좁은 골목', '언덕이나 계단'],
+  },
+]
+
+const DEFAULT_SELECT_LIST = [
+  [false, false, false, false, false],
+  [false, false, false, false],
+  [false, false, false, false, false, false],
+]
+
 export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) => {
   const [ploggingCourseCreateType, setPloggingCourseCreateType] = useState<PloggingCourseCreateType>()
-  const [step, setStep] = useState<'1' | '2' | '3'>('1')
-
+  const [step, setStep] = useState<'1' | '2' | '3' | '4'>('1')
   const [courseName, setCourseName] = useState<string>('')
+  const [newCoordinateList, setNewCoordinateList] = useState<any[]>([])
+  const [selectList, setSelectList] = useState<typeof DEFAULT_SELECT_LIST>(DEFAULT_SELECT_LIST)
+
   const navigate = useNavigate()
 
   const onChangeSelectCreateType = (value: any) => {
@@ -53,6 +85,11 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
   }
 
   const onSave = (coordinateList: CourseCoordinateListType) => {
+    setNewCoordinateList(coordinateList)
+    setStep('4')
+  }
+
+  const onSubmit = () => {
     if (!courseName) {
       alert('코스 이름을 입력해주세요.')
       return
@@ -66,7 +103,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
           {
             id: newPloggingCourseList.courseList.length,
             name: courseName,
-            coordinateList,
+            coordinateList: newCoordinateList,
           },
           ...newPloggingCourseList.courseList,
         ],
@@ -80,7 +117,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
           {
             id: 0,
             name: courseName,
-            coordinateList,
+            coordinateList: newCoordinateList,
           },
           ...PLOGGING_COURSE_LIST_SAMPLE.courseList,
         ],
@@ -98,6 +135,15 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
 
   const onClickSubmitStep2Button = () => {
     setStep('3')
+    return
+  }
+
+  const onClickSelectList = (id: number, id2: number) => () => {
+    setSelectList((prev) =>
+      prev.map((value, index) =>
+        index === id ? value.map((value2, index2) => (id2 === index2 ? !value2 : value2)) : value
+      )
+    )
     return
   }
 
@@ -127,7 +173,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
           </SubmitButtonButton>
         </StepContainer>
       )}
-      {(step === '2' || step === '3') && (
+      {(step === '2' || step === '3' || step === '4') && (
         <>
           <SubtitleContainer>
             <SubtitleCircle>
@@ -155,18 +201,57 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
           )}
         </>
       )}
-      {step === '3' && (
+      {(step === '3' || step === '4') && (
         <>
           <SubtitleContainer>
             <SubtitleCircle>
               <SubtitleCircleTypo>3</SubtitleCircleTypo>
             </SubtitleCircle>
-            <SubtitleTypo>경로 입력하기</SubtitleTypo>
+            {step === '3' ? <SubtitleTypo>경로 입력하기</SubtitleTypo> : <SubtitleTypo>경로 입력 완료</SubtitleTypo>}
           </SubtitleContainer>
-          <ContentContainer>
-            {ploggingCourseCreateType === 'ADDRESS' && <PloggingCourseCreateAddress onSave={onSave} />}
-            {ploggingCourseCreateType === 'CLICK' && <PloggingCourseCreateClick onSave={onSave} />}
-          </ContentContainer>
+          {step === '3' && (
+            <ContentContainer>
+              {ploggingCourseCreateType === 'ADDRESS' && <PloggingCourseCreateAddress onSave={onSave} />}
+              {ploggingCourseCreateType === 'CLICK' && <PloggingCourseCreateClick onSave={onSave} />}
+            </ContentContainer>
+          )}
+        </>
+      )}
+      {step === '4' && (
+        <>
+          <SubtitleContainer>
+            <SubtitleCircle>
+              <SubtitleCircleTypo>4</SubtitleCircleTypo>
+            </SubtitleCircle>
+            <SubtitleTypo>필터 정보 입력하기(선택)</SubtitleTypo>
+          </SubtitleContainer>
+          <AIContainer>
+            <AITitleTypo>플로깅 코스 필터 조건 넣기</AITitleTypo>
+            <AIQuestionContainer>
+              {AIQuestionList.map((AIQuestionItem, index) => (
+                <AIQuestionItemContainer key={`ai_question_item_${index}`}>
+                  <AIQuestionItemTitleTypo>{AIQuestionItem.title}</AIQuestionItemTitleTypo>
+                  <AIQuestionItemButtonContainer>
+                    {AIQuestionItem.selectList.map((selectItem, index2) => (
+                      <AIQuestionItemButton
+                        type={'primary'}
+                        isSelected={selectList[index][index2]}
+                        onClick={onClickSelectList(index, index2)}
+                        key={`ai_question_item_${index}_${index2}`}
+                      >
+                        <AIQuestionItemButtonTypo isSelected={selectList[index][index2]}>
+                          {selectItem}
+                        </AIQuestionItemButtonTypo>
+                      </AIQuestionItemButton>
+                    ))}
+                  </AIQuestionItemButtonContainer>
+                </AIQuestionItemContainer>
+              ))}
+            </AIQuestionContainer>
+          </AIContainer>
+          <SubmitButtonButton onClick={onSubmit} type={'primary'}>
+            <SubmitButtonTypo>플로깅 코스 제작 완료하기</SubmitButtonTypo>
+          </SubmitButtonButton>
         </>
       )}
       {/* <MenuContainer>
