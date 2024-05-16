@@ -1,6 +1,7 @@
 import { IconCheck, IconPhoto } from '@tabler/icons-react'
 import { Header } from 'components/Header'
 import { PLOGGING_MEETING_LIST_SAMPLE } from 'constants/meeting'
+import { useBooleanState } from 'hooks/useBooleanState'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
 import { FC, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -29,14 +30,20 @@ export const PloggingMeetingProgressPage: FC<PloggingMeetingProgressPageProps> =
   const { ploggingMeetingId } = state
   const navigate = useNavigate()
   const [meetingList] = useState<MeetingListType>(PLOGGING_MEETING_LIST_SAMPLE)
+  const { state: isSimulating, setTrue: startSimulate, setFalse: stopSimulate } = useBooleanState(false)
 
   const selectedPloggingMeetingItem =
     meetingList.filter((meetingItem) => meetingItem.id === ploggingMeetingId).length > 0
       ? meetingList.filter((meetingItem) => meetingItem.id === ploggingMeetingId)[0]
       : null
 
+  const onClickTestButton = () => {
+    startSimulate()
+    return
+  }
   const onClickButtonPloggingDone = () => {
     navigate('/plogging/meeting/review')
+    return
   }
 
   return (
@@ -49,7 +56,12 @@ export const PloggingMeetingProgressPage: FC<PloggingMeetingProgressPageProps> =
       </SubtitleTypo>
       {selectedPloggingMeetingItem && (
         <ContentContainer>
-          <PloggingMeetingViewer isDetail={true} meetingItem={selectedPloggingMeetingItem} />
+          <PloggingMeetingViewer
+            isDetail={true}
+            meetingItem={selectedPloggingMeetingItem}
+            isSimulating={isSimulating}
+            stopSimulate={stopSimulate}
+          />
           <InfoContainer>
             <InfoItemContainer isDivided>
               <InfoItemTitleTypo>이동한 거리</InfoItemTitleTypo>
@@ -71,7 +83,7 @@ export const PloggingMeetingProgressPage: FC<PloggingMeetingProgressPageProps> =
             </InfoItemContainer>
           </InfoContainer>
           <ButtonContainer>
-            <ImageUploadButton type={'primary'}>
+            <ImageUploadButton type={'primary'} onClick={onClickTestButton}>
               <IconPhoto />
               <ImageUploadButtonTypo>인증 사진 업로드</ImageUploadButtonTypo>
             </ImageUploadButton>
