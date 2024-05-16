@@ -7,7 +7,7 @@ import { CourseCoordinateListType, LocalStorageCourseListType } from 'types/plog
 import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 import { PloggingCourseCreateAddress } from './components/PloggingCourseCreateAddress'
 import { PloggingCourseCreateClick } from './components/PloggingCourseCreateClick'
-import { CREATE_TYPE_SELECT_OPTIONS } from './constant'
+import { CREATE_TYPE_SELECT_OPTIONS, PLOGGING_COURSE_LIST_SAMPLE } from './constant'
 import {
   ContentContainer,
   CourseNameInput,
@@ -82,6 +82,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
             name: courseName,
             coordinateList,
           },
+          ...PLOGGING_COURSE_LIST_SAMPLE.courseList,
         ],
       }
       saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(newPloggingCourseList))
