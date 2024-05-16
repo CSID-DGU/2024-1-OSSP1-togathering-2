@@ -41,15 +41,17 @@ export const tmapRoutePedestrian = async (data: RequestType) => {
       if (value.geometry.type === 'Point') {
         responseData = [
           ...responseData,
-          { lng: value.geometry.coordinates[0], lat: value.geometry.coordinates[1], isFlag: true, isPassed: true },
+          { lng: value.geometry.coordinates[0], lat: value.geometry.coordinates[1], isFlag: false, isPassed: true },
         ]
       }
       if (value.geometry.type === 'LineString') {
         value.geometry.coordinates.forEach((value2: any) => {
-          responseData = [...responseData, { lng: value2[0], lat: value2[1], isFlag: true, isPassed: true }]
+          responseData = [...responseData, { lng: value2[0], lat: value2[1], isFlag: false, isPassed: true }]
         })
       }
     })
+
+    responseData[responseData.length - 1] = { ...responseData[responseData.length - 1], isFlag: true }
 
     return responseData
   })

@@ -191,7 +191,8 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
               />
               {courseCoordinateList.map(
                 (value, index) =>
-                  (index === 0 || index === courseCoordinateList.length - 1 || courseCoordinateFlagActivate) && (
+                  (index === 0 || index === courseCoordinateList.length - 1 || courseCoordinateFlagActivate) &&
+                  value.isFlag && (
                     <MapMarker position={value} key={`flag_list_${index}`} clickable={true}>
                       {courseCoordinateFlagActivate && (
                         <MapMarkerContentContainer>
