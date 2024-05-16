@@ -246,7 +246,7 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
             size={'large'}
             onClick={onClickButtonSave}
           >
-            저장하기
+            경로 입력 완료하기
           </CourseSaveButton>
         </MenuContainer>
       )}
