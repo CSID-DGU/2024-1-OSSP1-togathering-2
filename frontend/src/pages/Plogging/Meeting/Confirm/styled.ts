@@ -102,3 +102,48 @@ export const StartButtonTypo = styled(Typography)`
   font-weight: bold;
   color: ${lightTheme.colors.base[50]};
 `
+
+export const MeetingPersonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+`
+
+export const MeetingPersonCard = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
+
+export const MeetingPersonAvatar = styled.div`
+  width: 28px;
+  height: 28px;
+  background: ${lightTheme.colors.base['200']};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 16px;
+`
+
+export const MeetingPersonInfoTypo = styled(Typography)`
+  font-size: 14px;
+  color: ${lightTheme.colors.base[700]};
+`
+
+export const MeetingPersonLeaderChip = styled.div`
+  background: ${lightTheme.colors.primary['600']};
+  padding: 0 5px;
+  box-sizing: border-box;
+  border-radius: 4px;
+`
+
+export const MeetingPersonLeaderChipTypo = styled(Typography)`
+  font-size: 10px;
+  font-weight: 500;
+  color: ${lightTheme.colors.base[50]};
+`

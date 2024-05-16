@@ -7,6 +7,11 @@ import {
   InfoItemContainer,
   InfoItemContentTypo,
   InfoItemTitleTypo,
+  MeetingPersonAvatar,
+  MeetingPersonCard,
+  MeetingPersonContainer,
+  MeetingPersonInfoTypo,
+  MeetingPersonLeaderChip,
   Root,
   StartButton,
   StartButtonTypo,
@@ -14,10 +19,11 @@ import {
   SubtitleTypo,
 } from './styled'
 
-import { IconRun } from '@tabler/icons-react'
+import { IconCrown, IconRun, IconUser } from '@tabler/icons-react'
 import { PLOGGING_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { lightTheme } from 'styles/theme'
 import { MeetingListType } from 'types/meeting'
 
 type PloggingMeetingConfirmPageProps = {
@@ -73,6 +79,40 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
               <InfoItemContainer isDivided>
                 <InfoItemTitleTypo>완주시 얻게 되는 점수</InfoItemTitleTypo>
                 <InfoItemContentTypo>24점</InfoItemContentTypo>
+              </InfoItemContainer>
+            </InfoContainer>
+            <InfoContainer>
+              <InfoItemContainer>
+                <InfoItemTitleTypo>모인 인원</InfoItemTitleTypo>
+                <MeetingPersonContainer>
+                  <MeetingPersonCard>
+                    <MeetingPersonAvatar>
+                      <IconUser size={14} color={lightTheme.colors.base['700']} />
+                    </MeetingPersonAvatar>
+                    <MeetingPersonInfoTypo>아마추어 개발자</MeetingPersonInfoTypo>
+                    <MeetingPersonLeaderChip>
+                      <IconCrown size={12} color={lightTheme.colors.base['50']} style={{ marginTop: 4 }} />
+                    </MeetingPersonLeaderChip>
+                  </MeetingPersonCard>
+                  <MeetingPersonCard>
+                    <MeetingPersonAvatar>
+                      <IconUser size={14} color={lightTheme.colors.base['700']} />
+                    </MeetingPersonAvatar>
+                    <MeetingPersonInfoTypo>학사 운영실 정차장님</MeetingPersonInfoTypo>
+                  </MeetingPersonCard>
+                  <MeetingPersonCard>
+                    <MeetingPersonAvatar>
+                      <IconUser size={14} color={lightTheme.colors.base['700']} />
+                    </MeetingPersonAvatar>
+                    <MeetingPersonInfoTypo>정교수님</MeetingPersonInfoTypo>
+                  </MeetingPersonCard>
+                  <MeetingPersonCard>
+                    <MeetingPersonAvatar>
+                      <IconUser size={14} color={lightTheme.colors.base['700']} />
+                    </MeetingPersonAvatar>
+                    <MeetingPersonInfoTypo>이태환 학생</MeetingPersonInfoTypo>
+                  </MeetingPersonCard>
+                </MeetingPersonContainer>
               </InfoItemContainer>
             </InfoContainer>
           </ContentContainer>
