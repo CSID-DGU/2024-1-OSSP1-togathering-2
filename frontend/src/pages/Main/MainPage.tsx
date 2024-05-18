@@ -5,6 +5,7 @@ import { TabBar } from 'components/TabBar'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LatestMeetingSection } from './components/LatestMeetingSection'
+import { PopularCourseSection } from './components/PopularCourseSection'
 import {
   PloggingMapButton,
   PloggingMapButtonContainer,
@@ -74,6 +75,7 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
         </PloggingMapButtonContainer>
       </PloggingMapContainer>
       <LatestMeetingSection />
+      <PopularCourseSection />
       <TabBar />
     </Root>
   )
