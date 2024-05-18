@@ -7,6 +7,7 @@ import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/consta
 import { FC, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CourseListType } from 'types/plogging'
+import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
   ButtonContainer,
@@ -29,7 +30,7 @@ type PloggingSoloProgressPageProps = {
 
 export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ className }) => {
   const { state } = useLocation()
-  const { ploggingCourseId } = state
+  const { ploggingCourseId, selectedCategory } = state
   const navigate = useNavigate()
   const [courseList, setCourseList] = useState<CourseListType>([])
   const { state: isSimulating, setTrue: startSimulate, setFalse: stopSimulate } = useBooleanState(false)
@@ -55,7 +56,7 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
     return
   }
   const onClickButtonPloggingDone = () => {
-    navigate('/plogging/solo/review')
+    navigate('/plogging/solo/review', { state })
     return
   }
 
@@ -102,7 +103,7 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
             </ImageUploadButton>
             <StopButton onClick={onClickButtonPloggingDone}>
               <IconCheck />
-              <StopButtonTypo>플로깅 완료하기</StopButtonTypo>
+              <StopButtonTypo>{`${getMeetingCategoryLabel(selectedCategory)} 완료하기`}</StopButtonTypo>
             </StopButton>
           </ButtonContainer>
         </ContentContainer>

@@ -1,7 +1,8 @@
 import { IconCheck, IconPhoto } from '@tabler/icons-react'
 import { Header } from 'components/Header'
 import { FC, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
 import {
   ButtonContainer,
   ContentContainer,
@@ -30,6 +31,8 @@ type PloggingSoloReviewPageProps = {
 }
 
 export const PloggingSoloReviewPage: FC<PloggingSoloReviewPageProps> = ({ className }) => {
+  const { state } = useLocation()
+  const { selectedCategory } = state
   const navigate = useNavigate()
   const [ratingList, setRatingList] = useState<[number, number]>([0, 0])
 
@@ -47,8 +50,8 @@ export const PloggingSoloReviewPage: FC<PloggingSoloReviewPageProps> = ({ classN
     <Root className={className}>
       <Header title={'혼자하기 결과'} />
       <SubtitleTypo>
-        오늘의 플로깅으로 <br />
-        내일의 거리가 더욱 깨끗해졌어요!
+        {`오늘의 ${getMeetingCategoryLabel(selectedCategory)}으로`} <br />
+        더욱 건강해졌어요!
       </SubtitleTypo>
       <ContentContainer>
         <InfoContainer>
@@ -62,14 +65,23 @@ export const PloggingSoloReviewPage: FC<PloggingSoloReviewPageProps> = ({ classN
           </InfoItemContainer>
         </InfoContainer>
         <InfoContainer>
-          <InfoItemContainer isDivided>
-            <InfoItemTitleTypo>제보한 쓰레기</InfoItemTitleTypo>
-            <InfoItemContentTypo>2개</InfoItemContentTypo>
-          </InfoItemContainer>
-          <InfoItemContainer isDivided>
-            <InfoItemTitleTypo>획득한 점수</InfoItemTitleTypo>
-            <InfoItemContentTypo>10점</InfoItemContentTypo>
-          </InfoItemContainer>
+          {selectedCategory === 'PLOGGING' ? (
+            <>
+              <InfoItemContainer isDivided>
+                <InfoItemTitleTypo>제보한 쓰레기</InfoItemTitleTypo>
+                <InfoItemContentTypo>2개</InfoItemContentTypo>
+              </InfoItemContainer>
+              <InfoItemContainer isDivided>
+                <InfoItemTitleTypo>획득한 점수</InfoItemTitleTypo>
+                <InfoItemContentTypo>10점</InfoItemContentTypo>
+              </InfoItemContainer>
+            </>
+          ) : (
+            <InfoItemContainer>
+              <InfoItemTitleTypo>획득한 점수</InfoItemTitleTypo>
+              <InfoItemContentTypo>10점</InfoItemContentTypo>
+            </InfoItemContainer>
+          )}
         </InfoContainer>
         <ButtonContainer>
           <ImageUploadButton type={'primary'}>
@@ -80,7 +92,9 @@ export const PloggingSoloReviewPage: FC<PloggingSoloReviewPageProps> = ({ classN
         <ContentDivider />
         <QuestionContainer>
           <QuestionItemContainer>
-            <QuestionItemTitleTypo>이 플로깅 코스를 추천하나요?</QuestionItemTitleTypo>
+            <QuestionItemTitleTypo>
+              이 {getMeetingCategoryLabel(selectedCategory)} 코스를 추천하나요?
+            </QuestionItemTitleTypo>
             <QuestionItemRatingContainer>
               <QuestionItemContentTypo>비추</QuestionItemContentTypo>
               {[0, 1, 2, 3, 4].map((value, index) => (
@@ -94,7 +108,9 @@ export const PloggingSoloReviewPage: FC<PloggingSoloReviewPageProps> = ({ classN
             </QuestionItemRatingContainer>
           </QuestionItemContainer>
           <QuestionItemContainer>
-            <QuestionItemTitleTypo>이 플로깅 코스는 쓰레기가 많았나요?</QuestionItemTitleTypo>
+            <QuestionItemTitleTypo>
+              이 {getMeetingCategoryLabel(selectedCategory)} 코스는 쓰레기가 많았나요?
+            </QuestionItemTitleTypo>
             <QuestionItemRatingContainer>
               <QuestionItemContentTypo>많음</QuestionItemContentTypo>
               {[0, 1, 2, 3, 4].map((value, index) => (
