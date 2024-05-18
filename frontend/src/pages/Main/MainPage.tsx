@@ -48,7 +48,7 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
       </TitleContainer>
       <PloggingMapContainer>
         <PloggingMapTitleContainer>
-          <PloggingMapTitleTypo>우리 동네에 예정되어 있는 플로깅</PloggingMapTitleTypo>
+          <PloggingMapTitleTypo>우리 동네에 예정되어 있는 모임</PloggingMapTitleTypo>
         </PloggingMapTitleContainer>
         <PloggingMapWrapper>
           <StartingPointsMap
@@ -56,6 +56,26 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
             startingPoints={[
               { lat: 37.55954751374675, lng: 126.99813054145416 },
               { lat: 37.5580558199932, lng: 126.998311394625 },
+              {
+                lng: 126.9887176826959,
+                lat: 37.55345638628968,
+              },
+              {
+                lng: 126.99848330927826,
+                lat: 37.55876427780856,
+              },
+              {
+                lng: 126.99916658554937,
+                lat: 37.558580978053875,
+              },
+              {
+                lng: 126.936261303681,
+                lat: 37.55516358086798,
+              },
+              {
+                lng: 129.16146889673206,
+                lat: 35.159599888896906,
+              },
             ]}
           />
         </PloggingMapWrapper>
