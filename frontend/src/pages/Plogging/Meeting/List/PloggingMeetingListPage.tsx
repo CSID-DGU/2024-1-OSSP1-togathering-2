@@ -17,7 +17,7 @@ export const PloggingMeetingListPage: FC<PloggingMeetingListPageProps> = ({ clas
 
   return (
     <Root className={className}>
-      <Header title={'플로깅 함께하기'} showBackButton />
+      <Header title={'함께하기'} showBackButton />
       <SubtitleContainer>
         {/* <SubtitleCircle>
           <SubtitleCircleTypo>*</SubtitleCircleTypo>

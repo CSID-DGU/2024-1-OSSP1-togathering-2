@@ -52,7 +52,7 @@ export const PloggingMeetingReviewPage: FC<PloggingMeetingReviewPageProps> = ({ 
 
   return (
     <Root className={className}>
-      <Header title={'플로깅 함께하기 결과'} />
+      <Header title={'함께하기 결과'} />
       <SubtitleTypo>
         우리의 모임으로 <br />
         내일의 거리가 더욱 깨끗해졌어요!
