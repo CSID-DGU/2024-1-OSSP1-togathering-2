@@ -155,9 +155,9 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
           <SubtitleCircleTypo>1</SubtitleCircleTypo>
         </SubtitleCircle>
         {step === '1' ? (
-          <SubtitleTypo>플로깅 코스 이름을 입력해주세요.</SubtitleTypo>
+          <SubtitleTypo> 코스 이름을 입력해주세요.</SubtitleTypo>
         ) : (
-          <SubtitleTypo>플로깅 코스 이름: {courseName}</SubtitleTypo>
+          <SubtitleTypo> 코스 이름: {courseName}</SubtitleTypo>
         )}
       </SubtitleContainer>
       {step === '1' && (
@@ -166,7 +166,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
             size={'large'}
             value={courseName}
             onChange={(e: any) => setCourseName(e.target.value)}
-            placeholder={'플로깅 코스 이름을 입력해주세요.'}
+            placeholder={' 코스 이름을 입력해주세요.'}
           />
           <SubmitButtonButton onClick={onClickSubmitStep1Button} type={'primary'}>
             <SubmitButtonTypo>이름 입력 완료</SubmitButtonTypo>
@@ -180,7 +180,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
               <SubtitleCircleTypo>2</SubtitleCircleTypo>
             </SubtitleCircle>
             {step === '2' ? (
-              <SubtitleTypo>플로깅 코스 제작 방식을 선택해주세요.</SubtitleTypo>
+              <SubtitleTypo>코스 제작 방식을 선택해주세요.</SubtitleTypo>
             ) : (
               <SubtitleTypo>
                 제작 방식:{' '}
@@ -226,7 +226,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
             <SubtitleTypo>필터 정보 입력하기(선택)</SubtitleTypo>
           </SubtitleContainer>
           <AIContainer>
-            <AITitleTypo>플로깅 코스 필터 조건 넣기</AITitleTypo>
+            <AITitleTypo> 코스 필터 조건 넣기</AITitleTypo>
             <AIQuestionContainer>
               {AIQuestionList.map((AIQuestionItem, index) => (
                 <AIQuestionItemContainer key={`ai_question_item_${index}`}>
@@ -250,7 +250,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
             </AIQuestionContainer>
           </AIContainer>
           <SubmitButtonButton onClick={onSubmit} type={'primary'}>
-            <SubmitButtonTypo>플로깅 코스 제작 완료하기</SubmitButtonTypo>
+            <SubmitButtonTypo> 코스 제작 완료하기</SubmitButtonTypo>
           </SubmitButtonButton>
         </>
       )}
