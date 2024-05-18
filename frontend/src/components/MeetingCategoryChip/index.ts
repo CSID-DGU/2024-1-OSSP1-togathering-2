@@ -1,0 +1,1 @@
+export { MeetingCategoryChip } from './MeetingCategoryChip'
