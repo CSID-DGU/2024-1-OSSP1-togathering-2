@@ -33,7 +33,7 @@ export const PloggingMeetingAlertPage: FC<PloggingMeetingAlertPageProps> = ({ cl
 
   return (
     <Root className={className}>
-      <Header title={'플로깅 함께하기'} showBackButton />
+      <Header title={'함께하기'} showBackButton />
       <SubtitleContainer>
         <SubtitleTypo>
           플로깅을 시작하기 전에,

@@ -47,7 +47,7 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
 
   return (
     <Root className={className}>
-      <Header title={'플로깅 함께하기'} showBackButton />
+      <Header title={'함께하기'} showBackButton />
       <SubtitleContainer>
         <SubtitleTypo>플로깅 모임 정보를 확인해주세요.</SubtitleTypo>
       </SubtitleContainer>
