@@ -22,7 +22,7 @@ export const PloggingMeetingCreateCoursePage: FC<PloggingMeetingCreateCoursePage
         <SubtitleCircle>
           <SubtitleCircleTypo>1</SubtitleCircleTypo>
         </SubtitleCircle>
-        <SubtitleTypo>어떤 코스에서 플로깅을 즐겨볼까요?</SubtitleTypo>
+        <SubtitleTypo>어떤 코스에서 즐겨볼까요?</SubtitleTypo>
       </SubtitleContainer>
       <ContentContainer>
         <SelectPloggingCourse onSelectPloggingCourse={onSelectPloggingCourse} />
