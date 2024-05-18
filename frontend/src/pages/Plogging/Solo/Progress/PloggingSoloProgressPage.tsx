@@ -63,9 +63,9 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
     <Root className={className}>
       <Header showLogo />
       <SubtitleTypo>
-        교수님 아자아자 파이팅!
+        모두 함께 아자아자 파이팅!
         <br />
-        오늘의 플로깅으로 거리가 깨끗해지고 있어요!
+        오늘의 활동으로 건강해지고 있어요!
       </SubtitleTypo>
       {selectedPloggingCourseItem && (
         <ContentContainer>
