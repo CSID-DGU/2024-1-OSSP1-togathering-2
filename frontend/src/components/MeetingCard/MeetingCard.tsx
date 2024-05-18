@@ -21,7 +21,7 @@ export const MeetingCard: FC<MeetingCardProps> = ({ className, category, name, m
         description={
           <DescriptionContainer>
             <MeetingCategoryChip category={category} />
-            <DescriptionTypo>{`최대 인원: ${maxCount}명`}</DescriptionTypo>
+            <DescriptionTypo>{`최대 ${maxCount}명`}</DescriptionTypo>
           </DescriptionContainer>
         }
       />
