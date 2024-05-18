@@ -23,26 +23,24 @@ import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { PloggingCourseViewer } from 'pages/Plogging/Course/Create/components/PloggingCourseViewer'
 import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { MeetingCategoryType } from 'types/meeting'
 import { CourseListType } from 'types/plogging'
+import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 
 type PloggingSoloConfirmPageProps = {
   className?: string
 }
 
-export const CREATE_TYPE_SELECT_OPTIONS: { label: string; value: string }[] = [
-  // { label: '산책', value: 'WALK' },
-  // { label: '러닝', value: 'RUNNING' },
-  // { label: '자전거', value: 'BICYCLE' },
-  // { label: '플로깅', value: 'PLOGGING' },
-  { label: '산책', value: '산책' },
-  { label: '러닝', value: '러닝' },
-  { label: '자전거', value: '자전거' },
-  { label: '플로깅', value: '플로깅' },
+export const CREATE_TYPE_SELECT_OPTIONS: { label: string; value: MeetingCategoryType }[] = [
+  { label: '산책', value: 'WALK' },
+  { label: '러닝', value: 'RUNNING' },
+  { label: '라이딩', value: 'BICYCLE' },
+  { label: '플로깅', value: 'PLOGGING' },
 ]
 
 export const PloggingSoloConfirmPage: FC<PloggingSoloConfirmPageProps> = ({ className }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>()
+  const [selectedCategory, setSelectedCategory] = useState<MeetingCategoryType>()
   const { state } = useLocation()
   const { ploggingCourseId } = state
   const navigate = useNavigate()
@@ -65,7 +63,7 @@ export const PloggingSoloConfirmPage: FC<PloggingSoloConfirmPageProps> = ({ clas
       : null
 
   const onClickStartButton = () => {
-    navigate('/plogging/solo/alert', { state: { ploggingCourseId } })
+    navigate('/plogging/solo/alert', { state: { ploggingCourseId, meetingCategory: selectedCategory } })
   }
 
   const onChangeSelectCreateType = (value: any) => {
@@ -81,7 +79,7 @@ export const PloggingSoloConfirmPage: FC<PloggingSoloConfirmPageProps> = ({ clas
           <SubtitleCircleTypo>2</SubtitleCircleTypo>
         </SubtitleCircle>
         {selectedCategory ? (
-          <SubtitleTypo>{`활동 카테고리: ${selectedCategory}`}</SubtitleTypo>
+          <SubtitleTypo>{`활동 카테고리: ${getMeetingCategoryLabel(selectedCategory)}`}</SubtitleTypo>
         ) : (
           <SubtitleTypo>활동 카테고리를 입력해주세요.</SubtitleTypo>
         )}

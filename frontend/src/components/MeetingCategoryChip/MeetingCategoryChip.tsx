@@ -11,7 +11,7 @@ export const MeetingCategoryChip: FC<MeetingCategoryChipProps> = ({ className, c
   if (category === 'BICYCLE') {
     return (
       <Root className={className} background={'#4CAF50'}>
-        <TitleTypo>자전거</TitleTypo>
+        <TitleTypo>라이딩</TitleTypo>
       </Root>
     )
   }
