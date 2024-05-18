@@ -34,7 +34,7 @@ import {
   SortConditionChip,
   SortConditionChipIconSparkles,
   SortConditionChipTypo,
-  SortConditionContainer
+  SortConditionContainer,
 } from './styled'
 
 type SelectPloggingCourseProps = {
@@ -186,7 +186,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
           </CourseContainer>
           <CreateCourseButton type={'primary'} onClick={onClickCreateCourseButton}>
             <PlusCircleOutlined />
-            <CreateCourseButtonTypo>나만의 플로깅 코스 만들기</CreateCourseButtonTypo>
+            <CreateCourseButtonTypo>나만의 코스 만들기</CreateCourseButtonTypo>
           </CreateCourseButton>
         </>
       )}
@@ -272,7 +272,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
           </QuestionContainer>
           <CreateCourseButton type={'primary'} onClick={onClickCreateCourseButton}>
             <PlusCircleOutlined />
-            <CreateCourseButtonTypo>나만의 플로깅 코스 만들기</CreateCourseButtonTypo>
+            <CreateCourseButtonTypo>나만의 코스 만들기</CreateCourseButtonTypo>
           </CreateCourseButton>
         </>
       )}

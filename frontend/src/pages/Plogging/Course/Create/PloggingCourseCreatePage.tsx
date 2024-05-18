@@ -149,7 +149,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
 
   return (
     <Root className={className}>
-      <Header title={'나만의 플로깅 코스 만들기'} showBackButton />
+      <Header title={'나만의 코스 만들기'} showBackButton />
       <SubtitleContainer>
         <SubtitleCircle>
           <SubtitleCircleTypo>1</SubtitleCircleTypo>
