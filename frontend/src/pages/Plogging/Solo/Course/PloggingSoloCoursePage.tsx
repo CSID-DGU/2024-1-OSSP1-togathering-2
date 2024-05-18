@@ -17,12 +17,12 @@ export const PloggingSoloCoursePage: FC<PloggingSoloCoursePageProps> = ({ classN
 
   return (
     <Root className={className}>
-      <Header title={'플로깅 혼자하기'} showBackButton />
+      <Header title={'혼자하기'} showBackButton />
       <SubtitleContainer>
         <SubtitleCircle>
           <SubtitleCircleTypo>1</SubtitleCircleTypo>
         </SubtitleCircle>
-        <SubtitleTypo>어떤 코스에서 플로깅을 즐겨볼까요?</SubtitleTypo>
+        <SubtitleTypo>어떤 코스에서 즐겨볼까요?</SubtitleTypo>
       </SubtitleContainer>
       <ContentContainer>
         <SelectPloggingCourse onSelectPloggingCourse={onSelectPloggingCourse} />

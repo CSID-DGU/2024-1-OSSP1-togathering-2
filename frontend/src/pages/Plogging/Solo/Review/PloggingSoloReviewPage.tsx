@@ -45,7 +45,7 @@ export const PloggingSoloReviewPage: FC<PloggingSoloReviewPageProps> = ({ classN
 
   return (
     <Root className={className}>
-      <Header title={'플로깅 혼자하기 결과'} />
+      <Header title={'혼자하기 결과'} />
       <SubtitleTypo>
         오늘의 플로깅으로 <br />
         내일의 거리가 더욱 깨끗해졌어요!

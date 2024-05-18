@@ -34,7 +34,7 @@ import {
   SortConditionChip,
   SortConditionChipIconSparkles,
   SortConditionChipTypo,
-  SortConditionContainer,
+  SortConditionContainer
 } from './styled'
 
 type SelectPloggingCourseProps = {

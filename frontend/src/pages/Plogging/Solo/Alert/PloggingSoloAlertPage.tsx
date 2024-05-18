@@ -35,7 +35,7 @@ export const PloggingSoloAlertPage: FC<PloggingSoloAlertPageProps> = ({ classNam
 
   return (
     <Root className={className}>
-      <Header title={'플로깅 혼자하기'} showBackButton />
+      <Header title={'혼자하기'} showBackButton />
       <SubtitleContainer>
         <SubtitleCircle>
           <SubtitleCircleTypo>3</SubtitleCircleTypo>
