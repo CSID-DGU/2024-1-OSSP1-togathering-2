@@ -22,6 +22,7 @@ type PloggingCourseViewerProps = {
   onSelect?: () => void
   isSimulating?: boolean
   stopSimulate?: () => void
+  hideInfo?: boolean
 }
 
 let timer: any
@@ -33,6 +34,7 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({
   isDetail = false,
   isSimulating = false,
   stopSimulate,
+  hideInfo = false,
 }) => {
   const [isPassedCount, setIsPassedCount] = useState<number>(0)
   const [loading, setLoading] = useState<'DONE' | 'LOADING'>('DONE')
@@ -145,7 +147,7 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({
           <KakaoMapMenuSwitch value={courseCoordinateFlagActivate} onClick={toggleCourseCoordinateFlagActivate} />
         </KakaoMapMenuContainer>
       </KakaoMapContainer>
-      {courseName && !isDetail && (
+      {courseName && !isDetail && !hideInfo && (
         <MenuContainer>
           <NameTypo>코스 이름: {courseName}</NameTypo>
           {onSelect && (
