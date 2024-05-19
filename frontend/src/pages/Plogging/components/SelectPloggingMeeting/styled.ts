@@ -1,5 +1,5 @@
 import { IconSparkles } from '@tabler/icons-react'
-import { Button, Typography } from 'antd'
+import { Button, Input, Typography } from 'antd'
 import styled from 'styled-components'
 import { lightTheme } from 'styles/theme'
 
@@ -41,6 +41,29 @@ export const SortConditionChipTypo = styled(Typography)<{ isSelected?: boolean }
 
 export const SortConditionChipIconSparkles = styled(IconSparkles)<{ isSelected?: boolean }>`
   color: ${(props) => (props.isSelected ? lightTheme.colors.base['50'] : lightTheme.colors.base['700'])};
+`
+
+export const SearchInput = styled(Input)``
+
+export const SearchButton = styled(Button)`
+  height: 40px;
+  background: ${lightTheme.colors.primary['600']};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+`
+
+export const SearchButtonTypo = styled(Typography)`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${lightTheme.colors.base['50']};
+`
+
+export const ResultNotFoundTypo = styled(Typography)`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${lightTheme.colors.base['700']};
 `
 
 export const CourseContainer = styled.div`
