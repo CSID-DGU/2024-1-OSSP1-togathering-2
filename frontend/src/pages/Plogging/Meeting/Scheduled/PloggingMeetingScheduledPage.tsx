@@ -1,11 +1,16 @@
 import { Header } from 'components/Header'
 import { TabBar } from 'components/TabBar'
-import { SELECTED_MEETING_LIST_KEY } from 'constants/common'
+import { MEETING_LIST_KEY, SELECTED_MEETING_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LocalSelectedMeetingListType, MeetingCategoryType, MeetingListType } from 'types/meeting'
+import {
+  LocalSelectedMeetingListType,
+  LocalStorageMeetingListType,
+  MeetingCategoryType,
+  MeetingListType,
+} from 'types/meeting'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
   ContentContainer,
@@ -40,10 +45,14 @@ export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps>
     let currentMeetingIdList = loadLocalStorage(SELECTED_MEETING_LIST_KEY)
     if (typeof currentMeetingIdList === 'string') {
       let parsedMeetingIdList = JSON.parse(currentMeetingIdList) as LocalSelectedMeetingListType
-      let allMeetingList = ALL_MEETING_LIST_SAMPLE
 
-      console.log({ allMeetingList, parsedMeetingIdList })
+      let currentMeetingList = loadLocalStorage(MEETING_LIST_KEY)
+      let parsedMeetingList: LocalStorageMeetingListType | null = null
+      if (typeof currentMeetingList === 'string') {
+        parsedMeetingList = JSON.parse(currentMeetingList) as LocalStorageMeetingListType
+      }
 
+      let allMeetingList = parsedMeetingList ? parsedMeetingList.meetingList : ALL_MEETING_LIST_SAMPLE
       setMeetingList(
         parsedMeetingIdList.selectedMeetingList.map((value) => {
           return allMeetingList.filter((value2) => value2.id === value.id)[0]
