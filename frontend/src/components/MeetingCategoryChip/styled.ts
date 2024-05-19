@@ -7,12 +7,12 @@ export const Root = styled.div<{ background: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3px 6px;
+  padding: 4px 8px;
   border-radius: 8px;
 `
 
 export const TitleTypo = styled(Typography)`
-  font-size: 10px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: bold;
   color: ${lightTheme.colors.base['50']};
 `
