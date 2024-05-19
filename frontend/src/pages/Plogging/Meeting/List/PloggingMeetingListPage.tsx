@@ -23,7 +23,7 @@ export const PloggingMeetingListPage: FC<PloggingMeetingListPageProps> = ({ clas
         {/* <SubtitleCircle>
           <SubtitleCircleTypo>*</SubtitleCircleTypo>
         </SubtitleCircle> */}
-        <SubtitleTypo>어떤 플로깅 모임에 참여하고 싶으신가요?</SubtitleTypo>
+        <SubtitleTypo>어떤 모임에 참여하고 싶으신가요?</SubtitleTypo>
       </SubtitleContainer>
       <ContentContainer>
         <SelectPloggingMeeting onSelectPloggingMeeting={onSelectPloggingMeeting} />
