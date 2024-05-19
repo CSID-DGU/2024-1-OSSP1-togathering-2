@@ -89,6 +89,7 @@ export const AlertContainer = styled.div`
 export const AlertContentTypo = styled(Typography)`
   color: ${lightTheme.colors.base['700']};
   font-size: 16px;
+  word-break: keep-all;
 `
 
 export const ButtonContainer = styled.div`

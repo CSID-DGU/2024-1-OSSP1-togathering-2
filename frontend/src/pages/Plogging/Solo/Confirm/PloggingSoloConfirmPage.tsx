@@ -63,7 +63,7 @@ export const PloggingSoloConfirmPage: FC<PloggingSoloConfirmPageProps> = ({ clas
       : null
 
   const onClickStartButton = () => {
-    navigate('/plogging/solo/alert', { state: { ploggingCourseId, meetingCategory: selectedCategory } })
+    navigate('/plogging/solo/alert', { state: { ploggingCourseId, selectedCategory } })
   }
 
   const onChangeSelectCreateType = (value: any) => {
