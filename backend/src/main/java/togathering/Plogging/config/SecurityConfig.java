@@ -17,6 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import togathering.Plogging.jwt.JWTFilter;
 import togathering.Plogging.jwt.JWTUtil;
 import togathering.Plogging.jwt.LoginFilter;
+import togathering.Plogging.oauth2.CustomSuccessHandler;
+import togathering.Plogging.service.CustomOAuth2UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +27,8 @@ public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
-
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomSuccessHandler customSuccessHandler;
 
     //AuthenticationManager Bean 등록
     @Bean
@@ -60,7 +63,12 @@ public class SecurityConfig {
 
         //oauth2
         http
-                .oauth2Login(Customizer.withDefaults());
+                .oauth2Login((oauth2) -> oauth2
+                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService))
+                        .successHandler(customSuccessHandler)
+                );
+
         //경로별 인가 작업
         http.authorizeRequests((auth) -> auth
                 .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
