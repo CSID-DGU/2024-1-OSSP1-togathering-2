@@ -8,7 +8,7 @@ import { lightTheme } from 'styles/theme'
 const items = [
   { href: '/', text: '홈', icon: HomeOutlined },
   { href: '/plogging/nearby', text: '내 근처', icon: EnvironmentOutlined },
-  { href: '/plogging/scheduled', text: '예정된 활동', icon: ClockCircleOutlined },
+  { href: '/plogging/meeting/scheduled', text: '예정된 모임', icon: ClockCircleOutlined },
 ]
 
 export const TabBar: FC = () => {
