@@ -1,5 +1,6 @@
 package togathering.Plogging.jwt;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
@@ -24,10 +26,10 @@ public class JWTFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         //request에서 Authorization 헤더를 찾음
-        String authorization= request.getHeader("Authorization");
+        String accessToken = request.getHeader("Authorization");
 
         //Authorization 헤더 검증
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
+        if (accessToken == null || !accessToken.startsWith("Bearer ")) {
 
             System.out.println("token null");
             filterChain.doFilter(request, response);
@@ -35,10 +37,31 @@ public class JWTFilter extends OncePerRequestFilter {
             //조건이 해당되면 메소드 종료 (필수)
             return;
         }
+        try {
+            jwtUtil.isExpired(accessToken);
+        } catch (ExpiredJwtException e) {
+            //response body
+            PrintWriter writer = response.getWriter();
+            writer.print("access token expired");
 
-        System.out.println("authorization now");
+            //response status code
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+        String category = jwtUtil.getCategory(accessToken);
+
+        if (!category.equals("access")) {
+
+            //response body
+            PrintWriter writer = response.getWriter();
+            writer.print("invalid access token");
+
+            //response status code
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
         //Bearer 부분 제거 후 순수 토큰만 획득
-        String token = authorization.split(" ")[1];
+        String token = accessToken.split(" ")[1];
 
         //토큰 소멸 시간 검증
         if (jwtUtil.isExpired(token)) {
