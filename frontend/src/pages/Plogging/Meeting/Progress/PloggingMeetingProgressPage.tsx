@@ -1,12 +1,14 @@
 import { IconCheck, IconPhoto } from '@tabler/icons-react'
 import { Header } from 'components/Header'
+import { MEETING_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { MeetingListType } from 'types/meeting'
+import { LocalStorageMeetingListType, MeetingListType } from 'types/meeting'
 import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
+import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
   ButtonContainer,
   ContentContainer,
@@ -30,7 +32,7 @@ export const PloggingMeetingProgressPage: FC<PloggingMeetingProgressPageProps> =
   const { state } = useLocation()
   const { ploggingMeetingId, selectedCategory } = state
   const navigate = useNavigate()
-  const [meetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
+  const [meetingList, setMeetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
   const { state: isSimulating, setTrue: startSimulate, setFalse: stopSimulate } = useBooleanState(false)
 
   const selectedPloggingMeetingItem =
@@ -46,6 +48,15 @@ export const PloggingMeetingProgressPage: FC<PloggingMeetingProgressPageProps> =
     navigate('/plogging/meeting/review', { state })
     return
   }
+
+  useEffect(() => {
+    let currentMeetingList = loadLocalStorage(MEETING_LIST_KEY)
+    if (typeof currentMeetingList === 'string') {
+      let parseMeetingList = JSON.parse(currentMeetingList) as LocalStorageMeetingListType
+      let newMeetingList = parseMeetingList.meetingList
+      setMeetingList(newMeetingList)
+    }
+  }, [])
 
   return (
     <Root className={className}>

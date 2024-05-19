@@ -66,6 +66,15 @@ export const PloggingMeetingReviewPage: FC<PloggingMeetingReviewPageProps> = ({ 
     }
   }
 
+  // useEffect(() => {
+  //   let currentMeetingList = loadLocalStorage(MEETING_LIST_KEY)
+  //   if (typeof currentMeetingList === 'string') {
+  //     let parseMeetingList = JSON.parse(currentMeetingList) as LocalStorageMeetingListType
+  //     let newMeetingList = parseMeetingList.meetingList
+  //     setMeetingList(newMeetingList)
+  //   }
+  // }, [])
+
   return (
     <Root className={className}>
       <Header title={'함께하기 결과'} />
