@@ -1,4 +1,4 @@
-import { Select, Typography } from 'antd'
+import { Button, DatePicker, Select, TimePicker, Typography } from 'antd'
 import styled from 'styled-components'
 import { lightTheme } from 'styles/theme'
 
@@ -44,10 +44,39 @@ export const ContentContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 `
 
 export const CategorySelectContainer = styled.div``
 
 export const CategorySelect = styled(Select)`
   width: 100%;
+`
+
+export const ContentDatePicker = styled(DatePicker)`
+  &&& {
+    height: 32px;
+  }
+`
+
+export const ContentTimePicker = styled(TimePicker)`
+  &&& {
+    height: 32px;
+  }
+`
+
+export const SubmitButton = styled(Button)`
+  height: 40px;
+  background: ${lightTheme.colors.primary['600']};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+`
+
+export const SubmitButtonTypo = styled(Typography)`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${lightTheme.colors.base['50']};
 `
