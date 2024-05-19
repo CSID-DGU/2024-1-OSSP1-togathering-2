@@ -1,12 +1,17 @@
 import { Header } from 'components/Header'
 import { TabBar } from 'components/TabBar'
-import { SCHEDULED_MEETING_LIST_SAMPLE } from 'constants/meeting'
+import { SELECTED_MEETING_LIST_KEY } from 'constants/common'
+import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MeetingCategoryType } from 'types/meeting'
+import { LocalSelectedMeetingListType, MeetingCategoryType, MeetingListType } from 'types/meeting'
+import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
   ContentContainer,
+  LinkButton,
+  LinkButtonTypo,
+  NotFoundTypo,
   PloggingMeetingViewerContainer,
   PloggingMeetingViewerWrapper,
   Root,
@@ -21,14 +26,31 @@ type PloggingMeetingScheduledPageProps = {
 
 export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps> = ({ className }) => {
   const navigate = useNavigate()
+  const [meetingList, setMeetingList] = useState<MeetingListType>([])
 
   const onClickMeetingViewer = (ploggingMeetingId: number, selectedCategory: MeetingCategoryType) => () => {
     navigate('/plogging/meeting/alert', { state: { ploggingMeetingId, selectedCategory } })
   }
 
-  const washedMeetingList = (() => {
-    return SCHEDULED_MEETING_LIST_SAMPLE
-  })()
+  const onClickMeetingListPage = () => {
+    navigate('/plogging/meeting/list')
+  }
+
+  useEffect(() => {
+    let currentMeetingIdList = loadLocalStorage(SELECTED_MEETING_LIST_KEY)
+    if (typeof currentMeetingIdList === 'string') {
+      let parsedMeetingIdList = JSON.parse(currentMeetingIdList) as LocalSelectedMeetingListType
+      let allMeetingList = ALL_MEETING_LIST_SAMPLE
+
+      console.log({ allMeetingList, parsedMeetingIdList })
+
+      setMeetingList(
+        parsedMeetingIdList.selectedMeetingList.map((value) => {
+          return allMeetingList.filter((value2) => value2.id === value.id)[0]
+        })
+      )
+    }
+  }, [])
 
   return (
     <Root className={className}>
@@ -38,16 +60,25 @@ export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps>
         <SubtitleTypo>예정된 모임들을 모아봤어요!</SubtitleTypo>
       </TitleContainer>
       <ContentContainer>
-        <PloggingMeetingViewerContainer>
-          {washedMeetingList.map((meetingItem) => (
-            <PloggingMeetingViewerWrapper
-              onClick={onClickMeetingViewer(meetingItem.id, meetingItem.category)}
-              key={`plogging_meeting_viewer_${meetingItem.id}`}
-            >
-              <PloggingMeetingViewer type={'SCHEDULED'} meetingItem={meetingItem} />
-            </PloggingMeetingViewerWrapper>
-          ))}
-        </PloggingMeetingViewerContainer>
+        {meetingList.length > 0 ? (
+          <PloggingMeetingViewerContainer>
+            {meetingList.map((meetingItem) => (
+              <PloggingMeetingViewerWrapper
+                onClick={onClickMeetingViewer(meetingItem.id, meetingItem.category)}
+                key={`plogging_meeting_viewer_${meetingItem.id}`}
+              >
+                <PloggingMeetingViewer type={'SCHEDULED'} meetingItem={meetingItem} />
+              </PloggingMeetingViewerWrapper>
+            ))}
+          </PloggingMeetingViewerContainer>
+        ) : (
+          <>
+            <NotFoundTypo>예정된 모임이 없어요...</NotFoundTypo>
+            <LinkButton type={'primary'} onClick={onClickMeetingListPage}>
+              <LinkButtonTypo>플로깅 모임 보러가기</LinkButtonTypo>
+            </LinkButton>
+          </>
+        )}
       </ContentContainer>
       <TabBar />
     </Root>

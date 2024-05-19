@@ -55,7 +55,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
     setTrue: showSearchResult,
     setFalse: closeSearchResult,
   } = useBooleanState(false)
-  const [sortConditionIndex, setSortConditionIndex] = useState(1)
+  const [sortConditionIndex, setSortConditionIndex] = useState(0)
   const [meetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
 
   const onClickSortConditionButton = (id: number) => () => {

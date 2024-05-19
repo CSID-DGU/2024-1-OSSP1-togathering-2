@@ -1,8 +1,11 @@
 import { IconCheck, IconPhoto, IconThumbDown, IconThumbUp } from '@tabler/icons-react'
 import { Header } from 'components/Header'
+import { SELECTED_MEETING_LIST_KEY } from 'constants/common'
 import { FC, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { LocalSelectedMeetingListType } from 'types/meeting'
 import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
+import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 import {
   ButtonContainer,
   ContentContainer,
@@ -35,7 +38,7 @@ type PloggingMeetingReviewPageProps = {
 
 export const PloggingMeetingReviewPage: FC<PloggingMeetingReviewPageProps> = ({ className }) => {
   const { state } = useLocation()
-  const { selectedCategory } = state
+  const { ploggingMeetingId, selectedCategory } = state
   const navigate = useNavigate()
   const [ratingList, setRatingList] = useState<[number, number, number]>([0, 0, 0])
 
@@ -51,6 +54,16 @@ export const PloggingMeetingReviewPage: FC<PloggingMeetingReviewPageProps> = ({ 
 
   const onClickFinishButton = () => {
     navigate('/')
+    let currentMeetingList = loadLocalStorage(SELECTED_MEETING_LIST_KEY)
+    if (typeof currentMeetingList === 'string') {
+      let parsedMeetingList: LocalSelectedMeetingListType = JSON.parse(
+        currentMeetingList
+      ) as LocalSelectedMeetingListType
+      parsedMeetingList.selectedMeetingList = parsedMeetingList.selectedMeetingList.filter(
+        (value) => +value.id !== +ploggingMeetingId
+      )
+      saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify(parsedMeetingList))
+    }
   }
 
   return (

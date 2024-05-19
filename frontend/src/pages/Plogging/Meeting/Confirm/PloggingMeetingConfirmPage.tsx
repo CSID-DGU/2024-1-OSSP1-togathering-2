@@ -51,7 +51,7 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
         : { selectedMeetingList: [] }
     currentSelectedMeetingList.selectedMeetingList = [
       ...currentSelectedMeetingList.selectedMeetingList,
-      ploggingMeetingId,
+      { id: ploggingMeetingId },
     ]
     saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify(currentSelectedMeetingList))
     navigate('/plogging/meeting/scheduled')

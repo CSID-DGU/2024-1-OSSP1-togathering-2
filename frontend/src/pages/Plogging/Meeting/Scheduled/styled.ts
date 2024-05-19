@@ -71,3 +71,28 @@ export const PloggingMeetingViewerContainer = styled.div`
 export const PloggingMeetingViewerWrapper = styled.div`
   cursor: pointer;
 `
+
+export const NotFoundTypo = styled(Typography)`
+  &&& {
+    font-size: 18px;
+    font-weight: 500;
+    color: ${lightTheme.colors.base['700']};
+  }
+`
+
+export const LinkButton = styled(Button)`
+  width: 100%;
+  height: 45px;
+  background: ${lightTheme.colors.primary['600']};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+`
+
+export const LinkButtonTypo = styled(Typography)`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${lightTheme.colors.base['50']};
+`
