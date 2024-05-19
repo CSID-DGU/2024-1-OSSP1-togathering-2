@@ -11,6 +11,7 @@ import { PloggingMeetingCreateInfoPage } from 'pages/Plogging/Meeting/Create/Inf
 import { PloggingMeetingListPage } from 'pages/Plogging/Meeting/List'
 import { PloggingMeetingProgressPage } from 'pages/Plogging/Meeting/Progress'
 import { PloggingMeetingReviewPage } from 'pages/Plogging/Meeting/Review'
+import { PloggingNearbyPage } from 'pages/Plogging/nearby'
 import { PloggingSoloAlertPage } from 'pages/Plogging/Solo/Alert'
 import { PloggingSoloConfirmPage } from 'pages/Plogging/Solo/Confirm'
 import { PloggingSoloCoursePage } from 'pages/Plogging/Solo/Course'
@@ -56,6 +57,8 @@ root.render(
           <Route path="/plogging/meeting/alert" element={<PloggingMeetingAlertPage />} />
           <Route path="/plogging/meeting/progress" element={<PloggingMeetingProgressPage />} />
           <Route path="/plogging/meeting/review" element={<PloggingMeetingReviewPage />} />
+
+          <Route path="/plogging/nearby" element={<PloggingNearbyPage />} />
 
           <Route path="/" element={<MainPage />} />
         </Routes>
