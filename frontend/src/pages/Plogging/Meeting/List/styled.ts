@@ -9,6 +9,7 @@ export const Root = styled.div`
   gap: 10px;
   padding: 20px;
   padding-top: 60px;
+  padding-bottom: 80px;
 `
 
 export const SubtitleContainer = styled.div`
