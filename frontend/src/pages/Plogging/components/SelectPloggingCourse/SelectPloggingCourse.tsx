@@ -228,7 +228,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
           </SortConditionChip>
         ))}
       </SortConditionContainer>
-      {sortConditionIndex !== 0 && !isSearchAvailable && (
+      {sortConditionIndex !== 0 && !isSearchAvailable && isSearchResultAvailable && (
         <>
           <CourseContainer>
             {washedCourseList.map((courseItem) => (

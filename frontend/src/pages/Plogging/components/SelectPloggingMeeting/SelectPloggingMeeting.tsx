@@ -172,10 +172,12 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
           </>
         )}
       </CourseContainer>
-      <CreateCourseButton type={'primary'} onClick={onClickCreateMeetingButton}>
-        <PlusCircleOutlined />
-        <CreateCourseButtonTypo>나만의 모임 만들기</CreateCourseButtonTypo>
-      </CreateCourseButton>
+      {!isSearchAvailable && (
+        <CreateCourseButton type={'primary'} onClick={onClickCreateMeetingButton}>
+          <PlusCircleOutlined />
+          <CreateCourseButtonTypo>나만의 모임 만들기</CreateCourseButtonTypo>
+        </CreateCourseButton>
+      )}
     </Root>
   )
 }
