@@ -1,4 +1,5 @@
 import { MeetingCategoryChip } from 'components/MeetingCategoryChip'
+import dayjs from 'dayjs'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { FC, useEffect, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
@@ -165,9 +166,7 @@ export const PloggingMeetingViewer: FC<PloggingMeetingViewerProps> = ({
             {type === 'SCHEDULED' && (
               <MeetingInfoContainer>
                 <MeetingCategoryChip category={meetingItem.category} />
-                <NameTypo>
-                  {Math.floor(Math.random() * 11) + 1}시간 {Math.floor(Math.random() * 60)}분 후 시작 예정
-                </NameTypo>
+                <NameTypo>{`일시: ${dayjs(meetingItem.startAt).format(`YYYY.MM.DD A hh:mm`)}`}</NameTypo>
               </MeetingInfoContainer>
             )}
           </NameTypo>

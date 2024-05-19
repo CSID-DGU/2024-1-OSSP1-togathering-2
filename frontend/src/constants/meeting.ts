@@ -9,6 +9,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[2],
     category: 'WALK',
     createdAt: '2024-05-18T00:00:00',
+    startAt: '2024-05-18T00:00:00',
   },
   {
     id: 33,
@@ -17,6 +18,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[1],
     category: 'RUNNING',
     createdAt: '2024-05-17T00:00:00',
+    startAt: '2024-05-17T00:00:00',
   },
   {
     id: 32,
@@ -25,6 +27,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[3],
     category: 'BICYCLE',
     createdAt: '2024-05-16T00:00:00',
+    startAt: '2024-05-16T00:00:00',
   },
   {
     id: 31,
@@ -33,6 +36,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[0],
     category: 'WALK',
     createdAt: '2024-05-15T00:00:00',
+    startAt: '2024-05-15T00:00:00',
   },
   {
     id: 30,
@@ -41,6 +45,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[2],
     category: 'RUNNING',
     createdAt: '2024-05-14T00:00:00',
+    startAt: '2024-05-14T00:00:00',
   },
   {
     id: 29,
@@ -49,6 +54,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[1],
     category: 'BICYCLE',
     createdAt: '2024-05-13T00:00:00',
+    startAt: '2024-05-13T00:00:00',
   },
   {
     id: 28,
@@ -57,6 +63,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[3],
     category: 'WALK',
     createdAt: '2024-05-12T00:00:00',
+    startAt: '2024-05-12T00:00:00',
   },
   {
     id: 27,
@@ -65,6 +72,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[0],
     category: 'RUNNING',
     createdAt: '2024-05-11T00:00:00',
+    startAt: '2024-05-11T00:00:00',
   },
   {
     id: 26,
@@ -73,6 +81,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[2],
     category: 'BICYCLE',
     createdAt: '2024-05-10T00:00:00',
+    startAt: '2024-05-10T00:00:00',
   },
   {
     id: 25,
@@ -81,6 +90,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[1],
     category: 'WALK',
     createdAt: '2024-05-09T00:00:00',
+    startAt: '2024-05-09T00:00:00',
   },
   {
     id: 24,
@@ -89,6 +99,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[3],
     category: 'RUNNING',
     createdAt: '2024-05-08T00:00:00',
+    startAt: '2024-05-08T00:00:00',
   },
   {
     id: 23,
@@ -97,6 +108,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[0],
     category: 'BICYCLE',
     createdAt: '2024-05-07T00:00:00',
+    startAt: '2024-05-07T00:00:00',
   },
   {
     id: 22,
@@ -105,6 +117,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[2],
     category: 'WALK',
     createdAt: '2024-05-06T00:00:00',
+    startAt: '2024-05-06T00:00:00',
   },
   {
     id: 21,
@@ -113,6 +126,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[1],
     category: 'RUNNING',
     createdAt: '2024-05-05T00:00:00',
+    startAt: '2024-05-05T00:00:00',
   },
   {
     id: 20,
@@ -121,6 +135,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[3],
     category: 'BICYCLE',
     createdAt: '2024-05-04T00:00:00',
+    startAt: '2024-05-04T00:00:00',
   },
   {
     id: 19,
@@ -129,6 +144,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[0],
     category: 'WALK',
     createdAt: '2024-05-03T00:00:00',
+    startAt: '2024-05-03T00:00:00',
   },
   {
     id: 18,
@@ -137,6 +153,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[2],
     category: 'RUNNING',
     createdAt: '2024-05-02T00:00:00',
+    startAt: '2024-05-02T00:00:00',
   },
   {
     id: 17,
@@ -145,6 +162,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[1],
     category: 'BICYCLE',
     createdAt: '2024-05-01T00:00:00',
+    startAt: '2024-05-01T00:00:00',
   },
   {
     id: 16,
@@ -153,6 +171,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[3],
     category: 'WALK',
     createdAt: '2024-04-30T00:00:00',
+    startAt: '2024-04-30T00:00:00',
   },
   {
     id: 15,
@@ -161,6 +180,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[0],
     category: 'WALK',
     createdAt: '2024-04-29T00:00:00',
+    startAt: '2024-04-29T00:00:00',
   },
   {
     id: 14,
@@ -169,6 +189,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[2],
     category: 'BICYCLE',
     createdAt: '2024-04-28T00:00:00',
+    startAt: '2024-04-28T00:00:00',
   },
   {
     id: 13,
@@ -177,6 +198,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[1],
     category: 'RUNNING',
     createdAt: '2024-04-27T00:00:00',
+    startAt: '2024-04-27T00:00:00',
   },
 ] as MeetingListType
 
@@ -188,6 +210,7 @@ export const PLOGGING_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[2],
     category: 'PLOGGING',
     createdAt: '2024-04-29T00:00:00',
+    startAt: '2024-04-29T00:00:00',
   },
   {
     id: 6,
@@ -196,6 +219,7 @@ export const PLOGGING_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[3],
     category: 'PLOGGING',
     createdAt: '2024-04-20T00:00:00',
+    startAt: '2024-04-20T00:00:00',
   },
   {
     id: 5,
@@ -204,6 +228,7 @@ export const PLOGGING_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[1],
     category: 'PLOGGING',
     createdAt: '2024-04-25T00:00:00',
+    startAt: '2024-04-25T00:00:00',
   },
   {
     id: 4,
@@ -212,6 +237,7 @@ export const PLOGGING_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[2],
     category: 'PLOGGING',
     createdAt: '2024-08-01T00:00:00',
+    startAt: '2024-08-01T00:00:00',
   },
   {
     id: 3,
@@ -220,6 +246,7 @@ export const PLOGGING_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[3],
     category: 'PLOGGING',
     createdAt: '2024-07-29T00:00:00',
+    startAt: '2024-07-29T00:00:00',
   },
   {
     id: 2,
@@ -228,6 +255,7 @@ export const PLOGGING_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[0],
     category: 'PLOGGING',
     createdAt: '2024-02-28T00:00:00',
+    startAt: '2024-02-28T00:00:00',
   },
   {
     id: 1,
@@ -236,6 +264,7 @@ export const PLOGGING_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[5],
     category: 'PLOGGING',
     createdAt: '2024-09-27T00:00:00',
+    startAt: '2024-09-27T00:00:00',
   },
   {
     id: 0,
@@ -244,6 +273,7 @@ export const PLOGGING_MEETING_LIST_SAMPLE: MeetingListType = [
     courseItem: PLOGGING_COURSE_LIST_SAMPLE.courseList[1],
     category: 'PLOGGING',
     createdAt: '2024-07-06T00:00:00',
+    startAt: '2024-07-06T00:00:00',
   },
 ]
 

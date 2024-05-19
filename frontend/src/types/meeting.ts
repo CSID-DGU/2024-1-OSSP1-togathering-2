@@ -9,6 +9,7 @@ export type MeetingItemType = {
   courseItem: CourseItemType
   category: MeetingCategoryType
   createdAt: string
+  startAt: string
 }
 
 export type MeetingListType = MeetingItemType[]

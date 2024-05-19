@@ -1,6 +1,7 @@
 import { Header } from 'components/Header'
 import { MEETING_LIST_KEY, PLOGGING_COURSE_LIST_KEY, SELECTED_MEETING_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
+import dayjs from 'dayjs'
 import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
 import { FC, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -14,7 +15,10 @@ import {
   CategorySelect,
   CategorySelectContainer,
   ContentContainer,
+  ContentDatePicker,
   Root,
+  SubmitButton,
+  SubmitButtonTypo,
   SubtitleCircle,
   SubtitleCircleTypo,
   SubtitleContainer,
@@ -39,9 +43,10 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
   const navigate = useNavigate()
   const [courseList, setCourseList] = useState<CourseListType>([])
 
-  const [step, setStep] = useState<'2' | '3' | '4'>('2')
+  const [step, setStep] = useState<'2' | '3' | '4' | '5'>('2')
   const [step2Count, setStep2Count] = useState<number>(2)
   const [step3Name, setStep3Name] = useState<string>('')
+  const [startAt, setStartAt] = useState<string>()
 
   const handleStep2Count = (type: 'PLUS' | 'MINUS') => () => {
     if (type === 'PLUS') {
@@ -83,8 +88,12 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
       alert('카테고리가 입력되지 않았습니다.')
       return
     }
+    if (!startAt) {
+      alert('시작 일시를 입력해주세요.')
+      return
+    }
     if (step3Name.length < 2) {
-      alert('모임 이름은 2글자 이상 입력해주세요')
+      alert('모임 이름은 2글자 이상 입력해주세요.')
       return
     }
 
@@ -106,6 +115,7 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
           maxCount: step2Count,
           name: step3Name,
           category: selectedCategory,
+          startAt,
         },
         ...parsedMeetingList.meetingList,
       ]
@@ -175,6 +185,11 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
     return
   }
 
+  const onSubmitTime = () => {
+    setStep('5')
+    return
+  }
+
   const selectedPloggingCourseItem =
     courseList.filter((courseItem) => courseItem.id === ploggingCourseId).length > 0
       ? courseList.filter((courseItem) => courseItem.id === ploggingCourseId)[0]
@@ -211,7 +226,7 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
         </CategorySelectContainer>
       )}
 
-      {(step === '3' || step === '4') && (
+      {(step === '3' || step === '4' || step === '5') && (
         <>
           <SubtitleContainer>
             <SubtitleCircle>
@@ -227,11 +242,38 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
           )}
         </>
       )}
-      {step === '4' && (
+      {(step === '4' || step === '5') && (
         <>
           <SubtitleContainer>
             <SubtitleCircle>
               <SubtitleCircleTypo>4</SubtitleCircleTypo>
+            </SubtitleCircle>
+            {step === '4' && <SubtitleTypo>모임은 언제 시작할까요?</SubtitleTypo>}
+            {step !== '4' && <SubtitleTypo>{`일시: ${dayjs(startAt).format('YYYY.MM.DD A HH:mm')}`}</SubtitleTypo>}
+          </SubtitleContainer>
+          {step === '4' && (
+            <ContentContainer>
+              <ContentDatePicker
+                placeholder="날짜와 시간을 정해주세요."
+                showTime
+                format={{
+                  format: 'YYYY-MM-DDTHH:mm:ss',
+                  type: 'mask',
+                }}
+                onChange={(_: any, dateString: any) => setStartAt(dayjs(dateString).format('YYYY-MM-DDTHH:mm'))}
+              />
+              <SubmitButton type={'primary'} onClick={onSubmitTime}>
+                <SubmitButtonTypo>완료하기</SubmitButtonTypo>
+              </SubmitButton>
+            </ContentContainer>
+          )}
+        </>
+      )}
+      {step === '5' && (
+        <>
+          <SubtitleContainer>
+            <SubtitleCircle>
+              <SubtitleCircleTypo>5</SubtitleCircleTypo>
             </SubtitleCircle>
             <SubtitleTypo>모임의 이름을 정해주세요!</SubtitleTypo>
           </SubtitleContainer>
