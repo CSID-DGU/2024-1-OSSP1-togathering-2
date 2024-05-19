@@ -3,9 +3,12 @@ import { TabBar } from 'components/TabBar'
 import { SCHEDULED_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
 import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { MeetingCategoryType } from 'types/meeting'
 import {
   ContentContainer,
   PloggingMeetingViewerContainer,
+  PloggingMeetingViewerWrapper,
   Root,
   SubtitleTypo,
   TitleContainer,
@@ -17,6 +20,12 @@ type PloggingMeetingScheduledPageProps = {
 }
 
 export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps> = ({ className }) => {
+  const navigate = useNavigate()
+
+  const onClickMeetingViewer = (ploggingMeetingId: number, selectedCategory: MeetingCategoryType) => () => {
+    navigate('/plogging/meeting/alert', { state: { ploggingMeetingId, selectedCategory } })
+  }
+
   const washedMeetingList = (() => {
     return SCHEDULED_MEETING_LIST_SAMPLE
   })()
@@ -31,11 +40,12 @@ export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps>
       <ContentContainer>
         <PloggingMeetingViewerContainer>
           {washedMeetingList.map((meetingItem) => (
-            <PloggingMeetingViewer
-              type={'SCHEDULED'}
-              meetingItem={meetingItem}
+            <PloggingMeetingViewerWrapper
+              onClick={onClickMeetingViewer(meetingItem.id, meetingItem.category)}
               key={`plogging_meeting_viewer_${meetingItem.id}`}
-            />
+            >
+              <PloggingMeetingViewer type={'SCHEDULED'} meetingItem={meetingItem} />
+            </PloggingMeetingViewerWrapper>
           ))}
         </PloggingMeetingViewerContainer>
       </ContentContainer>

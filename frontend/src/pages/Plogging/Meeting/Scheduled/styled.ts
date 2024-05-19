@@ -67,3 +67,7 @@ export const PloggingMeetingViewerContainer = styled.div`
   flex-direction: column;
   gap: 20px;
 `
+
+export const PloggingMeetingViewerWrapper = styled.div`
+  cursor: pointer;
+`
