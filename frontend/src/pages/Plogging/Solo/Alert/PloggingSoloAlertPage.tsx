@@ -87,6 +87,101 @@ export const PloggingSoloAlertPage: FC<PloggingSoloAlertPageProps> = ({ classNam
           </ul>
         </AlertContainer>
       )}
+      {selectedCategory === 'WALK' && (
+        <AlertContainer>
+          <ul>
+            <li>
+              <AlertContentTypo>
+                물과 간단한 간식을 챙겨요.
+                <br />
+                여러 번 사용할 수 있는 물병이면 더 좋아요!
+              </AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>편안한 옷차림과 신발은 필수에요.</AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>산책 중 피곤할 때는 충분한 휴식이 필요해요.</AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>가방이나 주머니에 필요한 물건을 적당히 담아주세요.</AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>
+                이번 산책은 낮에 이루어져요.
+                <br />
+                자외선에 오래 노출되지 않도록 모자나 선크림을 챙기세요.
+              </AlertContentTypo>
+            </li>
+          </ul>
+        </AlertContainer>
+      )}
+      {selectedCategory === 'RUNNING' && (
+        <AlertContainer>
+          <ul>
+            <li>
+              <AlertContentTypo>
+                물과 간단한 간식을 챙겨요.
+                <br />
+                여러 번 사용할 수 있는 물병이면 더 좋아요!
+              </AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>편안한 운동복과 러닝화는 필수에요.</AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>
+                러닝 중에는 허리에 무리가 가지 않도록
+                <br />
+                올바른 자세로 달리세요.
+              </AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>가벼운 물건만 가방이나 주머니에 넣어주세요.</AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>
+                이번 러닝은 낮에 이루어져요.
+                <br />
+                자외선에 오래 노출되지 않도록 모자나 선크림을 챙기세요.
+              </AlertContentTypo>
+            </li>
+          </ul>
+        </AlertContainer>
+      )}
+      {selectedCategory === 'BICYCLE' && (
+        <AlertContainer>
+          <ul>
+            <li>
+              <AlertContentTypo>
+                물과 간단한 간식을 챙겨요.
+                <br />
+                여러 번 사용할 수 있는 물병이면 더 좋아요!
+              </AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>편안한 운동복과 헬멧은 필수에요.</AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>
+                라이딩 중에는 허리에 무리가 가지 않도록
+                <br />
+                올바른 자세를 유지하세요.
+              </AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>가벼운 물건만 가방이나 자전거에 실어주세요.</AlertContentTypo>
+            </li>
+            <li>
+              <AlertContentTypo>
+                이번 자전거 라이딩은 낮에 이루어져요.
+                <br />
+                자외선에 오래 노출되지 않도록 모자나 선크림을 챙기세요.
+              </AlertContentTypo>
+            </li>
+          </ul>
+        </AlertContainer>
+      )}
       <ButtonContainer>
         <StartButton type={'primary'} onClick={onClickCheckButton}>
           <IconCheck />
