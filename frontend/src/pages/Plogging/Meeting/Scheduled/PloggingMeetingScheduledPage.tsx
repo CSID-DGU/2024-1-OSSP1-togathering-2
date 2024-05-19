@@ -83,11 +83,11 @@ export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps>
         ) : (
           <>
             <NotFoundTypo>예정된 모임이 없어요...</NotFoundTypo>
-            <LinkButton type={'primary'} onClick={onClickMeetingListPage}>
-              <LinkButtonTypo>플로깅 모임 보러가기</LinkButtonTypo>
-            </LinkButton>
           </>
         )}
+        <LinkButton type={'primary'} onClick={onClickMeetingListPage}>
+          <LinkButtonTypo>플로깅 모임 보러가기</LinkButtonTypo>
+        </LinkButton>
       </ContentContainer>
       <TabBar />
     </Root>
