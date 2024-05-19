@@ -7,6 +7,7 @@ export const Root = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `
 
 export const KakaoMapContainer = styled.div<{ isDetail: boolean }>`
@@ -70,4 +71,11 @@ export const MeetingInfoContainer = styled.span`
   display: flex;
   align-items: center;
   gap: 5px;
+`
+
+export const MeetingCategoryChipWrapper = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
 `

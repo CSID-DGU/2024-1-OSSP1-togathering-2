@@ -11,6 +11,7 @@ import {
   KakaoMapMenuSwitch,
   MapMarkerContentContainer,
   MapMarkerContentTypo,
+  MeetingCategoryChipWrapper,
   MeetingInfoContainer,
   MenuContainer,
   NameTypo,
@@ -153,20 +154,18 @@ export const PloggingMeetingViewer: FC<PloggingMeetingViewerProps> = ({
           <KakaoMapMenuSwitch value={courseCoordinateFlagActivate} onClick={toggleCourseCoordinateFlagActivate} />
         </KakaoMapMenuContainer>
       </KakaoMapContainer>
+      <MeetingCategoryChipWrapper>
+        <MeetingCategoryChip category={meetingItem.category} />
+      </MeetingCategoryChipWrapper>
       {meetingName && !isDetail && (
         <MenuContainer>
           <NameTypo>
             모임 이름: {meetingName} <br />
-            {type === 'LIST' && (
+            {(type === 'SCHEDULED' || type === 'LIST') && (
               <MeetingInfoContainer>
-                <MeetingCategoryChip category={meetingItem.category} />
-                <NameTypo>최대 {maxCount}명</NameTypo>
-              </MeetingInfoContainer>
-            )}
-            {type === 'SCHEDULED' && (
-              <MeetingInfoContainer>
-                <MeetingCategoryChip category={meetingItem.category} />
-                <NameTypo>{`일시: ${dayjs(meetingItem.startAt).format(`YYYY.MM.DD A hh:mm`)}`}</NameTypo>
+                <NameTypo>{`인원: ${maxCount - 1}명/${maxCount}명 · 일시: ${dayjs(meetingItem.startAt).format(
+                  `YY.MM.DD A hh:mm`
+                )}`}</NameTypo>
               </MeetingInfoContainer>
             )}
           </NameTypo>
