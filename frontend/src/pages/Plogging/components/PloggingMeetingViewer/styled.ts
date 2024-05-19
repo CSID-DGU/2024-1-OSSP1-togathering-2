@@ -65,3 +65,9 @@ export const SelectButton = styled(Button)`
 export const SelectButtonTypo = styled(Typography)`
   color: ${lightTheme.colors.base['50']};
 `
+
+export const MeetingInfoContainer = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`

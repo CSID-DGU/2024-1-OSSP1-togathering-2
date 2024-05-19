@@ -1,8 +1,8 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
-import { PLOGGING_MEETING_LIST_SAMPLE } from 'constants/meeting'
+import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MeetingListType } from 'types/meeting'
+import { MeetingCategoryType, MeetingListType } from 'types/meeting'
 import { getRandomOrder } from 'utils/getRandomOrder'
 import { PloggingMeetingViewer } from '../PloggingMeetingViewer'
 import {
@@ -17,7 +17,7 @@ import {
 
 type SelectPloggingMeetingProps = {
   className?: string
-  onSelectPloggingMeeting: (id: number) => () => void
+  onSelectPloggingMeeting: (id: number, category: MeetingCategoryType) => () => void
 }
 
 const sortConditionList = [
@@ -42,7 +42,7 @@ const sortConditionList = [
 export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ className, onSelectPloggingMeeting }) => {
   const navigate = useNavigate()
   const [sortConditionIndex, setSortConditionIndex] = useState(1)
-  const [meetingList] = useState<MeetingListType>(PLOGGING_MEETING_LIST_SAMPLE)
+  const [meetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
 
   const onClickSortConditionButton = (id: number) => () => {
     setSortConditionIndex((prev) => {
@@ -88,7 +88,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
         {washedMeetingList.map((meetingItem) => (
           <PloggingMeetingViewer
             meetingItem={meetingItem}
-            onSelect={onSelectPloggingMeeting(meetingItem.id)}
+            onSelect={onSelectPloggingMeeting(meetingItem.id, meetingItem.category)}
             key={`plogging_meeting_viewer_${meetingItem.id}`}
           />
         ))}

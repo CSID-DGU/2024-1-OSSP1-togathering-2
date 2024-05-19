@@ -1,11 +1,12 @@
 import { IconCheck, IconPhoto } from '@tabler/icons-react'
 import { Header } from 'components/Header'
-import { PLOGGING_MEETING_LIST_SAMPLE } from 'constants/meeting'
+import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
 import { FC, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { MeetingListType } from 'types/meeting'
+import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
 import {
   ButtonContainer,
   ContentContainer,
@@ -27,9 +28,9 @@ type PloggingMeetingProgressPageProps = {
 
 export const PloggingMeetingProgressPage: FC<PloggingMeetingProgressPageProps> = ({ className }) => {
   const { state } = useLocation()
-  const { ploggingMeetingId } = state
+  const { ploggingMeetingId, selectedCategory } = state
   const navigate = useNavigate()
-  const [meetingList] = useState<MeetingListType>(PLOGGING_MEETING_LIST_SAMPLE)
+  const [meetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
   const { state: isSimulating, setTrue: startSimulate, setFalse: stopSimulate } = useBooleanState(false)
 
   const selectedPloggingMeetingItem =
@@ -42,7 +43,7 @@ export const PloggingMeetingProgressPage: FC<PloggingMeetingProgressPageProps> =
     return
   }
   const onClickButtonPloggingDone = () => {
-    navigate('/plogging/meeting/review')
+    navigate('/plogging/meeting/review', { state })
     return
   }
 
@@ -52,7 +53,7 @@ export const PloggingMeetingProgressPage: FC<PloggingMeetingProgressPageProps> =
       <SubtitleTypo>
         모두 함께 아자아자 파이팅!
         <br />
-        오늘의 활동으로 건강해지고 있어요!
+        오늘의 {getMeetingCategoryLabel(selectedCategory)}으로 건강해지고 있어요!
       </SubtitleTypo>
       {selectedPloggingMeetingItem && (
         <ContentContainer>

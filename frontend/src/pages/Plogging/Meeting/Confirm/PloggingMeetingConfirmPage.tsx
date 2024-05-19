@@ -20,11 +20,12 @@ import {
 } from './styled'
 
 import { IconCrown, IconRun, IconUser } from '@tabler/icons-react'
-import { PLOGGING_MEETING_LIST_SAMPLE } from 'constants/meeting'
+import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { lightTheme } from 'styles/theme'
 import { MeetingListType } from 'types/meeting'
+import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
 
 type PloggingMeetingConfirmPageProps = {
   className?: string
@@ -32,9 +33,9 @@ type PloggingMeetingConfirmPageProps = {
 
 export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = ({ className }) => {
   const { state } = useLocation()
-  const { ploggingMeetingId } = state
+  const { ploggingMeetingId, selectedCategory } = state
   const navigate = useNavigate()
-  const [meetingList] = useState<MeetingListType>(PLOGGING_MEETING_LIST_SAMPLE)
+  const [meetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
 
   const selectedPloggingMeetingItem =
     meetingList.filter((meetingItem) => meetingItem.id === ploggingMeetingId).length > 0
@@ -42,14 +43,14 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
       : null
 
   const onClickStartButton = () => {
-    navigate('/plogging/meeting/alert', { state: { ploggingMeetingId } })
+    navigate('/plogging/meeting/alert', { state })
   }
 
   return (
     <Root className={className}>
       <Header title={'함께하기'} showBackButton />
       <SubtitleContainer>
-        <SubtitleTypo>플로깅 모임 정보를 확인해주세요.</SubtitleTypo>
+        <SubtitleTypo>{`${getMeetingCategoryLabel(selectedCategory)} 모임 정보를 확인해주세요.`}</SubtitleTypo>
       </SubtitleContainer>
       {selectedPloggingMeetingItem && (
         <>
