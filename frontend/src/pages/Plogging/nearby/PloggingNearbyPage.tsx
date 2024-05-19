@@ -5,7 +5,6 @@ import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { FC, useEffect, useState } from 'react'
 import { LocalStorageMeetingListType, MeetingListType } from 'types/meeting'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
-import { PLOGGING_COURSE_LIST_SAMPLE } from '../Course/Create/constant'
 import { NearbyMap } from './components/NearbyMap'
 import { ContentContainer, Root, SubtitleTypo, TitleContainer, TitleTypo } from './styled'
 
@@ -50,7 +49,7 @@ export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) =
 
   const startingPoints = (() => {
     // return ALL_MEETING_LIST_SAMPLE.map((item) => item.courseItem.coordinateList[0])
-    return PLOGGING_COURSE_LIST_SAMPLE.courseList.map((item) => item.coordinateList[0])
+    return meetingList.map((item) => item.courseItem.coordinateList[0])
   })()
 
   return (
