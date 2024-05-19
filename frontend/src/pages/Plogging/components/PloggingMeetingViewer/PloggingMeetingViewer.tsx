@@ -1,13 +1,16 @@
+import { MeetingCategoryChip } from 'components/MeetingCategoryChip'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { FC, useEffect, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
 import { MeetingItemType } from 'types/meeting'
+import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
 import {
   KakaoMapContainer,
   KakaoMapMenuContainer,
   KakaoMapMenuSwitch,
   MapMarkerContentContainer,
   MapMarkerContentTypo,
+  MeetingInfoContainer,
   MenuContainer,
   NameTypo,
   Root,
@@ -85,6 +88,7 @@ export const PloggingMeetingViewer: FC<PloggingMeetingViewerProps> = ({
   const courseCoordinateList = meetingItem.courseItem.coordinateList
   const meetingName = meetingItem.name
   const maxCount = meetingItem.maxCount
+  const meetingCategory = getMeetingCategoryLabel(meetingItem.category)
 
   return (
     <Root className={className}>
@@ -149,7 +153,11 @@ export const PloggingMeetingViewer: FC<PloggingMeetingViewerProps> = ({
       {meetingName && !isDetail && (
         <MenuContainer>
           <NameTypo>
-            모임 이름: {meetingName} <br /> 최대 인원: {maxCount}명
+            모임 이름: {meetingName} <br />
+            <MeetingInfoContainer>
+              <MeetingCategoryChip category={meetingItem.category} />
+              <NameTypo>최대 {maxCount}명</NameTypo>
+            </MeetingInfoContainer>
           </NameTypo>
           {onSelect && (
             <SelectButton type={'primary'} onClick={onSelect}>

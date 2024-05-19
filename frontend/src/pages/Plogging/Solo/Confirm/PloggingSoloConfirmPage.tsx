@@ -81,7 +81,7 @@ export const PloggingSoloConfirmPage: FC<PloggingSoloConfirmPageProps> = ({ clas
         {selectedCategory ? (
           <SubtitleTypo>{`활동 카테고리: ${getMeetingCategoryLabel(selectedCategory)}`}</SubtitleTypo>
         ) : (
-          <SubtitleTypo>활동 카테고리를 입력해주세요.</SubtitleTypo>
+          <SubtitleTypo>어떤 활동을 할까요?</SubtitleTypo>
         )}
       </SubtitleContainer>
       {!selectedCategory && (

@@ -80,8 +80,9 @@ export const AlertContainer = styled.div`
   align-items: center;
   gap: 15px;
 
-  padding: 20px 5px;
+  padding: 20px 10px;
   padding-bottom: 5px;
+  box-sizing: border-box;
   border-radius: 8px;
 `
 

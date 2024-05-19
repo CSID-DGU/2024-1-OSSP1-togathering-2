@@ -1,4 +1,4 @@
-import { Typography } from 'antd'
+import { Select, Typography } from 'antd'
 import styled from 'styled-components'
 import { lightTheme } from 'styles/theme'
 
@@ -44,4 +44,10 @@ export const ContentContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+`
+
+export const CategorySelectContainer = styled.div``
+
+export const CategorySelect = styled(Select)`
+  width: 100%;
 `
