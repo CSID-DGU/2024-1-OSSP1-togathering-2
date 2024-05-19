@@ -22,6 +22,7 @@ import {
 import { IconCrown, IconUser } from '@tabler/icons-react'
 import { SELECTED_MEETING_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
+import dayjs from 'dayjs'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { lightTheme } from 'styles/theme'
@@ -74,10 +75,16 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
               </InfoItemContainer>
             </InfoContainer>
             <InfoContainer>
-              <InfoItemContainer>
+              <InfoItemContainer isDivided>
                 <InfoItemTitleTypo>카테고리</InfoItemTitleTypo>
                 <InfoItemContentTypo>
                   {getMeetingCategoryLabel(selectedPloggingMeetingItem.category)}
+                </InfoItemContentTypo>
+              </InfoItemContainer>
+              <InfoItemContainer isDivided>
+                <InfoItemTitleTypo>일시</InfoItemTitleTypo>
+                <InfoItemContentTypo style={{ fontSize: 12, height: 30, paddingTop: 10 }}>
+                  {dayjs(selectedPloggingMeetingItem.startAt).format('YYYY.MM.DD A HH:mm')}
                 </InfoItemContentTypo>
               </InfoItemContainer>
             </InfoContainer>
