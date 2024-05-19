@@ -71,6 +71,10 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
 
   return (
     <Root className={className}>
+      <CreateCourseButton type={'primary'} onClick={onClickCreateMeetingButton}>
+        <PlusCircleOutlined />
+        <CreateCourseButtonTypo>나만의 모임 만들기</CreateCourseButtonTypo>
+      </CreateCourseButton>
       <SortConditionContainer>
         {sortConditionList.map((sortConditionItem, index) => (
           <SortConditionChip
@@ -93,10 +97,6 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
           />
         ))}
       </CourseContainer>
-      <CreateCourseButton type={'primary'} onClick={onClickCreateMeetingButton}>
-        <PlusCircleOutlined />
-        <CreateCourseButtonTypo>나만의 모임 만들기</CreateCourseButtonTypo>
-      </CreateCourseButton>
     </Root>
   )
 }

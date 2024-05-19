@@ -51,7 +51,7 @@ export const CourseContainer = styled.div`
 `
 
 export const CreateCourseButton = styled(Button)`
-  height: 45px;
+  height: 40px;
   background: ${lightTheme.colors.primary['600']};
   display: flex;
   justify-content: center;
