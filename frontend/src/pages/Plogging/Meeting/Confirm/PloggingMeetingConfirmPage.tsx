@@ -19,13 +19,15 @@ import {
   SubtitleTypo,
 } from './styled'
 
-import { IconCrown, IconRun, IconUser } from '@tabler/icons-react'
+import { IconCrown, IconUser } from '@tabler/icons-react'
+import { SELECTED_MEETING_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { lightTheme } from 'styles/theme'
-import { MeetingListType } from 'types/meeting'
+import { LocalSelectedMeetingListType, MeetingListType } from 'types/meeting'
 import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
+import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 
 type PloggingMeetingConfirmPageProps = {
   className?: string
@@ -43,7 +45,16 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
       : null
 
   const onClickStartButton = () => {
-    navigate('/plogging/meeting/alert', { state })
+    let currentSelectedMeetingList: LocalSelectedMeetingListType =
+      typeof loadLocalStorage(SELECTED_MEETING_LIST_KEY) === 'string'
+        ? (JSON.parse(loadLocalStorage(SELECTED_MEETING_LIST_KEY) as string) as LocalSelectedMeetingListType)
+        : { selectedMeetingList: [] }
+    currentSelectedMeetingList.selectedMeetingList = [
+      ...currentSelectedMeetingList.selectedMeetingList,
+      ploggingMeetingId,
+    ]
+    saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify(currentSelectedMeetingList))
+    navigate('/plogging/meeting/scheduled')
   }
 
   return (
@@ -60,6 +71,14 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
               <InfoItemContainer>
                 <InfoItemTitleTypo>모임 이름</InfoItemTitleTypo>
                 <InfoItemContentTypo>{selectedPloggingMeetingItem.name}</InfoItemContentTypo>
+              </InfoItemContainer>
+            </InfoContainer>
+            <InfoContainer>
+              <InfoItemContainer>
+                <InfoItemTitleTypo>카테고리</InfoItemTitleTypo>
+                <InfoItemContentTypo>
+                  {getMeetingCategoryLabel(selectedPloggingMeetingItem.category)}
+                </InfoItemContentTypo>
               </InfoItemContainer>
             </InfoContainer>
             <InfoContainer>
@@ -119,8 +138,7 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
           </ContentContainer>
           <ButtonContainer>
             <StartButton type={'primary'} onClick={onClickStartButton}>
-              <IconRun />
-              <StartButtonTypo> 바로 시작하기</StartButtonTypo>
+              <StartButtonTypo> 모임 참여하기</StartButtonTypo>
             </StartButton>
           </ButtonContainer>
         </>

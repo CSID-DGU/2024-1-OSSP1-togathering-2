@@ -12,3 +12,13 @@ export type MeetingItemType = {
 }
 
 export type MeetingListType = MeetingItemType[]
+
+export type SelectedMeetingItemType = {
+  id: number
+}
+
+export type SelectedMeetingListType = SelectedMeetingItemType[]
+
+export type LocalSelectedMeetingListType = {
+  selectedMeetingList: SelectedMeetingListType
+}
