@@ -1,6 +1,10 @@
 import { Header } from 'components/Header'
 import { TabBar } from 'components/TabBar'
+import { MEETING_LIST_KEY } from 'constants/common'
+import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { FC, useEffect, useState } from 'react'
+import { LocalStorageMeetingListType, MeetingListType } from 'types/meeting'
+import { loadLocalStorage } from 'utils/handleLocalStorage'
 import { PLOGGING_COURSE_LIST_SAMPLE } from '../Course/Create/constant'
 import { NearbyMap } from './components/NearbyMap'
 import { ContentContainer, Root, SubtitleTypo, TitleContainer, TitleTypo } from './styled'
@@ -12,6 +16,7 @@ type PloggingNearbyPageProps = {
 export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) => {
   const [latitude, setLatitude] = useState<any>(null)
   const [longitude, setLongitude] = useState<any>(null)
+  const [meetingList, setMeetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
   const [error, setError] = useState<any>(null)
 
   const getLocation = () => {
@@ -32,6 +37,12 @@ export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) =
 
   useEffect(() => {
     getLocation()
+    let currentMeetingList = loadLocalStorage(MEETING_LIST_KEY)
+    if (typeof currentMeetingList === 'string') {
+      let parseMeetingList = JSON.parse(currentMeetingList) as LocalStorageMeetingListType
+      let newMeetingList = parseMeetingList.meetingList
+      setMeetingList(newMeetingList)
+    }
   }, [])
 
   const centerCoordinate =
