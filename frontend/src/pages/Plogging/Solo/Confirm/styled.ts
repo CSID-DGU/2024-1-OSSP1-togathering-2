@@ -9,6 +9,7 @@ export const Root = styled.div`
   gap: 20px;
   padding: 20px;
   padding-top: 60px;
+  padding-bottom: 80px;
   box-sizing: border-box;
 `
 
