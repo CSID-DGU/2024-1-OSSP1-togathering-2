@@ -25,6 +25,7 @@ type PloggingMeetingViewerProps = {
   onSelect?: () => void
   isSimulating?: boolean
   stopSimulate?: () => void
+  type?: 'LIST' | 'SCHEDULED'
 }
 
 let timer: any
@@ -36,6 +37,7 @@ export const PloggingMeetingViewer: FC<PloggingMeetingViewerProps> = ({
   isDetail = false,
   isSimulating = false,
   stopSimulate,
+  type = 'LIST',
 }) => {
   const [isPassedCount, setIsPassedCount] = useState<number>(0)
   const [loading, setLoading] = useState<'DONE' | 'LOADING'>('DONE')
@@ -154,10 +156,20 @@ export const PloggingMeetingViewer: FC<PloggingMeetingViewerProps> = ({
         <MenuContainer>
           <NameTypo>
             모임 이름: {meetingName} <br />
-            <MeetingInfoContainer>
-              <MeetingCategoryChip category={meetingItem.category} />
-              <NameTypo>최대 {maxCount}명</NameTypo>
-            </MeetingInfoContainer>
+            {type === 'LIST' && (
+              <MeetingInfoContainer>
+                <MeetingCategoryChip category={meetingItem.category} />
+                <NameTypo>최대 {maxCount}명</NameTypo>
+              </MeetingInfoContainer>
+            )}
+            {type === 'SCHEDULED' && (
+              <MeetingInfoContainer>
+                <MeetingCategoryChip category={meetingItem.category} />
+                <NameTypo>
+                  {Math.floor(Math.random() * 11) + 1}시간 {Math.floor(Math.random() * 60)}분 후 시작 예정
+                </NameTypo>
+              </MeetingInfoContainer>
+            )}
           </NameTypo>
           {onSelect && (
             <SelectButton type={'primary'} onClick={onSelect}>

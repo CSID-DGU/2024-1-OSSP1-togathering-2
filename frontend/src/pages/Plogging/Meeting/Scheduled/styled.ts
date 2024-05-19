@@ -60,3 +60,10 @@ export const ContentButtonTypo = styled(Typography)`
     font-size: 16px;
   }
 `
+
+export const PloggingMeetingViewerContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`
