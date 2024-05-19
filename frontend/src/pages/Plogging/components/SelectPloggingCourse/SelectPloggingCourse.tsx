@@ -159,6 +159,10 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
 
   return (
     <Root className={className}>
+      <CreateCourseButton type={'primary'} onClick={onClickCreateCourseButton}>
+        <PlusCircleOutlined />
+        <CreateCourseButtonTypo>나만의 코스 만들기</CreateCourseButtonTypo>
+      </CreateCourseButton>
       <SortConditionContainer>
         {sortConditionList.map((sortConditionItem, index) => (
           <SortConditionChip
@@ -270,10 +274,6 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
               </QuestionItemButtonContainer>
             </QuestionItemContainer>
           </QuestionContainer>
-          <CreateCourseButton type={'primary'} onClick={onClickCreateCourseButton}>
-            <PlusCircleOutlined />
-            <CreateCourseButtonTypo>나만의 코스 만들기</CreateCourseButtonTypo>
-          </CreateCourseButton>
         </>
       )}
     </Root>
