@@ -1,5 +1,5 @@
 import { IconSparkles, IconStarFilled, IconTrash } from '@tabler/icons-react'
-import { Button, Typography } from 'antd'
+import { Button, Input, Typography } from 'antd'
 import styled from 'styled-components'
 import { lightTheme } from 'styles/theme'
 
@@ -62,6 +62,29 @@ export const CreateCourseButtonTypo = styled(Typography)`
   font-size: 16px;
   font-weight: 500;
   color: ${lightTheme.colors.base['50']};
+`
+
+export const SearchInput = styled(Input)``
+
+export const SearchButton = styled(Button)`
+  height: 40px;
+  background: ${lightTheme.colors.primary['600']};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+`
+
+export const SearchButtonTypo = styled(Typography)`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${lightTheme.colors.base['50']};
+`
+
+export const ResultNotFoundTypo = styled(Typography)`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${lightTheme.colors.base['700']};
 `
 
 export const AIContainer = styled.div`

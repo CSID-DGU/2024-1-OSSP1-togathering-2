@@ -122,7 +122,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
       <SortConditionContainer>
         <SortConditionChip isSelected={isSearchAvailable} onClick={onClickSearchChip}>
           <IconSearch size={12} color={!isSearchAvailable ? lightTheme.colors.base['700'] : 'white'} />
-          <SortConditionChipTypo isSelected={isSearchAvailable}>검색하기</SortConditionChipTypo>
+          <SortConditionChipTypo isSelected={isSearchAvailable}>검색</SortConditionChipTypo>
         </SortConditionChip>
         {sortConditionList.map((sortConditionItem, index) => (
           <SortConditionChip

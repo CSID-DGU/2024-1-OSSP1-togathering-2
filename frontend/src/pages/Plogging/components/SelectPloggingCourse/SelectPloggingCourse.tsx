@@ -1,7 +1,8 @@
 import { LoadingOutlined, PlusCircleOutlined } from '@ant-design/icons'
-import { IconThumbDown, IconThumbUp } from '@tabler/icons-react'
+import { IconSearch, IconThumbDown, IconThumbUp } from '@tabler/icons-react'
 import { Spin } from 'antd'
 import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
+import { useBooleanState } from 'hooks/useBooleanState'
 import { PloggingCourseViewer } from 'pages/Plogging/Course/Create/components/PloggingCourseViewer'
 import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
 import { FC, useEffect, useState } from 'react'
@@ -30,7 +31,11 @@ import {
   QuestionItemButtonTypo,
   QuestionItemContainer,
   QuestionItemTitleTypo,
+  ResultNotFoundTypo,
   Root,
+  SearchButton,
+  SearchButtonTypo,
+  SearchInput,
   SortConditionChip,
   SortConditionChipIconSparkles,
   SortConditionChipTypo,
@@ -89,11 +94,41 @@ const DEFAULT_SELECT_LIST = [
 
 export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className, onSelectPloggingCourse }) => {
   const navigate = useNavigate()
+  const { state: isSearchAvailable, setTrue: openSearch, setFalse: closeSearch } = useBooleanState(false)
+  const [searchKeyword, setSearchKeyword] = useState<string>('')
+  const {
+    state: isSearchResultAvailable,
+    setTrue: showSearchResult,
+    setFalse: closeSearchResult,
+  } = useBooleanState(false)
   const [selectList, setSelectList] = useState<typeof DEFAULT_SELECT_LIST>(DEFAULT_SELECT_LIST)
   const [loading, setLoading] = useState<'NONE' | 'LOADING' | 'DONE'>('NONE')
   const [sortConditionIndex, setSortConditionIndex] = useState(1)
   const [courseList, setCourseList] = useState<CourseListType>([])
   const [isSatisfied, setIsSatisfied] = useState<boolean>()
+
+  const onClickSearchChip = () => {
+    openSearch()
+  }
+
+  const onChangeSearch = (e: any) => {
+    setSearchKeyword(e.target.value)
+    closeSearchResult()
+  }
+
+  const onKeyPressEnter = (e: any) => {
+    if (e.key === 'Enter') {
+      onClickSearchButton()
+    }
+  }
+
+  const onClickSearchButton = () => {
+    if (searchKeyword.length < 2) {
+      alert('두 글자 이상 입력해주세요!')
+      return
+    }
+    showSearchResult()
+  }
 
   const onClickSelectList = (id: number, id2: number) => () => {
     setSelectList((prev) =>
@@ -112,6 +147,9 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
   }
 
   const onClickSortConditionButton = (id: number) => () => {
+    closeSearch()
+    closeSearchResult()
+    setSearchKeyword('')
     setSortConditionIndex((prev) => {
       if (prev === 0 && id !== 0) {
         setLoading('NONE')
@@ -149,11 +187,15 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
 
   const washedCourseList = (() => {
     let newCourseList: CourseListType = []
-    sortConditionList[sortConditionIndex].indexList.forEach((value) => {
-      if (value <= courseList.length) {
-        newCourseList.push(courseList[value - 1])
-      }
-    })
+    if (!isSearchResultAvailable) {
+      sortConditionList[sortConditionIndex].indexList.forEach((value) => {
+        if (value <= courseList.length) {
+          newCourseList.push(courseList[value - 1])
+        }
+      })
+      return newCourseList
+    }
+    newCourseList = courseList.filter((courseItem) => courseItem?.name && courseItem.name.indexOf(searchKeyword) !== -1)
     return newCourseList
   })()
 
@@ -164,20 +206,29 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
         <CreateCourseButtonTypo>나만의 코스 만들기</CreateCourseButtonTypo>
       </CreateCourseButton>
       <SortConditionContainer>
+        <SortConditionChip isSelected={isSearchAvailable} onClick={onClickSearchChip}>
+          <IconSearch size={12} color={!isSearchAvailable ? lightTheme.colors.base['700'] : 'white'} />
+          <SortConditionChipTypo isSelected={isSearchAvailable}>검색</SortConditionChipTypo>
+        </SortConditionChip>
         {sortConditionList.map((sortConditionItem, index) => (
           <SortConditionChip
-            isSelected={sortConditionIndex === index}
+            isSelected={sortConditionIndex === index && !isSearchAvailable}
             key={`sort_condition_${index}`}
             onClick={onClickSortConditionButton(index)}
           >
-            {index === 0 && <SortConditionChipIconSparkles size={16} isSelected={sortConditionIndex === index} />}
-            <SortConditionChipTypo isSelected={sortConditionIndex === index}>
+            {index === 0 && (
+              <SortConditionChipIconSparkles
+                size={16}
+                isSelected={sortConditionIndex === index && !isSearchAvailable}
+              />
+            )}
+            <SortConditionChipTypo isSelected={sortConditionIndex === index && !isSearchAvailable}>
               {sortConditionItem.label}
             </SortConditionChipTypo>
           </SortConditionChip>
         ))}
       </SortConditionContainer>
-      {sortConditionIndex !== 0 && (
+      {sortConditionIndex !== 0 && !isSearchAvailable && (
         <>
           <CourseContainer>
             {washedCourseList.map((courseItem) => (
@@ -194,7 +245,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
           </CreateCourseButton>
         </>
       )}
-      {sortConditionIndex === 0 && loading === 'NONE' && (
+      {sortConditionIndex === 0 && loading === 'NONE' && !isSearchAvailable && (
         <AIContainer>
           <AITitleTypo>AI 입맛대로 맞추기</AITitleTypo>
           <AIQuestionContainer>
@@ -276,6 +327,34 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
           </QuestionContainer>
         </>
       )}
+      <CourseContainer>
+        {isSearchAvailable && (
+          <>
+            <SearchInput
+              placeholder="검색어를 입력해주세요."
+              value={searchKeyword}
+              onChange={onChangeSearch}
+              onKeyDown={onKeyPressEnter}
+            />
+            <SearchButton type={'primary'} onClick={onClickSearchButton}>
+              <IconSearch size={16} />
+              <SearchButtonTypo>이 키워드로 검색하기</SearchButtonTypo>
+            </SearchButton>
+            {isSearchResultAvailable &&
+              (washedCourseList.length > 0 ? (
+                washedCourseList.map((courseItem) => (
+                  <PloggingCourseViewer
+                    courseItem={courseItem}
+                    onSelect={onClickSelectPloggingCourseButton(courseItem.id)}
+                    key={`plogging_course_viewer_${courseItem.id}`}
+                  />
+                ))
+              ) : (
+                <ResultNotFoundTypo>검색 결과가 존재하지 않습니다...</ResultNotFoundTypo>
+              ))}
+          </>
+        )}
+      </CourseContainer>
     </Root>
   )
 }
