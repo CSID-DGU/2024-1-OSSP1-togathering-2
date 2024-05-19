@@ -13,6 +13,10 @@ export type MeetingItemType = {
 
 export type MeetingListType = MeetingItemType[]
 
+export type LocalStorageMeetingListType = {
+  meetingList: MeetingListType
+}
+
 export type SelectedMeetingItemType = {
   id: number
 }

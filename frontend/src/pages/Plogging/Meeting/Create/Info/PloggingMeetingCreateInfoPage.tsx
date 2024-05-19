@@ -1,12 +1,13 @@
 import { Header } from 'components/Header'
-import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
+import { MEETING_LIST_KEY, PLOGGING_COURSE_LIST_KEY, SELECTED_MEETING_LIST_KEY } from 'constants/common'
+import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
 import { FC, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { MeetingCategoryType } from 'types/meeting'
+import { LocalSelectedMeetingListType, LocalStorageMeetingListType, MeetingCategoryType } from 'types/meeting'
 import { CourseListType } from 'types/plogging'
 import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
-import { loadLocalStorage } from 'utils/handleLocalStorage'
+import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 import { Step2Section } from './components/Step2Section'
 import { Step3Section } from './components/Step3Section'
 import {
@@ -74,7 +75,86 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
   }
 
   const onSaveStep3 = () => {
-    navigate(-2)
+    if (!selectedPloggingCourseItem) {
+      alert('코스 인식에 실패했습니다.')
+      return
+    }
+    if (!selectedCategory) {
+      alert('카테고리가 입력되지 않았습니다.')
+      return
+    }
+    if (step3Name.length < 2) {
+      alert('모임 이름은 2글자 이상 입력해주세요')
+      return
+    }
+
+    let currentMeetingList = loadLocalStorage(MEETING_LIST_KEY)
+    if (typeof currentMeetingList === 'string') {
+      let parsedMeetingList = JSON.parse(currentMeetingList) as LocalStorageMeetingListType
+      let maxId = 0
+      parsedMeetingList.meetingList.forEach((value) => {
+        if (maxId < value.id) {
+          maxId = value.id
+        }
+      })
+      maxId = maxId + 1
+      parsedMeetingList.meetingList = [
+        {
+          id: maxId,
+          courseItem: selectedPloggingCourseItem,
+          createdAt: '2024-05-19T15:53:00',
+          maxCount: step2Count,
+          name: step3Name,
+          category: selectedCategory,
+        },
+        ...parsedMeetingList.meetingList,
+      ]
+      saveLocalStorage(MEETING_LIST_KEY, JSON.stringify(parsedMeetingList))
+
+      let currentMeetingIdList = loadLocalStorage(SELECTED_MEETING_LIST_KEY)
+      if (typeof currentMeetingIdList === 'string') {
+        let parsedMeetingIdList: LocalSelectedMeetingListType = JSON.parse(
+          currentMeetingIdList
+        ) as LocalSelectedMeetingListType
+        parsedMeetingIdList.selectedMeetingList = [{ id: maxId }, ...parsedMeetingIdList.selectedMeetingList]
+        saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify(parsedMeetingIdList))
+      } else {
+        saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify({ selectedMeetingList: [{ id: maxId }] }))
+      }
+
+      navigate('/plogging/meeting/scheduled')
+      return
+    }
+
+    let maxId = 35
+
+    let parsedMeetingList = {
+      meetingList: [
+        {
+          id: maxId,
+          courseItem: selectedPloggingCourseItem,
+          createdAt: '2024-05-19T15:53:00',
+          maxCount: step2Count,
+          name: step3Name,
+          category: selectedCategory,
+        },
+        ...ALL_MEETING_LIST_SAMPLE,
+      ],
+    }
+    saveLocalStorage(MEETING_LIST_KEY, JSON.stringify(parsedMeetingList))
+
+    let currentMeetingIdList = loadLocalStorage(SELECTED_MEETING_LIST_KEY)
+    if (typeof currentMeetingIdList === 'string') {
+      let parsedMeetingIdList: LocalSelectedMeetingListType = JSON.parse(
+        currentMeetingIdList
+      ) as LocalSelectedMeetingListType
+      parsedMeetingIdList.selectedMeetingList = [{ id: maxId }, ...parsedMeetingIdList.selectedMeetingList]
+      saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify(parsedMeetingIdList))
+    } else {
+      saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify({ selectedMeetingList: [{ id: maxId }] }))
+    }
+
+    navigate('/plogging/meeting/scheduled')
     return
   }
 
