@@ -31,6 +31,16 @@ spring:
   mvc:
     path match:
       matching-strategy: ant_path_matcher
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope: ${GOOGLE_SCOPE}
+            authorization-grant-type: ${GOOGLE_AUTHORIZATION_GRANT_TYPE}
+            redirect-uri: ${GOOGLE_REDIRECT_URI}
 
 
 logging:
