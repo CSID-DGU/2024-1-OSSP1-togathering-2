@@ -16,10 +16,10 @@ spring:
     remote:
       secret: mysecret
   datasource:
-    url: jdbc:mysql://opensw.chom8scy20q0.ap-northeast-2.rds.amazonaws.com
-    username: root
-    password: plogging2021112828
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER}
   jpa:
     open-in-view: true
     hibernate:
