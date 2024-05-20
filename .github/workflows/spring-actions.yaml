@@ -44,9 +44,10 @@ jobs:
           echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
       ## 이미지 빌드 및 도커허브에 push ..
+      - name: Login to Docker Hub
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - name: backend docker build and push
         run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile.prod -t ${{ secrets.DOCKER_REPO }}/togethering:1.0 .
           docker push ${{ secrets.DOCKER_REPO }}/togethering:1.0
         working-directory: ${{ secrets.WORKING_BACKEND }}
@@ -83,7 +84,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.KEY }}
           script: |
-            sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            echo ${{ secrets.DOCKER_PASSWORD }} | sudo docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
             if [ "$(docker ps -qa)" ]; then
               sudo docker rm -f $(docker ps -qa)
             fi
