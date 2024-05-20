@@ -43,7 +43,7 @@ jobs:
           echo DB_DRIVER=${{ secrets.DB_DRIVER }} >> .env
           echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
-      ## 이미지 빌드 및 도커허브에 push
+      ## 이미지 빌드 및 도커허브에 push ..
       - name: backend docker build and push
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
@@ -83,6 +83,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.KEY }}
           script: |
+            sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             if [ "$(docker ps -qa)" ]; then
               sudo docker rm -f $(docker ps -qa)
             fi
