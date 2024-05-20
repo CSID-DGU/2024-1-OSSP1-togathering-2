@@ -41,10 +41,10 @@ tasks.named('test') {
 
 // 이 설정은 devtools를 다시 패키징하지 않도록 합니다.
 bootJar {
-	enabled = false
+	enabled = true
 }
 jar {
-	enabled = false
+	enabled = true
 }
 
 test {
