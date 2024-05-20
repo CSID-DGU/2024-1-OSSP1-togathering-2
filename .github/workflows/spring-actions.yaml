@@ -28,6 +28,7 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
+        working-directory: ${{ secrets.WORKING_BACKEND }}
       - name: Build with Gradle
         run: ./gradlew clean build -x test
         working-directory: ${{ secrets.WORKING_BACKEND }}
