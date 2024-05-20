@@ -11,7 +11,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: bianbbc87/togethering-nging:latest
+    image: bianbbc87/togethering-nginx:latest
     restart: unless-stopped
     ports:
       - 80:80
