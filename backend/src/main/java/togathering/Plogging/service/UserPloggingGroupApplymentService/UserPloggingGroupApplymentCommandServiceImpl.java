@@ -14,7 +14,7 @@ import togathering.Plogging.domain.enums.PloggingGroupStatus;
 import togathering.Plogging.repository.PloggingCourseRepository.PloggingCourseRepository;
 import togathering.Plogging.repository.PloggingGroupRepository.PloggingGroupRepository;
 import togathering.Plogging.repository.UserPloggingGroupApplymentRepository.UserPloggingGroupApplymentRepository;
-import togathering.Plogging.repository.UserRepository.UserRepository;
+import togathering.Plogging.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
