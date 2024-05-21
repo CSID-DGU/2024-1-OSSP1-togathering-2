@@ -26,10 +26,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	testImplementation 'org.springframework.security:spring-security-test'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
@@ -41,12 +47,19 @@ tasks.named('test') {
 
 // 이 설정은 devtools를 다시 패키징하지 않도록 합니다.
 bootJar {
-	enabled = false
+	enabled = true
 }
 jar {
-	enabled = false
+	enabled = true
 }
 
 test {
 	exclude '**/*Tests.java'
 }
+
+//docker-compose -f docker-compose-dev.yml up -d
+//docker-compose -f docker-compose-dev.yml down
+
+//docker stop $(docker ps -a -q)
+//docker rm $(docker ps -a -q)
+//docker rmi $(docker images -a -q)

@@ -1,0 +1,96 @@
+name: spring-actions
+on:
+  push:
+    branches: [ "backend" ]
+  pull_request:
+    branches: [ "backend" ]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'corretto'
+      ## gradle caching push
+      - name: Gradle Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+        working-directory: ${{ secrets.WORKING_BACKEND }}
+      - name: Build with Gradle
+        run: ./gradlew clean build -x test
+        working-directory: ${{ secrets.WORKING_BACKEND }}
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_DRIVER: ${{ secrets.DB_DRIVER }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      - name: Create env file
+        run: |
+          echo DB_URL=${{ secrets.DB_URL }} >> .env
+          echo DB_DRIVER=${{ secrets.DB_DRIVER }} >> .env
+          echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+      ## 이미지 빌드 및 도커허브에 push ..
+      - name: Login to Docker Hub
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: backend docker build and push
+        run: |
+          docker build -f Dockerfile.prod -t ${{ secrets.DOCKER_REPO }}/togethering:1.0 .
+          docker push ${{ secrets.DOCKER_REPO }}/togethering:1.0
+        working-directory: ${{ secrets.WORKING_BACKEND }}
+      - name: nginx docker build and push
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/togethering-nginx:latest .
+          docker push ${{ secrets.DOCKER_REPO }}/togethering-nginx:latest
+        working-directory: ${{ secrets.WORKING_NGINX }}
+      - name: Copy docker-compose.yml to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          source: "/github/workspace/docker-compose.yml"
+          target: "/home/ubuntu/"
+
+      - name: Copy .env to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          source: "/github/workspace/.env"
+          target: "/home/ubuntu/"
+      ## docker compose up
+      # HOST : 인스턴스 주소
+      # KEY : rsa - 전부 복사, % 제외
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          script: |
+            echo ${{ secrets.DOCKER_PASSWORD }} | sudo docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+            if [ "$(docker ps -qa)" ]; then
+              sudo docker rm -f $(docker ps -qa)
+            fi
+            
+            sudo docker pull ${{ secrets.DOCKER_REPO }}/togethering:1.0
+            sudo docker pull ${{ secrets.DOCKER_REPO }}/togethering-nginx:latest
+            
+            docker-compose -f /home/ubuntu/github/workspace/docker-compose.yml up -d
+            docker image prune -f
