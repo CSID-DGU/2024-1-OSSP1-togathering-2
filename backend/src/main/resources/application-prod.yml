@@ -51,5 +51,7 @@ logging:
   level:
     "[com.example.server]": INFO
     "[org.hibernate.type]": TRACE
+jwt:
+  secret: ${JWT_SECRET}
 greeting:
   message: this is prod application.yml
