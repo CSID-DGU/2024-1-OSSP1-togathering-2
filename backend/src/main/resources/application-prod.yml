@@ -52,4 +52,4 @@ logging:
     "[com.example.server]": INFO
     "[org.hibernate.type]": TRACE
 greeting:
-  message: this is dev application.yml
+  message: this is prod application.yml
