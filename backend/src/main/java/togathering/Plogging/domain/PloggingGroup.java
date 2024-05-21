@@ -11,6 +11,7 @@ import togathering.Plogging.domain.mapping.PloggingGroupReview;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,6 +32,9 @@ public class PloggingGroup extends BaseEntity {
     private PloggingCourse ploggingCourse;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String address;
 
     @Column(nullable = false)
@@ -48,4 +52,5 @@ public class PloggingGroup extends BaseEntity {
 
     @OneToMany(mappedBy = "ploggingGroup", cascade = CascadeType.ALL)
     private List<PloggingGroupPicture> ploggingGroupPictures;
+
 }
