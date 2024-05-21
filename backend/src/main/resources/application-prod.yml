@@ -16,10 +16,6 @@ spring:
     remote:
       secret: mysecret
 
-  redis:
-    host: localhost
-    port: 6379
-
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}

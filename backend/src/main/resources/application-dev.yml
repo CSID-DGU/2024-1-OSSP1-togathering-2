@@ -22,6 +22,7 @@ spring:
     driver-class-name: ${SPRING_DATASOURCE_DRIVER}
   jpa:
     open-in-view: true
+    generate-ddl: true
     hibernate:
       ddl-auto: update
     show-sql: true
