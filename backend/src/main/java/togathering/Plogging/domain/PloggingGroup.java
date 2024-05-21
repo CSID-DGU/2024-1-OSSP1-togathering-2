@@ -28,7 +28,7 @@ public class PloggingGroup extends BaseEntity {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "plogging_course_id")
     private PloggingCourse ploggingCourse;
 
     @Column(nullable = false)
