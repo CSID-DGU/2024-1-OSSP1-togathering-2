@@ -11,7 +11,7 @@ type CourseCardProps = {
 }
 
 export const CourseCard: FC<CourseCardProps> = ({ className, courseItem }) => {
-  const name = courseItem.name ?? '요즘 뜨는 플로깅 코스'
+  const name = courseItem.name ?? '요즘 뜨는 코스'
 
   return (
     <Root

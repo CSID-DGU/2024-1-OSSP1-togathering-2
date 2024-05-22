@@ -86,7 +86,7 @@ export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps>
           </>
         )}
         <LinkButton type={'primary'} onClick={onClickMeetingListPage}>
-          <LinkButtonTypo>플로깅 모임 보러가기</LinkButtonTypo>
+          <LinkButtonTypo>모임 보러가기</LinkButtonTypo>
         </LinkButton>
       </ContentContainer>
       <TabBar />

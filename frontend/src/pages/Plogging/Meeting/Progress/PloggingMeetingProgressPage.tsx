@@ -101,7 +101,7 @@ export const PloggingMeetingProgressPage: FC<PloggingMeetingProgressPageProps> =
             </ImageUploadButton>
             <StopButton onClick={onClickButtonPloggingDone}>
               <IconCheck />
-              <StopButtonTypo>플로깅 완료하기</StopButtonTypo>
+              <StopButtonTypo>완료하기</StopButtonTypo>
             </StopButton>
           </ButtonContainer>
         </ContentContainer>
