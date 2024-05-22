@@ -35,11 +35,11 @@ export const PloggingCourseListPage: FC<PloggingCourseListPageProps> = ({ classN
   return (
     <Root className={className}>
       <TitleContainer>
-        <TitleTypo>플로깅 코스 추천받기</TitleTypo>
+        <TitleTypo>코스 추천받기</TitleTypo>
       </TitleContainer>
       <ContentButtonContainer>
         <ContentButton type={'primary'} onClick={onClickButtonPlogginCourseCreate}>
-          플로깅 코스 만들기
+          코스 만들기
         </ContentButton>
       </ContentButtonContainer>
       <CourseContainer>
