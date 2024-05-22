@@ -249,7 +249,7 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
               <SubtitleCircleTypo>4</SubtitleCircleTypo>
             </SubtitleCircle>
             {step === '4' && <SubtitleTypo>모임은 언제 시작할까요?</SubtitleTypo>}
-            {step !== '4' && <SubtitleTypo>{`일시: ${dayjs(startAt).format('YYYY.MM.DD A HH:mm')}`}</SubtitleTypo>}
+            {step !== '4' && <SubtitleTypo>{`일시: ${dayjs(startAt).format('YYYY.MM.DD A hh:mm')}`}</SubtitleTypo>}
           </SubtitleContainer>
           {step === '4' && (
             <ContentContainer>
