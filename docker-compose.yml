@@ -19,6 +19,8 @@ services:
       GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI}
       GOOGLE_AUTHORIZATION_GRANT_TYPE: ${GOOGLE_AUTHORIZATION_GRANT_TYPE}
       GOOGLE_SCOPE: profile,email
+    networks:
+      - my-network
 
 
   nginx:
@@ -28,16 +30,23 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./github/workspace/nginx/conf.d:/etc/nginx/conf.d
-      - ./github/workspace/nginx/html:/etc/nginx/html
-      - ./github/workspace/data/certbot/conf:/etc/letsencrypt
-      - ./github/workspace/data/certbot/www:/var/www/certbot
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/html:/etc/nginx/html
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     depends_on:
       - "backend"
+    networks:
+      - my-network
 
   certbot:
     image: certbot/certbot
     restart: unless-stopped
     volumes:
-      - ./github/workspace/data/certbot/conf:/etc/letsencrypt
-      - ./github/workspace/data/certbot/www:/var/www/certbot
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    networks:
+      - my-network
+
+networks:
+  my-network:
