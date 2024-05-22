@@ -28,10 +28,10 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/html:/etc/nginx/html
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
+      - ./github/workspace/nginx/conf.d:/etc/nginx/conf.d
+      - ./github/workspace/nginx/html:/etc/nginx/html
+      - ./github/workspace/data/certbot/conf:/etc/letsencrypt
+      - ./github/workspace/data/certbot/www:/var/www/certbot
     depends_on:
       - "backend"
 
@@ -39,5 +39,5 @@ services:
     image: certbot/certbot
     restart: unless-stopped
     volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
+      - ./github/workspace/data/certbot/conf:/etc/letsencrypt
+      - ./github/workspace/data/certbot/www:/var/www/certbot
