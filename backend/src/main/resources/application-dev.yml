@@ -49,7 +49,7 @@ logging:
     "[com.example.server]": INFO
     "[org.hibernate.type]": TRACE
 jwt:
-  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  secret: ${JWT_SECRET}
 
 greeting:
   message: this is dev application.yml
