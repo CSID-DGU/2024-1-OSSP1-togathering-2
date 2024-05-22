@@ -72,11 +72,12 @@ export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps>
         {meetingList.length > 0 ? (
           <PloggingMeetingViewerContainer>
             {meetingList.map((meetingItem) => (
-              <PloggingMeetingViewerWrapper
-                onClick={onClickMeetingViewer(meetingItem.id, meetingItem.category)}
-                key={`plogging_meeting_viewer_${meetingItem.id}`}
-              >
-                <PloggingMeetingViewer type={'SCHEDULED'} meetingItem={meetingItem} />
+              <PloggingMeetingViewerWrapper key={`plogging_meeting_viewer_${meetingItem.id}`}>
+                <PloggingMeetingViewer
+                  type={'SCHEDULED'}
+                  meetingItem={meetingItem}
+                  onStart={onClickMeetingViewer(meetingItem.id, meetingItem.category)}
+                />
               </PloggingMeetingViewerWrapper>
             ))}
           </PloggingMeetingViewerContainer>
