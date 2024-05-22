@@ -25,6 +25,7 @@ type PloggingMeetingViewerProps = {
   meetingItem: MeetingItemType
   isDetail?: boolean
   onSelect?: () => void
+  onStart?: () => void
   isSimulating?: boolean
   stopSimulate?: () => void
   type?: 'LIST' | 'SCHEDULED'
@@ -36,6 +37,7 @@ export const PloggingMeetingViewer: FC<PloggingMeetingViewerProps> = ({
   className,
   meetingItem,
   onSelect,
+  onStart,
   isDetail = false,
   isSimulating = false,
   stopSimulate,
@@ -172,6 +174,11 @@ export const PloggingMeetingViewer: FC<PloggingMeetingViewerProps> = ({
           {onSelect && (
             <SelectButton type={'primary'} onClick={onSelect}>
               <SelectButtonTypo>모임 선택</SelectButtonTypo>
+            </SelectButton>
+          )}
+          {onStart && (
+            <SelectButton type={'primary'} onClick={onStart}>
+              <SelectButtonTypo>모임 시작</SelectButtonTypo>
             </SelectButton>
           )}
         </MenuContainer>
