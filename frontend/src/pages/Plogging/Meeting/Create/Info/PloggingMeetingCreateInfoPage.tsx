@@ -257,7 +257,7 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
                 placeholder="날짜와 시간을 정해주세요."
                 showTime
                 format={{
-                  format: 'YYYY-MM-DDTHH:mm:ss',
+                  format: 'YYYY-MM-DDThh:mm:ss',
                   type: 'mask',
                 }}
                 onChange={(_: any, dateString: any) => setStartAt(dayjs(dateString).format('YYYY-MM-DDTHH:mm'))}
