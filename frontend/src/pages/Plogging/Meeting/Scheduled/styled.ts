@@ -68,9 +68,7 @@ export const PloggingMeetingViewerContainer = styled.div`
   gap: 20px;
 `
 
-export const PloggingMeetingViewerWrapper = styled.div`
-  cursor: pointer;
-`
+export const PloggingMeetingViewerWrapper = styled.div``
 
 export const NotFoundTypo = styled(Typography)`
   &&& {
