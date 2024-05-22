@@ -33,10 +33,10 @@ jobs:
         run: ./gradlew clean build -x test
         working-directory: ${{ secrets.WORKING_BACKEND }}
         env:
-          DB_URL: ${{ secrets.DB_URL }}
-          DB_DRIVER: ${{ secrets.DB_DRIVER }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          SPRING_DATASOURCE_URL: ${{ secrets.DB_URL }}
+          SPRING_DATASOURCE_DRIVER: ${{ secrets.DB_DRIVER }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           GOOGLE_CLIENT_NAME: ${{ secrets.GOOGLE_CLIENT_NAME }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
@@ -46,10 +46,10 @@ jobs:
           GOOGLE_SCOPE: ${{ secrets.GOOGLE_SCOPE }}
       - name: Create env file
         run: |
-          echo DB_URL=${{ secrets.DB_URL }} >> .env
-          echo DB_DRIVER=${{ secrets.DB_DRIVER }} >> .env
-          echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
-          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+          echo SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} >> .env
+          echo SPRING_DATASOURCE_DRIVER=${{ secrets.DB_DRIVER }} >> .env
+          echo SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} >> .env
+          echo SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
           echo GOOGLE_CLIENT_NAME=${{ secrets.GOOGLE_CLIENT_NAME }} >> .env
           echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> .env
