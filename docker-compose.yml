@@ -28,8 +28,8 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/html:/etc/nginx/html
+      - /home/ubuntu/github/workspace/nginx/conf.d:/etc/nginx/conf.d
+      - /home/ubuntu/github/workspace/nginx/html:/etc/nginx/html
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     depends_on:
