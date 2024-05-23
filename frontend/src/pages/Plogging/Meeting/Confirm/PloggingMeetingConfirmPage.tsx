@@ -1,5 +1,5 @@
 import { Header } from 'components/Header'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import {
   ButtonContainer,
   ContentContainer,
@@ -20,13 +20,14 @@ import {
 } from './styled'
 
 import { IconCrown, IconUser } from '@tabler/icons-react'
-import { SELECTED_MEETING_LIST_KEY } from 'constants/common'
+import { MEETING_LIST_KEY, SELECTED_MEETING_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import dayjs from 'dayjs'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { lightTheme } from 'styles/theme'
 import { LocalSelectedMeetingListType, MeetingListType } from 'types/meeting'
+import { getTotalDistance, getTotalDuration } from 'utils/getCourseItemInfo'
 import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
 import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 
@@ -38,7 +39,7 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
   const { state } = useLocation()
   const { ploggingMeetingId, selectedCategory } = state
   const navigate = useNavigate()
-  const [meetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
+  const [meetingList, setMeetingList] = useState<MeetingListType>([])
 
   const selectedPloggingMeetingItem =
     meetingList.filter((meetingItem) => meetingItem.id === ploggingMeetingId).length > 0
@@ -58,13 +59,36 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
     navigate('/plogging/meeting/scheduled')
   }
 
+  useEffect(() => {
+    let newMeetingList = loadLocalStorage(MEETING_LIST_KEY)
+    if (newMeetingList) {
+      if (meetingList.length === 0) {
+        setMeetingList(JSON.parse(newMeetingList).meetingList)
+      }
+    } else {
+      setMeetingList(ALL_MEETING_LIST_SAMPLE)
+    }
+  }, [meetingList, setMeetingList])
+
+  if (!selectedPloggingMeetingItem) {
+    return <span />
+  }
+
+  let totalDistance = selectedPloggingMeetingItem
+    ? getTotalDistance(selectedPloggingMeetingItem.courseItem.coordinateList)
+    : null
+  let totalDuration =
+    selectedPloggingMeetingItem && selectedCategory && totalDistance
+      ? getTotalDuration(selectedCategory, totalDistance)
+      : null
+
   return (
     <Root className={className}>
       <Header title={'함께하기'} showBackButton />
       <SubtitleContainer>
         <SubtitleTypo>{`${getMeetingCategoryLabel(selectedCategory)} 모임 정보를 확인해주세요.`}</SubtitleTypo>
       </SubtitleContainer>
-      {selectedPloggingMeetingItem && (
+      {selectedPloggingMeetingItem && totalDistance && totalDuration && (
         <>
           <PloggingMeetingViewer isDetail={true} meetingItem={selectedPloggingMeetingItem} />
           <ContentContainer>
@@ -91,11 +115,15 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
             <InfoContainer>
               <InfoItemContainer isDivided>
                 <InfoItemTitleTypo>총 거리</InfoItemTitleTypo>
-                <InfoItemContentTypo>1,000m</InfoItemContentTypo>
+                <InfoItemContentTypo>{`약 ${totalDistance}m`}</InfoItemContentTypo>
               </InfoItemContainer>
               <InfoItemContainer isDivided>
                 <InfoItemTitleTypo>예상 소요 시간</InfoItemTitleTypo>
-                <InfoItemContentTypo>12분</InfoItemContentTypo>
+                <InfoItemContentTypo>
+                  {totalDuration.minute === 0
+                    ? `${totalDuration.second}초`
+                    : `${totalDuration.minute}분 ${totalDuration.second}초`}
+                </InfoItemContentTypo>
               </InfoItemContainer>
             </InfoContainer>
             <InfoContainer>
@@ -105,7 +133,7 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
               </InfoItemContainer>
               <InfoItemContainer isDivided>
                 <InfoItemTitleTypo>완주시 얻게 되는 점수</InfoItemTitleTypo>
-                <InfoItemContentTypo>24점</InfoItemContentTypo>
+                <InfoItemContentTypo>{totalDuration.minute * 2}점</InfoItemContentTypo>
               </InfoItemContainer>
             </InfoContainer>
             <InfoContainer>
