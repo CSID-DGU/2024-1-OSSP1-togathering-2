@@ -13,7 +13,7 @@ export const getTotalDistance = (coordinates: CoordinateItemType[]) => {
     totalDistance += getCoordinatesDistance(coordinates[i], coordinates[i + 1])
   }
 
-  return totalDistance
+  return Math.floor(totalDistance)
 }
 
 export const getTotalDuration = (type: MeetingCategoryType, distance: number) => {
@@ -35,7 +35,7 @@ export const getTotalDuration = (type: MeetingCategoryType, distance: number) =>
   }
 
   const duration = distance / speed // 총 시간 (초)
-  return Math.floor(duration / 60)
+  return { minute: Math.floor(duration / 60), second: Math.floor(duration % 60) }
 }
 
 export const getCourseItemInfo = (type: MeetingCategoryType, coordinates: CoordinateItemType[]) => {

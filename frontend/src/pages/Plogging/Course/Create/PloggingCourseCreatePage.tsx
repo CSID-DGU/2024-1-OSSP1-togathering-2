@@ -115,7 +115,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
       let newPloggingCourseList: LocalStorageCourseListType = {
         courseList: [
           {
-            id: 0,
+            id: PLOGGING_COURSE_LIST_SAMPLE.courseList.length,
             name: courseName,
             coordinateList: newCoordinateList,
           },
@@ -129,6 +129,10 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
   }
 
   const onClickSubmitStep1Button = () => {
+    if (courseName.length < 2) {
+      alert('코스 이름은 2글자 이상 입력해주세요.')
+      return
+    }
     setStep('2')
     return
   }
