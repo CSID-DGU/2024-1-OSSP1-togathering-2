@@ -9,6 +9,8 @@ import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { lightTheme } from 'styles/theme'
 import { CourseListType } from 'types/plogging'
+import { sortCoursesNearBy } from 'utils/getCoordinatesDistance'
+import { getTotalDistance } from 'utils/getCourseItemInfo'
 import { getRandomOrder } from 'utils/getRandomOrder'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
@@ -74,7 +76,7 @@ const sortConditionList = [
   },
   {
     label: '짧은 소요시간 순',
-    indexList: [1, 5, 4, 3, 2],
+    indexList: [1, 3, 2, 1],
   },
   {
     label: '긴 소요시간 순',
@@ -82,7 +84,7 @@ const sortConditionList = [
   },
   {
     label: '별점 높은 순',
-    indexList: [4, 1, 2, 5, 3],
+    indexList: getRandomOrder(100),
   },
 ]
 
@@ -105,6 +107,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
   const [loading, setLoading] = useState<'NONE' | 'LOADING' | 'DONE'>('NONE')
   const [sortConditionIndex, setSortConditionIndex] = useState(1)
   const [courseList, setCourseList] = useState<CourseListType>([])
+  const [sortedCourseList, setSortedCourseList] = useState<CourseListType>([])
   const [isSatisfied, setIsSatisfied] = useState<boolean>()
 
   const onClickSearchChip = () => {
@@ -181,6 +184,48 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
     }
   }, [courseList, setCourseList])
 
+  const getWashedCourseListNearBy = async () => {
+    return await sortCoursesNearBy(courseList)
+  }
+
+  const getWashedCourseList = (sortConditionIndex: number) => {
+    let newCourseList: CourseListType = [...courseList]
+
+    if (isSearchResultAvailable) {
+      return newCourseList.filter((courseItem) => courseItem?.name && courseItem.name.indexOf(searchKeyword) !== -1)
+    }
+
+    if (sortConditionIndex === 2) {
+      newCourseList.sort((a, b) => getTotalDistance(a.coordinateList) - getTotalDistance(b.coordinateList))
+      return newCourseList
+    }
+
+    if (sortConditionIndex === 3) {
+      newCourseList.sort((a, b) => getTotalDistance(b.coordinateList) - getTotalDistance(a.coordinateList))
+      return newCourseList
+    }
+
+    newCourseList = []
+
+    sortConditionList[sortConditionIndex].indexList.forEach((value) => {
+      if (value <= courseList.length) {
+        newCourseList.push(courseList[value - 1])
+      }
+    })
+
+    return newCourseList
+  }
+
+  useEffect(() => {
+    if (courseList.length > 0) {
+      if (sortConditionIndex === 1) {
+        getWashedCourseListNearBy().then((value) => setSortedCourseList(value))
+      } else {
+        setSortedCourseList(getWashedCourseList(sortConditionIndex))
+      }
+    }
+  }, [courseList, sortConditionIndex, setSortConditionIndex])
+
   if (courseList.length === 0) {
     return (
       <Root className={className}>
@@ -191,21 +236,6 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
       </Root>
     )
   }
-
-  const washedCourseList = (() => {
-    let newCourseList: CourseListType = []
-    if (!isSearchResultAvailable) {
-      sortConditionList[sortConditionIndex].indexList.forEach((value) => {
-        if (value <= courseList.length) {
-          newCourseList.push(courseList[value - 1])
-        }
-      })
-      return newCourseList
-    }
-    newCourseList = courseList.filter((courseItem) => courseItem?.name && courseItem.name.indexOf(searchKeyword) !== -1)
-    return newCourseList
-  })()
-
   return (
     <Root className={className}>
       <CreateCourseButton type={'primary'} onClick={onClickCreateCourseButton}>
@@ -238,7 +268,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
       {sortConditionIndex !== 0 && !isSearchAvailable && (
         <>
           <CourseContainer>
-            {washedCourseList.map((courseItem) => (
+            {sortedCourseList.map((courseItem) => (
               <PloggingCourseViewer
                 courseItem={courseItem}
                 onSelect={onClickSelectPloggingCourseButton(courseItem.id)}
@@ -301,7 +331,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
       {sortConditionIndex === 0 && loading === 'DONE' && (
         <>
           <CourseContainer>
-            {washedCourseList.map((courseItem) => (
+            {sortedCourseList.map((courseItem) => (
               <PloggingCourseViewer
                 courseItem={courseItem}
                 onSelect={onClickSelectPloggingCourseButton(courseItem.id)}
@@ -348,8 +378,8 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
               <SearchButtonTypo>이 키워드로 검색하기</SearchButtonTypo>
             </SearchButton>
             {isSearchResultAvailable &&
-              (washedCourseList.length > 0 ? (
-                washedCourseList.map((courseItem) => (
+              (sortedCourseList.length > 0 ? (
+                sortedCourseList.map((courseItem) => (
                   <PloggingCourseViewer
                     courseItem={courseItem}
                     onSelect={onClickSelectPloggingCourseButton(courseItem.id)}

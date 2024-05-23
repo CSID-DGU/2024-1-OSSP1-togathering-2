@@ -59,7 +59,7 @@ export const getCoordinatesDistanceFromMe = async (destination: CoordinateItemTy
   return distance
 }
 
-export const sortCoursesByDistance = async (courseList: CourseListType) => {
+export const sortCoursesNearBy = async (courseList: CourseListType) => {
   const distancePromises = courseList.map(async (course) => {
     const distance = await getCoordinatesDistanceFromMe(course.coordinateList[0])
     return { course, distance }
