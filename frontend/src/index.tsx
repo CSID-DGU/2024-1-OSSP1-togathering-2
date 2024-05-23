@@ -42,25 +42,25 @@ root.render(
       <CommonContainer>
         <ScrollControl />
         <Routes>
-          <Route path="/plogging/course/list" element={<PloggingCourseListPage />} />
-          <Route path="/plogging/course/create" element={<PloggingCourseCreatePage />} />
+          <Route path="/course/list" element={<PloggingCourseListPage />} />
+          <Route path="/course/create" element={<PloggingCourseCreatePage />} />
 
-          <Route path="/plogging/solo/course" element={<PloggingSoloCoursePage />} />
-          <Route path="/plogging/solo/confirm" element={<PloggingSoloConfirmPage />} />
-          <Route path="/plogging/solo/alert" element={<PloggingSoloAlertPage />} />
-          <Route path="/plogging/solo/progress" element={<PloggingSoloProgressPage />} />
-          <Route path="/plogging/solo/review" element={<PloggingSoloReviewPage />} />
+          <Route path="/solo/course" element={<PloggingSoloCoursePage />} />
+          <Route path="/solo/confirm" element={<PloggingSoloConfirmPage />} />
+          <Route path="/solo/alert" element={<PloggingSoloAlertPage />} />
+          <Route path="/solo/progress" element={<PloggingSoloProgressPage />} />
+          <Route path="/solo/review" element={<PloggingSoloReviewPage />} />
 
-          <Route path="/plogging/meeting/list" element={<PloggingMeetingListPage />} />
-          <Route path="/plogging/meeting/create/course" element={<PloggingMeetingCreateCoursePage />} />
-          <Route path="/plogging/meeting/create/info" element={<PloggingMeetingCreateInfoPage />} />
-          <Route path="/plogging/meeting/confirm" element={<PloggingMeetingConfirmPage />} />
-          <Route path="/plogging/meeting/alert" element={<PloggingMeetingAlertPage />} />
-          <Route path="/plogging/meeting/progress" element={<PloggingMeetingProgressPage />} />
-          <Route path="/plogging/meeting/review" element={<PloggingMeetingReviewPage />} />
-          <Route path="/plogging/meeting/scheduled" element={<PloggingMeetingScheduledPage />} />
+          <Route path="/meeting/list" element={<PloggingMeetingListPage />} />
+          <Route path="/meeting/create/course" element={<PloggingMeetingCreateCoursePage />} />
+          <Route path="/meeting/create/info" element={<PloggingMeetingCreateInfoPage />} />
+          <Route path="/meeting/confirm" element={<PloggingMeetingConfirmPage />} />
+          <Route path="/meeting/alert" element={<PloggingMeetingAlertPage />} />
+          <Route path="/meeting/progress" element={<PloggingMeetingProgressPage />} />
+          <Route path="/meeting/review" element={<PloggingMeetingReviewPage />} />
+          <Route path="/meeting/scheduled" element={<PloggingMeetingScheduledPage />} />
 
-          <Route path="/plogging/nearby" element={<PloggingNearbyPage />} />
+          <Route path="/nearby" element={<PloggingNearbyPage />} />
 
           <Route path="/" element={<MainPage />} />
         </Routes>

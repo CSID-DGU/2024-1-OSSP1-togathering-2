@@ -135,7 +135,7 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
         saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify({ selectedMeetingList: [{ id: maxId }] }))
       }
 
-      navigate('/plogging/meeting/scheduled')
+      navigate('/meeting/scheduled')
       return
     }
 
@@ -166,7 +166,7 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
       saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify({ selectedMeetingList: [{ id: maxId }] }))
     }
 
-    navigate('/plogging/meeting/scheduled')
+    navigate('/meeting/scheduled')
     return
   }
 

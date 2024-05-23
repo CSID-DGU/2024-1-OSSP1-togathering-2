@@ -57,7 +57,7 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
     return
   }
   const onClickButtonPloggingDone = () => {
-    navigate('/plogging/solo/review', { state })
+    navigate('/solo/review', { state })
     return
   }
 

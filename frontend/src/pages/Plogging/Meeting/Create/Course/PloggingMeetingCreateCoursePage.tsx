@@ -12,7 +12,7 @@ export const PloggingMeetingCreateCoursePage: FC<PloggingMeetingCreateCoursePage
   const navigate = useNavigate()
 
   const onSelectPloggingCourse = (id: number) => {
-    navigate('/plogging/meeting/create/info', { state: { ploggingCourseId: id } })
+    navigate('/meeting/create/info', { state: { ploggingCourseId: id } })
   }
 
   return (

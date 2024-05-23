@@ -13,7 +13,7 @@ export const PloggingMeetingListPage: FC<PloggingMeetingListPageProps> = ({ clas
   const navigate = useNavigate()
 
   const onSelectPloggingMeeting = (id: number, category: MeetingCategoryType) => () => {
-    navigate('/plogging/meeting/confirm', { state: { ploggingMeetingId: id, selectedCategory: category } })
+    navigate('/meeting/confirm', { state: { ploggingMeetingId: id, selectedCategory: category } })
   }
 
   return (

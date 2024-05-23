@@ -16,7 +16,7 @@ export const PloggingCourseListPage: FC<PloggingCourseListPageProps> = ({ classN
   const [courseList, setCourseList] = useState<CourseListType>([])
 
   const onClickButtonPlogginCourseCreate = () => {
-    navigate('/plogging/course/create')
+    navigate('/course/create')
     return
   }
 
