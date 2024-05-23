@@ -2,8 +2,12 @@ import { TeamOutlined, UserOutlined } from '@ant-design/icons'
 import { Header } from 'components/Header'
 import { StartingPointsMap } from 'components/StartingPointsMap'
 import { TabBar } from 'components/TabBar'
-import { FC } from 'react'
+import { MEETING_LIST_KEY, PLOGGING_COURSE_LIST_KEY } from 'constants/common'
+import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
+import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
+import { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 import { LatestMeetingSection } from './components/LatestMeetingSection'
 import { PopularCourseSection } from './components/PopularCourseSection'
 import {
@@ -38,6 +42,17 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
   const onClickButtonPloggingGroupJoin = () => {
     return
   }
+
+  useEffect(() => {
+    let currentCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
+    if (typeof currentCourseList !== 'string') {
+      saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(PLOGGING_COURSE_LIST_SAMPLE))
+    }
+    let currentMeetingList = loadLocalStorage(MEETING_LIST_KEY)
+    if (typeof currentMeetingList !== 'string') {
+      saveLocalStorage(MEETING_LIST_KEY, JSON.stringify({ meetingList: ALL_MEETING_LIST_SAMPLE }))
+    }
+  }, [])
 
   return (
     <Root className={className}>
