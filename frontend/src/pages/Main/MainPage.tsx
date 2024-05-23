@@ -5,8 +5,9 @@ import { TabBar } from 'components/TabBar'
 import { MEETING_LIST_KEY, PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { LocalStorageMeetingListType, MeetingListType } from 'types/meeting'
 import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 import { LatestMeetingSection } from './components/LatestMeetingSection'
 import { PopularCourseSection } from './components/PopularCourseSection'
@@ -29,6 +30,10 @@ type MainPageProps = {
 
 export const MainPage: FC<MainPageProps> = ({ className }) => {
   const navigate = useNavigate()
+  const [meetingList, setMeetingList] = useState<MeetingListType>([])
+  const [latitude, setLatitude] = useState<any>(null)
+  const [longitude, setLongitude] = useState<any>(null)
+  const [error, setError] = useState<any>(null)
 
   const onClickButtonPloggingCourseList = () => {
     navigate('/course/list')
@@ -43,7 +48,24 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
     return
   }
 
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLatitude(position.coords.latitude)
+          setLongitude(position.coords.longitude)
+        },
+        (error) => {
+          setError(error.message)
+        }
+      )
+    } else {
+      setError('Geolocation is not supported by this browser.')
+    }
+  }
+
   useEffect(() => {
+    getLocation()
     let currentCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
     if (typeof currentCourseList !== 'string') {
       saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(PLOGGING_COURSE_LIST_SAMPLE))
@@ -51,6 +73,10 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
     let currentMeetingList = loadLocalStorage(MEETING_LIST_KEY)
     if (typeof currentMeetingList !== 'string') {
       saveLocalStorage(MEETING_LIST_KEY, JSON.stringify({ meetingList: ALL_MEETING_LIST_SAMPLE }))
+    } else {
+      let parseMeetingList = JSON.parse(currentMeetingList) as LocalStorageMeetingListType
+      let newMeetingList = parseMeetingList.meetingList
+      setMeetingList(newMeetingList)
     }
   }, [])
 
@@ -67,31 +93,8 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
         </PloggingMapTitleContainer>
         <PloggingMapWrapper>
           <StartingPointsMap
-            center={{ lat: 37.55954751374675, lng: 126.99813054145416 }}
-            startingPoints={[
-              { lat: 37.55954751374675, lng: 126.99813054145416 },
-              { lat: 37.5580558199932, lng: 126.998311394625 },
-              {
-                lng: 126.9887176826959,
-                lat: 37.55345638628968,
-              },
-              {
-                lng: 126.99848330927826,
-                lat: 37.55876427780856,
-              },
-              {
-                lng: 126.99916658554937,
-                lat: 37.558580978053875,
-              },
-              {
-                lng: 126.936261303681,
-                lat: 37.55516358086798,
-              },
-              {
-                lng: 129.16146889673206,
-                lat: 35.159599888896906,
-              },
-            ]}
+            center={{ lat: latitude, lng: longitude }}
+            startingPoints={meetingList.map((meetingItem) => meetingItem.courseItem.coordinateList[0])}
           />
         </PloggingMapWrapper>
         <PloggingMapButtonContainer>
