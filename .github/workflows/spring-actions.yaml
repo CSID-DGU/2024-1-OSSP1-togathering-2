@@ -2,8 +2,20 @@ name: spring-actions
 on:
   push:
     branches: [ "backend" ]
+    paths:
+      - '**/*.java'
+      - '**/build.gradle*'
+      - '**/settings.gradle*'
+      - '**/application*.yml'
+      - '**/*.sql'
   pull_request:
     branches: [ "backend" ]
+    paths:
+      - '**/*.java'
+      - '**/build.gradle*'
+      - '**/settings.gradle*'
+      - '**/application*.yml'
+      - '**/*.sql'
 permissions:
   contents: read
 jobs:
@@ -16,6 +28,11 @@ jobs:
         with:
           java-version: '11'
           distribution: 'corretto'
+      # yml 파일 prod 버전으로 변경
+      - name: Set YML
+        run: |
+          echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > backend/src/resources/templates/application.yml
+          find backend/src/resources/templates
       ## gradle caching push
       - name: Gradle Caching
         uses: actions/cache@v3
