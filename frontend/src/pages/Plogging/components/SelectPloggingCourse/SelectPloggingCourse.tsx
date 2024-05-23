@@ -118,6 +118,8 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
   const [sortedCourseList, setSortedCourseList] = useState<CourseListType>([])
   const [isSatisfied, setIsSatisfied] = useState<boolean>()
 
+  console.log({ courseList })
+
   const onClickSearchChip = () => {
     openSearch()
   }
@@ -237,7 +239,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
     }
   }, [courseList, sortConditionIndex, setSortConditionIndex])
 
-  if (courseList.length === 0) {
+  if (courseList?.length === 0) {
     return (
       <Root className={className}>
         <CreateCourseButton type={'primary'} onClick={onClickCreateCourseButton}>

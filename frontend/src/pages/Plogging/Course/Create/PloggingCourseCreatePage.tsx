@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Header } from 'components/Header'
-import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
+import { MY_COURSE_LIST_KEY, PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CourseCoordinateListType, LocalStorageCourseListType } from 'types/plogging'
@@ -78,17 +78,6 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
     return
   }
 
-  const onClickButtonReset = () => {
-    if (confirm('정말로 초기화하시겠습니까?? 기존 작업은 전부 삭제됩니다.')) {
-      navigate(0)
-    }
-  }
-  const onClickButtonGoBack = () => {
-    if (confirm('정말로 이동하시겠습니까? 기존 작업은 전부 삭제됩니다.')) {
-      navigate('/course/list', { replace: true })
-    }
-  }
-
   const onSave = (coordinateList: CourseCoordinateListType) => {
     setNewCoordinateList(coordinateList)
     setStep('4')
@@ -102,11 +91,13 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
     let currentPloggingCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
     if (currentPloggingCourseList) {
       let newPloggingCourseList: LocalStorageCourseListType = JSON.parse(currentPloggingCourseList)
+      console.log(newPloggingCourseList)
+      let newId = newPloggingCourseList.courseList.length
 
       newPloggingCourseList = {
         courseList: [
           {
-            id: newPloggingCourseList.courseList.length,
+            id: newId,
             name: courseName,
             coordinateList: newCoordinateList,
           },
@@ -114,13 +105,25 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
         ],
       }
       saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(newPloggingCourseList))
+
+      let myCourseIdList = loadLocalStorage(MY_COURSE_LIST_KEY)
+      if (typeof myCourseIdList !== 'string') {
+        let newMyCourseIdList = [newId]
+        saveLocalStorage(MY_COURSE_LIST_KEY, JSON.stringify(newMyCourseIdList))
+      } else {
+        let newMyCourseIdList = JSON.parse(myCourseIdList) as number[]
+        newMyCourseIdList = [newId, ...newMyCourseIdList]
+        saveLocalStorage(MY_COURSE_LIST_KEY, JSON.stringify(newMyCourseIdList))
+      }
+
       navigate(-1)
       return
     } else {
+      let newId = PLOGGING_COURSE_LIST_SAMPLE.courseList.length
       let newPloggingCourseList: LocalStorageCourseListType = {
         courseList: [
           {
-            id: PLOGGING_COURSE_LIST_SAMPLE.courseList.length,
+            id: newId,
             name: courseName,
             coordinateList: newCoordinateList,
           },
@@ -128,6 +131,16 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
         ],
       }
       saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(newPloggingCourseList))
+
+      let myCourseIdList = loadLocalStorage(MY_COURSE_LIST_KEY)
+      if (typeof myCourseIdList !== 'string') {
+        let newMyCourseIdList = [newId]
+        saveLocalStorage(MY_COURSE_LIST_KEY, JSON.stringify(newMyCourseIdList))
+      } else {
+        let newMyCourseIdList = JSON.parse(myCourseIdList) as number[]
+        newMyCourseIdList = [newId, ...newMyCourseIdList]
+        saveLocalStorage(MY_COURSE_LIST_KEY, JSON.stringify(newMyCourseIdList))
+      }
       navigate(-1)
       return
     }
