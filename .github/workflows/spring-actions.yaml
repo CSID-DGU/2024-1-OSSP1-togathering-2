@@ -17,6 +17,7 @@ on:
       - '**/settings.gradle*'
       - '**/application*.yml'
       - '**/*.sql'
+      - '**/*.yaml'
 permissions:
   contents: read
 jobs:
