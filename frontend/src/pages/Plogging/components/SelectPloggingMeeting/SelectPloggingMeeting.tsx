@@ -99,6 +99,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
 
   const onChangeSearch = (e: any) => {
     setSearchKeyword(e.target.value)
+    closeSearchResult()
   }
 
   const onKeyPressEnter = (e: any) => {
@@ -133,7 +134,6 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
   const getWashedMeetingList = (sortConditionIndex: number) => {
     let newMeetingList: MeetingListType = [...meetingList]
     if (isSearchAvailable) {
-      console.log(newMeetingList, searchCategory)
       return newMeetingList.filter(
         (courseItem) =>
           courseItem?.name &&
