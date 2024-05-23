@@ -96,7 +96,14 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
   }
 
   if (meetingList.length === 0) {
-    return <span />
+    return (
+      <Root className={className}>
+        <CreateCourseButton type={'primary'} onClick={onClickCreateMeetingButton}>
+          <PlusCircleOutlined />
+          <CreateCourseButtonTypo>나만의 모임 만들기</CreateCourseButtonTypo>
+        </CreateCourseButton>
+      </Root>
+    )
   }
 
   const washedMeetingList = (() => {
