@@ -33,6 +33,10 @@ type SelectPloggingMeetingProps = {
 
 const sortConditionList = [
   {
+    label: '최신순',
+    indexList: getRandomOrder(100),
+  },
+  {
     label: '가까운 거리 순',
     indexList: getRandomOrder(100),
   },
@@ -64,9 +68,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
   const [sortedMeetingList, setSortedMeetingList] = useState<MeetingListType>([])
 
   const onClickSortConditionButton = (id: number) => () => {
-    setSortConditionIndex((prev) => {
-      return id
-    })
+    setSortConditionIndex(id)
     closeSearch()
     closeSearchResult()
     setSearchKeyword('')
@@ -123,16 +125,17 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
     }
 
     if (sortConditionIndex === 0) {
+      newMeetingList.sort((a, b) => b.id - a.id)
       return newMeetingList
     }
-    if (sortConditionIndex === 1) {
+    if (sortConditionIndex === 2) {
       newMeetingList.sort(
         (a, b) => getTotalDistance(a.courseItem.coordinateList) - getTotalDistance(b.courseItem.coordinateList)
       )
       return newMeetingList
     }
 
-    if (sortConditionIndex === 2) {
+    if (sortConditionIndex === 3) {
       newMeetingList.sort(
         (a, b) => getTotalDistance(b.courseItem.coordinateList) - getTotalDistance(a.courseItem.coordinateList)
       )
@@ -152,7 +155,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
 
   useEffect(() => {
     if (meetingList.length > 0) {
-      if (sortConditionIndex === 0) {
+      if (sortConditionIndex === 1) {
         getWashedMeetingListNearBy().then((value) => setSortedMeetingList(value))
       } else {
         setSortedMeetingList(getWashedMeetingList(sortConditionIndex))
