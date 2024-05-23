@@ -1,4 +1,5 @@
 import { ClockCircleOutlined, EnvironmentOutlined, HomeOutlined } from '@ant-design/icons'
+import { IconUser } from '@tabler/icons-react'
 import { COMMON_CONTAINER_MIN_WIDTH, COMMON_CONTAINER_WIDTH } from 'constants/layout'
 import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -9,6 +10,7 @@ const items = [
   { href: '/', text: '홈', icon: HomeOutlined },
   { href: '/nearby', text: '내 근처', icon: EnvironmentOutlined },
   { href: '/meeting/scheduled', text: '예정된 모임', icon: ClockCircleOutlined },
+  { href: '/course/mine', text: '나만의 코스', icon: IconUser },
 ]
 
 export const TabBar: FC = () => {
