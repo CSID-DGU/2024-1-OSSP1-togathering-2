@@ -16,9 +16,9 @@ type PloggingNearbyPageProps = {
 }
 
 export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) => {
+  const [meetingList, setMeetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
   const [latitude, setLatitude] = useState<any>(null)
   const [longitude, setLongitude] = useState<any>(null)
-  const [meetingList, setMeetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
   const [error, setError] = useState<any>(null)
   const navigate = useNavigate()
 
