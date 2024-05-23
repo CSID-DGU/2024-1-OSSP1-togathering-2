@@ -16,7 +16,7 @@ export const LatestMeetingSection: FC<LatestMeetingSectionProps> = ({ className 
 
   return (
     <Root className={className}>
-      <TitleTypo>최근에 개설된 미팅</TitleTypo>
+      <TitleTypo>최근에 개설된 모임</TitleTypo>
       <MeetingContainer>
         {washedMeetingList.map((meetingItem) => (
           <MeetingCard
