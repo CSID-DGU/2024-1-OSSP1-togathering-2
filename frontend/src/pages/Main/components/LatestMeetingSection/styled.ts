@@ -24,3 +24,5 @@ export const MeetingContainer = styled.div`
   padding-bottom: 10px;
   overflow-x: scroll;
 `
+
+export const MeetingCardWrapper = styled.div``
