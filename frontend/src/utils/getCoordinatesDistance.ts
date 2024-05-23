@@ -1,3 +1,4 @@
+import { MeetingListType } from 'types/meeting'
 import { CourseListType } from 'types/plogging'
 
 type CoordinateItemType = {
@@ -70,4 +71,17 @@ export const sortCoursesNearBy = async (courseList: CourseListType) => {
   coursesWithDistances.sort((a, b) => a.distance - b.distance)
 
   return coursesWithDistances.map(({ course }) => course)
+}
+
+export const sortMeetingsNearBy = async (meetingList: MeetingListType) => {
+  const distancePromises = meetingList.map(async (meeting) => {
+    const distance = await getCoordinatesDistanceFromMe(meeting.courseItem.coordinateList[0])
+    return { meeting, distance }
+  })
+
+  const coursesWithDistances = await Promise.all(distancePromises)
+
+  coursesWithDistances.sort((a, b) => a.distance - b.distance)
+
+  return coursesWithDistances.map(({ meeting }) => meeting)
 }

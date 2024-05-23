@@ -7,6 +7,8 @@ import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { lightTheme } from 'styles/theme'
 import { MeetingCategoryType, MeetingListType } from 'types/meeting'
+import { sortMeetingsNearBy } from 'utils/getCoordinatesDistance'
+import { getTotalDistance } from 'utils/getCourseItemInfo'
 import { getRandomOrder } from 'utils/getRandomOrder'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 import { PloggingMeetingViewer } from '../PloggingMeetingViewer'
@@ -44,7 +46,7 @@ const sortConditionList = [
   },
   {
     label: '별점 높은 순',
-    indexList: [4, 1, 2, 5, 3, 6, 7],
+    indexList: getRandomOrder(100),
   },
 ]
 
@@ -59,6 +61,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
   } = useBooleanState(false)
   const [sortConditionIndex, setSortConditionIndex] = useState(0)
   const [meetingList, setMeetingList] = useState<MeetingListType>([])
+  const [sortedMeetingList, setSortedMeetingList] = useState<MeetingListType>([])
 
   const onClickSortConditionButton = (id: number) => () => {
     setSortConditionIndex((prev) => {
@@ -108,6 +111,55 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
     }
   }, [meetingList, setMeetingList])
 
+  const getWashedMeetingListNearBy = async () => {
+    return await sortMeetingsNearBy(meetingList)
+  }
+
+  const getWashedMeetingList = (sortConditionIndex: number) => {
+    let newMeetingList: MeetingListType = [...meetingList]
+
+    if (isSearchResultAvailable) {
+      return newMeetingList.filter((courseItem) => courseItem?.name && courseItem.name.indexOf(searchKeyword) !== -1)
+    }
+
+    if (sortConditionIndex === 0) {
+      return newMeetingList
+    }
+    if (sortConditionIndex === 1) {
+      newMeetingList.sort(
+        (a, b) => getTotalDistance(a.courseItem.coordinateList) - getTotalDistance(b.courseItem.coordinateList)
+      )
+      return newMeetingList
+    }
+
+    if (sortConditionIndex === 2) {
+      newMeetingList.sort(
+        (a, b) => getTotalDistance(b.courseItem.coordinateList) - getTotalDistance(a.courseItem.coordinateList)
+      )
+      return newMeetingList
+    }
+
+    newMeetingList = []
+
+    sortConditionList[sortConditionIndex].indexList.forEach((value) => {
+      if (value <= meetingList.length) {
+        newMeetingList.push(meetingList[value - 1])
+      }
+    })
+
+    return newMeetingList
+  }
+
+  useEffect(() => {
+    if (meetingList.length > 0) {
+      if (sortConditionIndex === 0) {
+        getWashedMeetingListNearBy().then((value) => setSortedMeetingList(value))
+      } else {
+        setSortedMeetingList(getWashedMeetingList(sortConditionIndex))
+      }
+    }
+  }, [meetingList, sortConditionIndex, setSortConditionIndex])
+
   if (meetingList.length === 0) {
     return (
       <Root className={className}>
@@ -118,20 +170,6 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
       </Root>
     )
   }
-
-  const washedMeetingList = (() => {
-    let newMeetingList: MeetingListType = []
-    if (!isSearchResultAvailable) {
-      sortConditionList[sortConditionIndex].indexList.forEach((value) => {
-        if (value <= meetingList.length) {
-          newMeetingList.push(meetingList[value - 1])
-        }
-      })
-      return newMeetingList
-    }
-    newMeetingList = meetingList.filter((meetingItem) => meetingItem.name.indexOf(searchKeyword) !== -1)
-    return newMeetingList
-  })()
 
   return (
     <Root className={className}>
@@ -158,7 +196,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
       </SortConditionContainer>
       <CourseContainer>
         {!isSearchAvailable &&
-          washedMeetingList.map((meetingItem) => (
+          sortedMeetingList.map((meetingItem) => (
             <PloggingMeetingViewer
               meetingItem={meetingItem}
               onSelect={onSelectPloggingMeeting(meetingItem.id, meetingItem.category)}
@@ -178,8 +216,8 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
               <SearchButtonTypo>이 키워드로 검색하기</SearchButtonTypo>
             </SearchButton>
             {isSearchResultAvailable &&
-              (washedMeetingList.length > 0 ? (
-                washedMeetingList.map((meetingItem) => (
+              (sortedMeetingList.length > 0 ? (
+                sortedMeetingList.map((meetingItem) => (
                   <PloggingMeetingViewer
                     meetingItem={meetingItem}
                     onSelect={onSelectPloggingMeeting(meetingItem.id, meetingItem.category)}

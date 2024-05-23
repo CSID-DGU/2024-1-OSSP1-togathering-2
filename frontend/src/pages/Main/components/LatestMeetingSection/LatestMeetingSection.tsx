@@ -1,5 +1,5 @@
 import { MeetingCard } from 'components/MeetingCard'
-import { COMMON_MEETING_LIST_SAMPLE } from 'constants/meeting'
+import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import dayjs from 'dayjs'
 import { FC } from 'react'
 import { MeetingContainer, Root, TitleTypo } from './styled'
@@ -10,7 +10,7 @@ type LatestMeetingSectionProps = {
 
 export const LatestMeetingSection: FC<LatestMeetingSectionProps> = ({ className }) => {
   const washedMeetingList = (() => {
-    let newMeetingList = COMMON_MEETING_LIST_SAMPLE.sort((a, b) => (dayjs(a.createdAt).isAfter(b.createdAt) ? 1 : -1))
+    let newMeetingList = ALL_MEETING_LIST_SAMPLE.sort((a, b) => (dayjs(a.createdAt).isAfter(b.createdAt) ? 1 : -1))
     return newMeetingList
   })().filter((_, index) => index < 8)
 
