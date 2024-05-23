@@ -1,7 +1,14 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.12'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "io.sentry.jvm.gradle" version "4.6.0"
 }
 
 group = 'togethering'
@@ -29,6 +36,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.9.0'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -44,6 +52,17 @@ dependencies {
 tasks.named('test') {
 	systemProperty 'file.encoding', 'UTF-8'
 	useJUnitPlatform()
+}
+
+sentry {
+	// Generates a JVM (Java, Kotlin, etc.) source bundle and uploads your source code to Sentry.
+	// This enables source context, allowing you to see your source
+	// code as part of your stack traces in Sentry.
+	includeSourceContext = true
+
+	org = "dongguk-university"
+	projectName = "togethering-spring"
+	authToken = System.getenv("SENTRY_AUTH_TOKEN")
 }
 
 // 이 설정은 devtools를 다시 패키징하지 않도록 합니다.
