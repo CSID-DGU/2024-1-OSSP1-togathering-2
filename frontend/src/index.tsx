@@ -3,6 +3,7 @@ import { CommonContainer } from 'components/CommonContainer'
 import 'global.css'
 import { MainPage } from 'pages/Main'
 import { PloggingCourseCreatePage } from 'pages/Plogging/Course/Create'
+import { CourseEditPage } from 'pages/Plogging/Course/Edit'
 import { PloggingCourseListPage } from 'pages/Plogging/Course/List'
 import { CourseMinePage } from 'pages/Plogging/Course/Mine'
 import { PloggingMeetingAlertPage } from 'pages/Plogging/Meeting/Alert'
@@ -46,6 +47,7 @@ root.render(
           <Route path="/course/list" element={<PloggingCourseListPage />} />
           <Route path="/course/create" element={<PloggingCourseCreatePage />} />
           <Route path="/course/mine" element={<CourseMinePage />} />
+          <Route path="/course/edit" element={<CourseEditPage />} />
 
           <Route path="/solo/course" element={<PloggingSoloCoursePage />} />
           <Route path="/solo/confirm" element={<PloggingSoloConfirmPage />} />
