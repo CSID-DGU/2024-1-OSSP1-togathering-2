@@ -7,6 +7,7 @@ import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/consta
 import { FC, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CourseListType } from 'types/plogging'
+import { getTotalDistance, getTotalDuration } from 'utils/getCourseItemInfo'
 import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
@@ -60,6 +61,12 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
     return
   }
 
+  let totalDistance = selectedPloggingCourseItem ? getTotalDistance(selectedPloggingCourseItem.coordinateList) : null
+  let totalDuration =
+    selectedPloggingCourseItem && selectedCategory && totalDistance
+      ? getTotalDuration(selectedCategory, totalDistance)
+      : null
+
   return (
     <Root className={className}>
       <Header showLogo />
@@ -68,7 +75,7 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
         <br />
         오늘의 활동으로 건강해지고 있어요!
       </SubtitleTypo>
-      {selectedPloggingCourseItem && (
+      {selectedPloggingCourseItem && totalDuration && totalDistance && (
         <ContentContainer>
           <PloggingCourseViewer
             isDetail={true}
@@ -79,23 +86,32 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
           <InfoContainer>
             <InfoItemContainer isDivided>
               <InfoItemTitleTypo>이동한 거리</InfoItemTitleTypo>
-              <InfoItemContentTypo>298m / 1,000m</InfoItemContentTypo>
+              <InfoItemContentTypo>0m / {`${totalDistance}m`}</InfoItemContentTypo>
             </InfoItemContainer>
             <InfoItemContainer isDivided>
               <InfoItemTitleTypo>시간</InfoItemTitleTypo>
-              <InfoItemContentTypo>00:07:34</InfoItemContentTypo>
+              <InfoItemContentTypo>0분 0초</InfoItemContentTypo>
             </InfoItemContainer>
           </InfoContainer>
-          <InfoContainer>
-            <InfoItemContainer isDivided>
-              <InfoItemTitleTypo>제보한 쓰레기</InfoItemTitleTypo>
-              <InfoItemContentTypo>2개</InfoItemContentTypo>
-            </InfoItemContainer>
-            <InfoItemContainer isDivided>
-              <InfoItemTitleTypo>획득한 점수</InfoItemTitleTypo>
-              <InfoItemContentTypo>10점</InfoItemContentTypo>
-            </InfoItemContainer>
-          </InfoContainer>
+          {selectedCategory === 'PLOGGING' ? (
+            <InfoContainer>
+              <InfoItemContainer isDivided>
+                <InfoItemTitleTypo>제보한 쓰레기</InfoItemTitleTypo>
+                <InfoItemContentTypo>2개</InfoItemContentTypo>
+              </InfoItemContainer>
+              <InfoItemContainer isDivided>
+                <InfoItemTitleTypo>획득한 점수</InfoItemTitleTypo>
+                <InfoItemContentTypo>10점</InfoItemContentTypo>
+              </InfoItemContainer>
+            </InfoContainer>
+          ) : (
+            <InfoContainer>
+              <InfoItemContainer>
+                <InfoItemTitleTypo>획득한 점수</InfoItemTitleTypo>
+                <InfoItemContentTypo>{totalDuration.minute * 2}점</InfoItemContentTypo>
+              </InfoItemContainer>
+            </InfoContainer>
+          )}
           <ButtonContainer>
             <ImageUploadButton type={'primary'} onClick={onClickTestButton}>
               <IconPhoto />
