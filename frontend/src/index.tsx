@@ -4,6 +4,7 @@ import 'global.css'
 import { MainPage } from 'pages/Main'
 import { PloggingCourseCreatePage } from 'pages/Plogging/Course/Create'
 import { PloggingCourseListPage } from 'pages/Plogging/Course/List'
+import { CourseMinePage } from 'pages/Plogging/Course/Mine'
 import { PloggingMeetingAlertPage } from 'pages/Plogging/Meeting/Alert'
 import { PloggingMeetingConfirmPage } from 'pages/Plogging/Meeting/Confirm'
 import { PloggingMeetingCreateCoursePage } from 'pages/Plogging/Meeting/Create/Course'
@@ -48,6 +49,7 @@ root.render(
           <Route path="/user/join" element={<UserJoinPage />} />
           <Route path="/course/list" element={<PloggingCourseListPage />} />
           <Route path="/course/create" element={<PloggingCourseCreatePage />} />
+          <Route path="/course/mine" element={<CourseMinePage />} />
 
           <Route path="/solo/course" element={<PloggingSoloCoursePage />} />
           <Route path="/solo/confirm" element={<PloggingSoloConfirmPage />} />

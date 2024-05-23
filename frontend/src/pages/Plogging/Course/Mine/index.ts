@@ -1,0 +1,1 @@
+export { CourseMinePage } from './CourseMinePage'
