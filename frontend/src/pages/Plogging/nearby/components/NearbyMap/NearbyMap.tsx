@@ -32,7 +32,7 @@ export const NearbyMap: FC<NearbyMapProps> = ({ className, center, startingPoint
 
 const Root = styled.div`
   width: 100%;
-  height: calc(100vh - 300px);
+  height: 400px;
   display: flex;
   flex-direction: column;
 `

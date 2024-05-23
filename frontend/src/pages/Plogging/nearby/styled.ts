@@ -41,6 +41,7 @@ export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
 `
 
 export const ContentButtonContainer = styled.div`

@@ -3,8 +3,11 @@ import { TabBar } from 'components/TabBar'
 import { MEETING_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { FC, useEffect, useState } from 'react'
-import { LocalStorageMeetingListType, MeetingListType } from 'types/meeting'
+import { useNavigate } from 'react-router-dom'
+import { LocalStorageMeetingListType, MeetingCategoryType, MeetingListType } from 'types/meeting'
+import { getNearByMeetingList } from 'utils/getNearByMeetingList'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
+import { PloggingMeetingViewer } from '../components/PloggingMeetingViewer'
 import { NearbyMap } from './components/NearbyMap'
 import { ContentContainer, Root, SubtitleTypo, TitleContainer, TitleTypo } from './styled'
 
@@ -17,6 +20,11 @@ export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) =
   const [longitude, setLongitude] = useState<any>(null)
   const [meetingList, setMeetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
   const [error, setError] = useState<any>(null)
+  const navigate = useNavigate()
+
+  const onSelectPloggingMeeting = (id: number, category: MeetingCategoryType) => () => {
+    navigate('/meeting/confirm', { state: { ploggingMeetingId: id, selectedCategory: category } })
+  }
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -44,13 +52,17 @@ export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) =
     }
   }, [])
 
-  const centerCoordinate =
-    latitude && longitude ? { lat: latitude, lng: longitude } : { lat: 37.55954751374675, lng: 126.99813054145416 }
+  // const centerCoordinate =
+  //   latitude && longitude ? { lat: latitude, lng: longitude } : { lat: 37.55954751374675, lng: 126.99813054145416 }
+
+  const centerCoordinate = { lat: 37.55954751374675, lng: 126.99813054145416 }
 
   const startingPoints = (() => {
     // return ALL_MEETING_LIST_SAMPLE.map((item) => item.courseItem.coordinateList[0])
     return meetingList.map((item) => item.courseItem.coordinateList[0])
   })()
+
+  const sortedMeetingList = getNearByMeetingList(meetingList, centerCoordinate)
 
   return (
     <Root className={className}>
@@ -62,6 +74,17 @@ export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) =
       <ContentContainer>
         <NearbyMap center={centerCoordinate} startingPoints={startingPoints} />
       </ContentContainer>
+      {sortedMeetingList && (
+        <ContentContainer>
+          {sortedMeetingList.map((meetingItem) => (
+            <PloggingMeetingViewer
+              meetingItem={meetingItem}
+              onSelect={onSelectPloggingMeeting(meetingItem.id, meetingItem.category)}
+              key={`plogging_meeting_viewer_${meetingItem.id}`}
+            />
+          ))}
+        </ContentContainer>
+      )}
       <TabBar />
     </Root>
   )
