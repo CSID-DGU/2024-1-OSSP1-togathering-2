@@ -32,7 +32,7 @@ export const PloggingSoloAlertPage: FC<PloggingSoloAlertPageProps> = ({ classNam
   const navigate = useNavigate()
 
   const onClickCheckButton = () => {
-    navigate('/plogging/solo/progress', { state })
+    navigate('/solo/progress', { state })
   }
 
   return (

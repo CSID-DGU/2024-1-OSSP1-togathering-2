@@ -29,11 +29,11 @@ export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps>
   const [meetingList, setMeetingList] = useState<MeetingListType>([])
 
   const onClickMeetingViewer = (ploggingMeetingId: number, selectedCategory: MeetingCategoryType) => () => {
-    navigate('/plogging/meeting/alert', { state: { ploggingMeetingId, selectedCategory } })
+    navigate('/meeting/alert', { state: { ploggingMeetingId, selectedCategory } })
   }
 
   const onClickMeetingListPage = () => {
-    navigate('/plogging/meeting/list')
+    navigate('/meeting/list')
   }
 
   useEffect(() => {

@@ -113,7 +113,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
   }
 
   const onClickCreateMeetingButton = () => {
-    navigate('/plogging/meeting/create/course')
+    navigate('/meeting/create/course')
   }
 
   useEffect(() => {

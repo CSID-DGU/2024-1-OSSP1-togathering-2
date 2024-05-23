@@ -11,7 +11,7 @@ type PopularCourseSectionProps = {
 export const PopularCourseSection: FC<PopularCourseSectionProps> = ({ className }) => {
   const navigate = useNavigate()
   const onSelectPloggingCourse = (id: number) => () => {
-    navigate('/plogging/solo/confirm', { state: { ploggingCourseId: id } })
+    navigate('/solo/confirm', { state: { ploggingCourseId: id } })
   }
 
   const washedCourseList = (() => {

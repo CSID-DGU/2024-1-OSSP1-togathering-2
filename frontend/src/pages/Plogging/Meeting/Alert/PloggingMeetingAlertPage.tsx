@@ -30,7 +30,7 @@ export const PloggingMeetingAlertPage: FC<PloggingMeetingAlertPageProps> = ({ cl
   const navigate = useNavigate()
 
   const onClickCheckButton = () => {
-    navigate('/plogging/meeting/progress', { state })
+    navigate('/meeting/progress', { state })
   }
 
   return (

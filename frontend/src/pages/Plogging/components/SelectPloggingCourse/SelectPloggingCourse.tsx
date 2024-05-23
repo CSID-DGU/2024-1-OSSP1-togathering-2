@@ -177,7 +177,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
   }
 
   const onClickCreateCourseButton = () => {
-    navigate('/plogging/course/create')
+    navigate('/course/create')
     return
   }
 

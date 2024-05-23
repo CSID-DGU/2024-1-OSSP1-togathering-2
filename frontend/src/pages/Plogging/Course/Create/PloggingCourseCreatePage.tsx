@@ -85,7 +85,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
   }
   const onClickButtonGoBack = () => {
     if (confirm('정말로 이동하시겠습니까? 기존 작업은 전부 삭제됩니다.')) {
-      navigate('/plogging/course/list', { replace: true })
+      navigate('/course/list', { replace: true })
     }
   }
 

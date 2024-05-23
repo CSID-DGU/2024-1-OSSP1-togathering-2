@@ -31,7 +31,7 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
   const navigate = useNavigate()
 
   const onClickButtonPloggingCourseList = () => {
-    navigate('/plogging/course/list')
+    navigate('/course/list')
     return
   }
 
@@ -95,18 +95,8 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
           />
         </PloggingMapWrapper>
         <PloggingMapButtonContainer>
-          <PloggingMapButton
-            primary={true}
-            icon={() => <UserOutlined />}
-            text="혼자 시작"
-            href="/plogging/solo/course"
-          />
-          <PloggingMapButton
-            primary={true}
-            icon={() => <TeamOutlined />}
-            text="함께 시작"
-            href="/plogging/meeting/list"
-          />
+          <PloggingMapButton primary={true} icon={() => <UserOutlined />} text="혼자 시작" href="/solo/course" />
+          <PloggingMapButton primary={true} icon={() => <TeamOutlined />} text="함께 시작" href="/meeting/list" />
         </PloggingMapButtonContainer>
       </PloggingMapContainer>
       <LatestMeetingSection />

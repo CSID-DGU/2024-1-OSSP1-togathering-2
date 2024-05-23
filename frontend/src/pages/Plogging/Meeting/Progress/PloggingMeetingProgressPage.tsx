@@ -45,7 +45,7 @@ export const PloggingMeetingProgressPage: FC<PloggingMeetingProgressPageProps> =
     return
   }
   const onClickButtonPloggingDone = () => {
-    navigate('/plogging/meeting/review', { state })
+    navigate('/meeting/review', { state })
     return
   }
 

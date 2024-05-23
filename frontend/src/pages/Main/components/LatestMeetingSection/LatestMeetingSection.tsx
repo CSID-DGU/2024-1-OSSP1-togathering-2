@@ -13,7 +13,7 @@ type LatestMeetingSectionProps = {
 export const LatestMeetingSection: FC<LatestMeetingSectionProps> = ({ className }) => {
   const navigate = useNavigate()
   const onSelectPloggingCourse = (id: number, category: MeetingCategoryType) => () => {
-    navigate('/plogging/meeting/confirm', { state: { ploggingMeetingId: id, selectedCategory: category } })
+    navigate('/meeting/confirm', { state: { ploggingMeetingId: id, selectedCategory: category } })
   }
   const washedMeetingList = (() => {
     let newMeetingList = ALL_MEETING_LIST_SAMPLE.sort((a, b) => (dayjs(a.createdAt).isAfter(b.createdAt) ? 1 : -1))
