@@ -8,6 +8,7 @@ on:
       - '**/settings.gradle*'
       - '**/application*.yml'
       - '**/*.sql'
+      - '**/*.yaml'
   pull_request:
     branches: [ "backend" ]
     paths:
