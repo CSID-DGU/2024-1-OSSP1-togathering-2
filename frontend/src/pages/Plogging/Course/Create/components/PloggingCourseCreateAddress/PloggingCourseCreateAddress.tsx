@@ -47,8 +47,8 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
         data.map((addressItem: any) => ({
           label: `${addressItem.place_name}(${addressItem.address_name})`,
           value: JSON.stringify({
-            lat: addressItem.y,
-            lng: addressItem.x,
+            lat: +addressItem.y,
+            lng: +addressItem.x,
             name: `${addressItem.place_name}(${addressItem.address_name})`,
           }),
         }))

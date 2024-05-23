@@ -182,7 +182,14 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
   }, [courseList, setCourseList])
 
   if (courseList.length === 0) {
-    return <span />
+    return (
+      <Root className={className}>
+        <CreateCourseButton type={'primary'} onClick={onClickCreateCourseButton}>
+          <PlusCircleOutlined />
+          <CreateCourseButtonTypo>나만의 코스 만들기</CreateCourseButtonTypo>
+        </CreateCourseButton>
+      </Root>
+    )
   }
 
   const washedCourseList = (() => {
