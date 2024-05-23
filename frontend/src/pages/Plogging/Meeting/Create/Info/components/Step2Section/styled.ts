@@ -25,7 +25,7 @@ export const Step2Button = styled(Button)`
 `
 
 export const Step2CountTypo = styled(Typography)`
-  width: 20px;
+  width: 40px;
   display: flex;
   justify-content: center;
   font-size: 24px;
@@ -47,4 +47,13 @@ export const Step2SubmitButtonTypo = styled(Typography)`
   font-size: 16px;
   font-weight: 500;
   color: ${lightTheme.colors.base['50']};
+`
+
+export const Step2CaptionTypo = styled(Typography)`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 12px;
+  color: ${lightTheme.colors.base['500']};
 `

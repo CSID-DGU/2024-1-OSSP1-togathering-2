@@ -51,7 +51,7 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
   const handleStep2Count = (type: 'PLUS' | 'MINUS') => () => {
     if (type === 'PLUS') {
       setStep2Count((prev) => {
-        if (prev >= 100) {
+        if (prev > 100) {
           return prev
         }
         return prev + 1
