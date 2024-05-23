@@ -118,8 +118,6 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
   const [sortedCourseList, setSortedCourseList] = useState<CourseListType>([])
   const [isSatisfied, setIsSatisfied] = useState<boolean>()
 
-  console.log({ courseList })
-
   const onClickSearchChip = () => {
     openSearch()
   }
