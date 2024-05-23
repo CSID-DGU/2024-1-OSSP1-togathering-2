@@ -52,6 +52,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
         working-directory: ${{ secrets.WORKING_BACKEND }}
+      # sentry
+      - name: Install Sentry CLI
+        run: curl -sL https://sentry.io/get-cli/ | bash
+      - name: Sentry CLI Login
+        run: sentry-cli login --auth-token ${{ secrets.SENTRY_AUTH_TOKEN }}
       - name: Build with Gradle
         run: ./gradlew clean build -x test
         working-directory: ${{ secrets.WORKING_BACKEND }}
