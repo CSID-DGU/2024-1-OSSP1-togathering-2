@@ -71,6 +71,10 @@ const sortConditionList = [
     indexList: [5, 3, 2, 1, 4],
   },
   {
+    label: '최신순',
+    indexList: [5, 3, 2, 1, 4],
+  },
+  {
     label: '가까운 거리 순',
     indexList: getRandomOrder(100),
   },
@@ -195,12 +199,15 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
       return newCourseList.filter((courseItem) => courseItem?.name && courseItem.name.indexOf(searchKeyword) !== -1)
     }
 
-    if (sortConditionIndex === 2) {
+    if (sortConditionIndex === 1) {
+      return newCourseList
+    }
+    if (sortConditionIndex === 3) {
       newCourseList.sort((a, b) => getTotalDistance(a.coordinateList) - getTotalDistance(b.coordinateList))
       return newCourseList
     }
 
-    if (sortConditionIndex === 3) {
+    if (sortConditionIndex === 4) {
       newCourseList.sort((a, b) => getTotalDistance(b.coordinateList) - getTotalDistance(a.coordinateList))
       return newCourseList
     }
@@ -218,7 +225,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
 
   useEffect(() => {
     if (courseList.length > 0) {
-      if (sortConditionIndex === 1) {
+      if (sortConditionIndex === 2) {
         getWashedCourseListNearBy().then((value) => setSortedCourseList(value))
       } else {
         setSortedCourseList(getWashedCourseList(sortConditionIndex))
