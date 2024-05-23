@@ -25,6 +25,7 @@ import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/consta
 import { useLocation, useNavigate } from 'react-router-dom'
 import { MeetingCategoryType } from 'types/meeting'
 import { CourseListType } from 'types/plogging'
+import { getTotalDistance, getTotalDuration } from 'utils/getCourseItemInfo'
 import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 
@@ -71,6 +72,12 @@ export const PloggingSoloConfirmPage: FC<PloggingSoloConfirmPageProps> = ({ clas
     return
   }
 
+  let totalDistance = selectedPloggingCourseItem ? getTotalDistance(selectedPloggingCourseItem.coordinateList) : null
+  let totalDuration =
+    selectedPloggingCourseItem && selectedCategory && totalDistance
+      ? getTotalDuration(selectedCategory, totalDistance)
+      : null
+
   return (
     <Root className={className}>
       <Header title={'혼자하기'} showBackButton />
@@ -103,7 +110,7 @@ export const PloggingSoloConfirmPage: FC<PloggingSoloConfirmPageProps> = ({ clas
             </SubtitleCircle>
             <SubtitleTypo>활동 정보를 확인해주세요.</SubtitleTypo>
           </SubtitleContainer>
-          {selectedPloggingCourseItem && (
+          {selectedPloggingCourseItem && totalDuration && totalDistance && (
             <>
               <PloggingCourseViewer isDetail={true} courseItem={selectedPloggingCourseItem} />
               <ContentContainer>
@@ -116,17 +123,21 @@ export const PloggingSoloConfirmPage: FC<PloggingSoloConfirmPageProps> = ({ clas
                 <InfoContainer>
                   <InfoItemContainer isDivided>
                     <InfoItemTitleTypo>총 거리</InfoItemTitleTypo>
-                    <InfoItemContentTypo>1,000m</InfoItemContentTypo>
+                    <InfoItemContentTypo>{`약 ${totalDistance}m`}</InfoItemContentTypo>
                   </InfoItemContainer>
                   <InfoItemContainer isDivided>
                     <InfoItemTitleTypo>예상 소요 시간</InfoItemTitleTypo>
-                    <InfoItemContentTypo>12분</InfoItemContentTypo>
+                    <InfoItemContentTypo>
+                      {totalDuration.minute === 0
+                        ? `${totalDuration.second}초`
+                        : `${totalDuration.minute}분 ${totalDuration.second}초`}
+                    </InfoItemContentTypo>
                   </InfoItemContainer>
                 </InfoContainer>
                 <InfoContainer>
                   <InfoItemContainer>
                     <InfoItemTitleTypo>완주시 얻게 되는 점수</InfoItemTitleTypo>
-                    <InfoItemContentTypo>24점</InfoItemContentTypo>
+                    <InfoItemContentTypo>{totalDuration.minute * 2}점</InfoItemContentTypo>
                   </InfoItemContainer>
                 </InfoContainer>
               </ContentContainer>
