@@ -67,12 +67,6 @@ jobs:
           GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
           GOOGLE_AUTHORIZATION_GRANT_TYPE: ${{ secrets.GOOGLE_AUTHORIZATION_GRANT_TYPE }}
           GOOGLE_SCOPE: ${{ secrets.GOOGLE_SCOPE }}
-          spring.security.oauth2.client.registration.google.client-name: ${{ secrets.GOOGLE_CLIENT_NAME }}
-          spring.security.oauth2.client.registration.google.client-id: ${{ secrets.GOOGLE_CLIENT_ID }}
-          spring.security.oauth2.client.registration.google.client-secret: ${{ secrets.GOOGLE_CLINET_SECRET }}
-          spring.security.oauth2.client.registration.google.redirect-uri: ${{ secrets.GOOGLE_REDIRECT_URI }}
-          spring.security.oauth2.client.registration.google.authorization-grant-type: ${{ secrets.GOOGLE_AUTHORIZATION_GRANT_TYPE }}
-          spring.security.oauth2.client.registration.google.scope: ${{ secrets.GOOGLE_SCOPE }}
       - name: Create env file
         run: |
           echo SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} >> .env
@@ -86,12 +80,6 @@ jobs:
           echo GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }} >> .env
           echo GOOGLE_AUTHORIZATION_GRANT_TYPE=${{ secrets.GOOGLE_AUTHORIZATION_GRANT_TYPE }} >> .env
           echo GOOGLE_SCOPE=${{ secrets.GOOGLE_SCOPE }} >> .env
-          echo spring.security.oauth2.client.registration.google.client-name=${{ secrets.GOOGLE_CLIENT_NAME }} >> .env
-          echo spring.security.oauth2.client.registration.google.client-id=${{ secrets.GOOGLE_CLIENT_ID }} >> .env
-          echo spring.security.oauth2.client.registration.google.client-secret=${{ secrets.GOOGLE_CLINET_SECRET }} >> .env
-          echo spring.security.oauth2.client.registration.google.redirect-uri=${{ secrets.GOOGLE_REDIRECT_URI }} >> .env
-          echo spring.security.oauth2.client.registration.google.authorization-grant-type=${{ secrets.GOOGLE_AUTHORIZATION_GRANT_TYPE }} >> .env
-          echo spring.security.oauth2.client.registration.google.scope=${{ secrets.GOOGLE_SCOPE }} >> .env
       ## 이미지 빌드 및 도커허브에 push ..
       - name: Login to Docker Hub
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
