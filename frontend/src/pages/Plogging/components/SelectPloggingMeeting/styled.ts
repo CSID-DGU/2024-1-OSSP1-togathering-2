@@ -1,5 +1,5 @@
 import { IconSparkles } from '@tabler/icons-react'
-import { Button, Input, Typography } from 'antd'
+import { Button, Input, Select, Typography } from 'antd'
 import styled from 'styled-components'
 import { lightTheme } from 'styles/theme'
 
@@ -159,4 +159,8 @@ export const AISubmitButtonTypo = styled(Typography)<{ isLoading?: boolean }>`
   font-size: 16px;
   font-weight: 500;
   color: ${(props) => (props.isLoading ? lightTheme.colors.base['700'] : lightTheme.colors.base['50'])};
+`
+
+export const SearchCategorySelect = styled(Select)`
+  width: 100%;
 `

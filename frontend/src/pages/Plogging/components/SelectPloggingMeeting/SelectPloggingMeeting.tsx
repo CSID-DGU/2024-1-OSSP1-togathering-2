@@ -20,6 +20,7 @@ import {
   Root,
   SearchButton,
   SearchButtonTypo,
+  SearchCategorySelect,
   SearchInput,
   SortConditionChip,
   SortConditionChipTypo,
@@ -54,10 +55,21 @@ const sortConditionList = [
   },
 ]
 
+type SearchCategoryType = MeetingCategoryType | 'ALL'
+
+export const SEARCH_CATEGORY_SELECT_OPTIONS: { label: string; value: SearchCategoryType }[] = [
+  { label: '전체', value: 'ALL' },
+  { label: '산책', value: 'WALK' },
+  { label: '러닝', value: 'RUNNING' },
+  { label: '라이딩', value: 'BICYCLE' },
+  { label: '플로깅', value: 'PLOGGING' },
+]
+
 export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ className, onSelectPloggingMeeting }) => {
   const navigate = useNavigate()
   const { state: isSearchAvailable, setTrue: openSearch, setFalse: closeSearch } = useBooleanState(false)
   const [searchKeyword, setSearchKeyword] = useState<string>('')
+  const [searchCategory, setSearchCategory] = useState<SearchCategoryType>('ALL')
   const {
     state: isSearchResultAvailable,
     setTrue: showSearchResult,
@@ -72,6 +84,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
     closeSearch()
     closeSearchResult()
     setSearchKeyword('')
+    setSearchCategory('ALL')
     return
   }
 
@@ -79,9 +92,13 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
     openSearch()
   }
 
+  const onChangeCategory = (value: any) => {
+    setSearchCategory(value)
+    closeSearchResult()
+  }
+
   const onChangeSearch = (e: any) => {
     setSearchKeyword(e.target.value)
-    closeSearchResult()
   }
 
   const onKeyPressEnter = (e: any) => {
@@ -91,10 +108,6 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
   }
 
   const onClickSearchButton = () => {
-    if (searchKeyword.length < 2) {
-      alert('두 글자 이상 입력해주세요!')
-      return
-    }
     showSearchResult()
   }
 
@@ -119,9 +132,14 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
 
   const getWashedMeetingList = (sortConditionIndex: number) => {
     let newMeetingList: MeetingListType = [...meetingList]
-
-    if (isSearchResultAvailable) {
-      return newMeetingList.filter((courseItem) => courseItem?.name && courseItem.name.indexOf(searchKeyword) !== -1)
+    if (isSearchAvailable) {
+      console.log(newMeetingList, searchCategory)
+      return newMeetingList.filter(
+        (courseItem) =>
+          courseItem?.name &&
+          courseItem.name.indexOf(searchKeyword) !== -1 &&
+          (courseItem.category === searchCategory || searchCategory === 'ALL')
+      )
     }
 
     if (sortConditionIndex === 0) {
@@ -161,7 +179,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
         setSortedMeetingList(getWashedMeetingList(sortConditionIndex))
       }
     }
-  }, [meetingList, sortConditionIndex, setSortConditionIndex])
+  }, [meetingList, sortConditionIndex, setSortConditionIndex, searchKeyword, searchCategory])
 
   if (meetingList.length === 0) {
     return (
@@ -208,6 +226,13 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
           ))}
         {isSearchAvailable && (
           <>
+            <SearchCategorySelect
+              size={'middle'}
+              placeholder="모임 카테고리를 선택해주세요."
+              optionFilterProp="children"
+              onChange={onChangeCategory}
+              options={SEARCH_CATEGORY_SELECT_OPTIONS}
+            />
             <SearchInput
               placeholder="검색어를 입력해주세요."
               value={searchKeyword}
