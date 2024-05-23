@@ -7,8 +7,10 @@ on:
       - '**/build.gradle*'
       - '**/settings.gradle*'
       - '**/application*.yml'
-      - '**/*.sql'
       - '**/*.yaml'
+      - '**/docker-compose.yml'
+      - '**/Dockerfile'
+      - '**/*.conf'
   pull_request:
     branches: [ "backend" ]
     paths:
@@ -16,8 +18,10 @@ on:
       - '**/build.gradle*'
       - '**/settings.gradle*'
       - '**/application*.yml'
-      - '**/*.sql'
       - '**/*.yaml'
+      - '**/docker-compose.yml'
+      - '**/Dockerfile'
+      - '**/*.conf'
 permissions:
   contents: read
 jobs:
