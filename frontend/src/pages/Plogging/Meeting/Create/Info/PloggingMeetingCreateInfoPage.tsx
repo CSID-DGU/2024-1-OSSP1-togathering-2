@@ -96,10 +96,13 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
       alert('모임 이름은 2글자 이상 입력해주세요.')
       return
     }
+    let now = new Date()
+    let nowDayjs = dayjs(now)
 
     let currentMeetingList = loadLocalStorage(MEETING_LIST_KEY)
     if (typeof currentMeetingList === 'string') {
       let parsedMeetingList = JSON.parse(currentMeetingList) as LocalStorageMeetingListType
+
       let maxId = 0
       parsedMeetingList.meetingList.forEach((value) => {
         if (maxId < value.id) {
@@ -111,11 +114,11 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
         {
           id: maxId,
           courseItem: selectedPloggingCourseItem,
-          createdAt: '2024-05-19T15:53:00',
           maxCount: step2Count,
           name: step3Name,
           category: selectedCategory,
           startAt,
+          createdAt: nowDayjs.format('YYYY-MM-DDTHH:mm'),
         },
         ...parsedMeetingList.meetingList,
       ]
@@ -138,19 +141,18 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
 
     let maxId = 35
 
-    let parsedMeetingList = {
-      meetingList: [
-        {
-          id: maxId,
-          courseItem: selectedPloggingCourseItem,
-          createdAt: '2024-05-19T15:53:00',
-          maxCount: step2Count,
-          name: step3Name,
-          category: selectedCategory,
-        },
-        ...ALL_MEETING_LIST_SAMPLE,
-      ],
-    }
+    let parsedMeetingList = [
+      {
+        id: maxId,
+        courseItem: selectedPloggingCourseItem,
+        maxCount: step2Count,
+        name: step3Name,
+        category: selectedCategory,
+        startAt,
+        createdAt: nowDayjs.format('YYYY-MM-DDTHH:mm'),
+      },
+      ...ALL_MEETING_LIST_SAMPLE,
+    ]
     saveLocalStorage(MEETING_LIST_KEY, JSON.stringify({ meetingList: parsedMeetingList }))
 
     let currentMeetingIdList = loadLocalStorage(SELECTED_MEETING_LIST_KEY)
