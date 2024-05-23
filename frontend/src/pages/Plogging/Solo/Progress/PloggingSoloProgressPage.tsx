@@ -33,9 +33,9 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
   const { state } = useLocation()
   const { ploggingCourseId, selectedCategory } = state
   const navigate = useNavigate()
-  const [courseList, setCourseList] = useState<CourseListType>([])
   const { state: isSimulating, setTrue: startSimulate, setFalse: stopSimulate } = useBooleanState(false)
 
+  const [courseList, setCourseList] = useState<CourseListType>([])
   useEffect(() => {
     let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
     if (newCourseList) {
