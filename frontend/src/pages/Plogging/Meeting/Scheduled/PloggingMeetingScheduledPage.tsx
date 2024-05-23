@@ -5,12 +5,7 @@ import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {
-  LocalSelectedMeetingListType,
-  LocalStorageMeetingListType,
-  MeetingCategoryType,
-  MeetingListType,
-} from 'types/meeting'
+import { LocalSelectedMeetingListType, MeetingCategoryType, MeetingListType } from 'types/meeting'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
   ContentContainer,
@@ -47,12 +42,14 @@ export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps>
       let parsedMeetingIdList = JSON.parse(currentMeetingIdList) as LocalSelectedMeetingListType
 
       let currentMeetingList = loadLocalStorage(MEETING_LIST_KEY)
-      let parsedMeetingList: LocalStorageMeetingListType | null = null
+      let parsedMeetingList: MeetingListType | null = null
       if (typeof currentMeetingList === 'string') {
-        parsedMeetingList = JSON.parse(currentMeetingList).meetingList as LocalStorageMeetingListType
+        parsedMeetingList = JSON.parse(currentMeetingList).meetingList as MeetingListType
       }
 
-      let allMeetingList = parsedMeetingList ? parsedMeetingList.meetingList : ALL_MEETING_LIST_SAMPLE
+      let allMeetingList = parsedMeetingList ? parsedMeetingList : ALL_MEETING_LIST_SAMPLE
+
+      console.log(allMeetingList)
       setMeetingList(
         parsedMeetingIdList.selectedMeetingList.map((value) => {
           return allMeetingList.filter((value2) => value2.id === value.id)[0]
