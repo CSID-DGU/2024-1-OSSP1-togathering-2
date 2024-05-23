@@ -49,7 +49,7 @@ export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps>
       let currentMeetingList = loadLocalStorage(MEETING_LIST_KEY)
       let parsedMeetingList: LocalStorageMeetingListType | null = null
       if (typeof currentMeetingList === 'string') {
-        parsedMeetingList = JSON.parse(currentMeetingList) as LocalStorageMeetingListType
+        parsedMeetingList = JSON.parse(currentMeetingList).meetingList as LocalStorageMeetingListType
       }
 
       let allMeetingList = parsedMeetingList ? parsedMeetingList.meetingList : ALL_MEETING_LIST_SAMPLE

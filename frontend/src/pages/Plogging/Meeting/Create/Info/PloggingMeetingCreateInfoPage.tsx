@@ -151,7 +151,7 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
         ...ALL_MEETING_LIST_SAMPLE,
       ],
     }
-    saveLocalStorage(MEETING_LIST_KEY, JSON.stringify(parsedMeetingList))
+    saveLocalStorage(MEETING_LIST_KEY, JSON.stringify({ meetingList: parsedMeetingList }))
 
     let currentMeetingIdList = loadLocalStorage(SELECTED_MEETING_LIST_KEY)
     if (typeof currentMeetingIdList === 'string') {
@@ -159,7 +159,7 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
         currentMeetingIdList
       ) as LocalSelectedMeetingListType
       parsedMeetingIdList.selectedMeetingList = [{ id: maxId }, ...parsedMeetingIdList.selectedMeetingList]
-      saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify(parsedMeetingIdList))
+      saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify({ meetingList: parsedMeetingList }))
     } else {
       saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify({ selectedMeetingList: [{ id: maxId }] }))
     }
@@ -183,6 +183,17 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
     setSelectedCategory(value)
     setStep('3')
     return
+  }
+
+  const onChangeStartAt = (_: any, dateString: any) => {
+    let now = new Date()
+    let newDate = dayjs(dateString)
+    if (newDate.isBefore(now)) {
+      alert('모임 시작 일정이 오늘이거나 과거입니다.')
+      return
+    }
+
+    setStartAt(newDate.format('YYYY-MM-DDTHH:mm'))
   }
 
   const onSubmitTime = () => {
@@ -260,7 +271,7 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
                   format: 'YYYY-MM-DDThh:mm:ss',
                   type: 'mask',
                 }}
-                onChange={(_: any, dateString: any) => setStartAt(dayjs(dateString).format('YYYY-MM-DDTHH:mm'))}
+                onChange={onChangeStartAt}
               />
               <SubmitButton type={'primary'} onClick={onSubmitTime}>
                 <SubmitButtonTypo>완료하기</SubmitButtonTypo>

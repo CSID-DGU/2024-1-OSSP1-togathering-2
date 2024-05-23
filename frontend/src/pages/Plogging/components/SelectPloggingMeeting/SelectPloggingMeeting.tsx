@@ -1,12 +1,14 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { IconSearch } from '@tabler/icons-react'
+import { MEETING_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { useBooleanState } from 'hooks/useBooleanState'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { lightTheme } from 'styles/theme'
 import { MeetingCategoryType, MeetingListType } from 'types/meeting'
 import { getRandomOrder } from 'utils/getRandomOrder'
+import { loadLocalStorage } from 'utils/handleLocalStorage'
 import { PloggingMeetingViewer } from '../PloggingMeetingViewer'
 import {
   CourseContainer,
@@ -56,7 +58,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
     setFalse: closeSearchResult,
   } = useBooleanState(false)
   const [sortConditionIndex, setSortConditionIndex] = useState(0)
-  const [meetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
+  const [meetingList, setMeetingList] = useState<MeetingListType>([])
 
   const onClickSortConditionButton = (id: number) => () => {
     setSortConditionIndex((prev) => {
@@ -94,6 +96,17 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
   const onClickCreateMeetingButton = () => {
     navigate('/plogging/meeting/create/course')
   }
+
+  useEffect(() => {
+    let newMeetingList = loadLocalStorage(MEETING_LIST_KEY)
+    if (newMeetingList) {
+      if (meetingList.length === 0) {
+        setMeetingList(JSON.parse(newMeetingList).meetingList)
+      }
+    } else {
+      setMeetingList(ALL_MEETING_LIST_SAMPLE)
+    }
+  }, [meetingList, setMeetingList])
 
   if (meetingList.length === 0) {
     return (
