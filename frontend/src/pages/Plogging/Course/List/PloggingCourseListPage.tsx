@@ -43,9 +43,11 @@ export const PloggingCourseListPage: FC<PloggingCourseListPageProps> = ({ classN
         </ContentButton>
       </ContentButtonContainer>
       <CourseContainer>
-        {courseList.map((courseItem, index) => (
-          <PloggingCourseViewer courseItem={courseItem} key={`plogging_course_viewer_${index}`} />
-        ))}
+        {courseList
+          .filter((courseItem) => !courseItem?.isHidden)
+          .map((courseItem, index) => (
+            <PloggingCourseViewer courseItem={courseItem} key={`plogging_course_viewer_${index}`} />
+          ))}
       </CourseContainer>
     </Root>
   )

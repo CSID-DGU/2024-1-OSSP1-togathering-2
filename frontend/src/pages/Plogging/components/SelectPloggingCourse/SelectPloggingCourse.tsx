@@ -8,7 +8,7 @@ import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/consta
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { lightTheme } from 'styles/theme'
-import { CourseListType } from 'types/plogging'
+import { CourseItemType, CourseListType } from 'types/plogging'
 import { sortCoursesNearBy } from 'utils/getCoordinatesDistance'
 import { getTotalDistance } from 'utils/getCourseItemInfo'
 import { getRandomOrder } from 'utils/getRandomOrder'
@@ -279,13 +279,15 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
       {sortConditionIndex !== 0 && !isSearchAvailable && (
         <>
           <CourseContainer>
-            {sortedCourseList.map((courseItem) => (
-              <PloggingCourseViewer
-                courseItem={courseItem}
-                onSelect={onClickSelectPloggingCourseButton(courseItem.id)}
-                key={`plogging_course_viewer_${courseItem.id}`}
-              />
-            ))}
+            {sortedCourseList
+              .filter((courseItem: CourseItemType) => !courseItem?.isHidden)
+              .map((courseItem) => (
+                <PloggingCourseViewer
+                  courseItem={courseItem}
+                  onSelect={onClickSelectPloggingCourseButton(courseItem.id)}
+                  key={`plogging_course_viewer_${courseItem.id}`}
+                />
+              ))}
           </CourseContainer>
           <CreateCourseButton type={'primary'} onClick={onClickCreateCourseButton}>
             <PlusCircleOutlined />
@@ -342,13 +344,15 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
       {sortConditionIndex === 0 && loading === 'DONE' && (
         <>
           <CourseContainer>
-            {sortedCourseList.map((courseItem) => (
-              <PloggingCourseViewer
-                courseItem={courseItem}
-                onSelect={onClickSelectPloggingCourseButton(courseItem.id)}
-                key={`plogging_course_viewer_${courseItem.id}`}
-              />
-            ))}
+            {sortedCourseList
+              .filter((courseItem: CourseItemType) => !courseItem.isHidden)
+              .map((courseItem) => (
+                <PloggingCourseViewer
+                  courseItem={courseItem}
+                  onSelect={onClickSelectPloggingCourseButton(courseItem.id)}
+                  key={`plogging_course_viewer_${courseItem.id}`}
+                />
+              ))}
           </CourseContainer>
           <QuestionContainer>
             <QuestionItemContainer>

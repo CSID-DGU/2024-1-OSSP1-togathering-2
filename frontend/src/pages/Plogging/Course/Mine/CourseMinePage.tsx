@@ -4,7 +4,7 @@ import { TabBar } from 'components/TabBar'
 import { MY_COURSE_LIST_KEY, PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CourseListType } from 'types/plogging'
+import { CourseItemType, CourseListType } from 'types/plogging'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 import { PloggingCourseViewer } from '../Create/components/PloggingCourseViewer'
 import {
@@ -66,11 +66,13 @@ export const CourseMinePage: FC<CourseMinePageProps> = ({ className }) => {
         <CreateCourseButtonTypo>나만의 코스 만들기</CreateCourseButtonTypo>
       </CreateCourseButton>
       <ContentContainer>
-        {courseList.map((courseItem, index) => (
-          <PloggingCourseViewerWrapper key={`plogging_course_viewer_${index}`}>
-            <PloggingCourseViewer courseItem={courseItem} onEdit={onClickEditCourseButton(courseItem.id)} />
-          </PloggingCourseViewerWrapper>
-        ))}
+        {courseList
+          .filter((courseItem: CourseItemType) => !courseItem?.isHidden)
+          .map((courseItem, index) => (
+            <PloggingCourseViewerWrapper key={`plogging_course_viewer_${index}`}>
+              <PloggingCourseViewer courseItem={courseItem} onEdit={onClickEditCourseButton(courseItem.id)} />
+            </PloggingCourseViewerWrapper>
+          ))}
         {courseList.length === 0 ||
           (myCourseIdList.length === 0 && <SubtitleTypo>나만의 코스가 없어요 ㅠㅠ</SubtitleTypo>)}
       </ContentContainer>

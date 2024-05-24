@@ -15,6 +15,7 @@ export type CourseItemType = {
   id: number
   coordinateList: CourseCoordinateListType
   name?: string
+  isHidden?: boolean
 }
 
 export type CourseListType = CourseItemType[]
