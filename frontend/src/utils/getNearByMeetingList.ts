@@ -5,8 +5,7 @@ export const getNearByMeetingList = (meetingList: MeetingListType, now: { lng: n
   let newMeetingList: MeetingListType = []
 
   meetingList.forEach((meetingItem) => {
-    console.log(meetingItem.name, getCoordinatesDistance(now, meetingItem.courseItem.coordinateList[0]))
-    if (getCoordinatesDistance(now, meetingItem.courseItem.coordinateList[0]) < 400) {
+    if (getCoordinatesDistance(now, meetingItem.courseItem.coordinateList[0]) < 800) {
       newMeetingList.push(meetingItem)
     }
   })
