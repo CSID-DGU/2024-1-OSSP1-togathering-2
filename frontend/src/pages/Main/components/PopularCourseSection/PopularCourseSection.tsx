@@ -15,7 +15,7 @@ export const PopularCourseSection: FC<PopularCourseSectionProps> = ({ className 
   }
 
   const washedCourseList = (() => {
-    let newCourseList = PLOGGING_COURSE_LIST_SAMPLE.courseList
+    let newCourseList = PLOGGING_COURSE_LIST_SAMPLE.courseList.filter((courseItem) => !courseItem?.isHidden)
     return newCourseList
   })().filter((_, index) => index < 8)
 

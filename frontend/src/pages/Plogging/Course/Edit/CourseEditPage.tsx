@@ -69,7 +69,6 @@ export const CourseEditPage: FC<CourseEditPageProps> = ({ className }) => {
     let currentPloggingCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
     if (currentPloggingCourseList) {
       let newPloggingCourseList: LocalStorageCourseListType = JSON.parse(currentPloggingCourseList)
-      console.log(newPloggingCourseList)
       let newId = newPloggingCourseList.courseList.length
 
       newPloggingCourseList = {
@@ -79,9 +78,12 @@ export const CourseEditPage: FC<CourseEditPageProps> = ({ className }) => {
             name: courseName,
             coordinateList: newCoordinateList,
           },
-          ...newPloggingCourseList.courseList,
+          ...newPloggingCourseList.courseList.map((courseItem) =>
+            courseItem.id === ploggingCourseId ? { ...courseItem, isHidden: true } : courseItem
+          ),
         ],
       }
+
       saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(newPloggingCourseList))
 
       let myCourseIdList = loadLocalStorage(MY_COURSE_LIST_KEY)
@@ -105,7 +107,9 @@ export const CourseEditPage: FC<CourseEditPageProps> = ({ className }) => {
             name: courseName,
             coordinateList: newCoordinateList,
           },
-          ...PLOGGING_COURSE_LIST_SAMPLE.courseList,
+          ...PLOGGING_COURSE_LIST_SAMPLE.courseList.map((courseItem) =>
+            courseItem.id === ploggingCourseId ? { ...courseItem, isHidden: true } : courseItem
+          ),
         ],
       }
       saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(newPloggingCourseList))
