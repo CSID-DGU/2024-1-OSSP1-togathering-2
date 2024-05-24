@@ -20,6 +20,7 @@ type PloggingCourseViewerProps = {
   courseItem: CourseItemType
   isDetail?: boolean
   onSelect?: () => void
+  onEdit?: () => void
   isSimulating?: boolean
   stopSimulate?: () => void
   hideInfo?: boolean
@@ -31,6 +32,7 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({
   className,
   courseItem,
   onSelect,
+  onEdit,
   isDetail = false,
   isSimulating = false,
   stopSimulate,
@@ -153,6 +155,11 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({
           {onSelect && (
             <SelectButton type={'primary'} onClick={onSelect}>
               <SelectButtonTypo>코스 선택</SelectButtonTypo>
+            </SelectButton>
+          )}
+          {onEdit && (
+            <SelectButton type={'primary'} onClick={onEdit}>
+              <SelectButtonTypo>코스 수정</SelectButtonTypo>
             </SelectButton>
           )}
         </MenuContainer>

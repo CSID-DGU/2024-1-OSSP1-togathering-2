@@ -35,6 +35,11 @@ export const CourseMinePage: FC<CourseMinePageProps> = ({ className }) => {
     return
   }
 
+  const onClickEditCourseButton = (id: number) => () => {
+    navigate('/course/edit', { state: { ploggingCourseId: id } })
+    return
+  }
+
   useEffect(() => {
     let currentMyCourseIdList = loadLocalStorage(MY_COURSE_LIST_KEY)
     if (typeof currentMyCourseIdList === 'string') {
@@ -62,11 +67,8 @@ export const CourseMinePage: FC<CourseMinePageProps> = ({ className }) => {
       </CreateCourseButton>
       <ContentContainer>
         {courseList.map((courseItem, index) => (
-          <PloggingCourseViewerWrapper
-            key={`plogging_course_viewer_${index}`}
-            onClick={onSelectPloggingCourse(courseItem.id)}
-          >
-            <PloggingCourseViewer courseItem={courseItem} />
+          <PloggingCourseViewerWrapper key={`plogging_course_viewer_${index}`}>
+            <PloggingCourseViewer courseItem={courseItem} onEdit={onClickEditCourseButton(courseItem.id)} />
           </PloggingCourseViewerWrapper>
         ))}
         {courseList.length === 0 ||

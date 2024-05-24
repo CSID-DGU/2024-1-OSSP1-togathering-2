@@ -15,7 +15,7 @@ import {
   SubtitleCircle,
   SubtitleCircleTypo,
   SubtitleContainer,
-  SubtitleTypo,
+  SubtitleTypo
 } from './styled'
 
 import { IconRun } from '@tabler/icons-react'
@@ -43,9 +43,9 @@ export const CREATE_TYPE_SELECT_OPTIONS: { label: string; value: MeetingCategory
 export const PloggingSoloConfirmPage: FC<PloggingSoloConfirmPageProps> = ({ className }) => {
   const [selectedCategory, setSelectedCategory] = useState<MeetingCategoryType>()
   const { state } = useLocation()
-  const { ploggingCourseId } = state
   const navigate = useNavigate()
   const [courseList, setCourseList] = useState<CourseListType>([])
+  const { ploggingCourseId } = state
 
   useEffect(() => {
     let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)

@@ -4,7 +4,6 @@ import { useBooleanState } from 'hooks/useBooleanState'
 import { FC, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
 import { CoordinateItemType, CourseCoordinateListType } from 'types/plogging'
-import { DEFAULT_KAKAO_MAP_COORDINATE } from '../../constant'
 import { AddressSelectOptionListType } from '../../type'
 import {
   CourseEditorAlertTypo,
@@ -30,15 +29,21 @@ import {
 type PloggingCourseCreateClickProps = {
   className?: string
   onSave: (courseItem: CourseCoordinateListType) => void
+  newCoordinateList?: any[]
 }
 
-export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({ className, onSave }) => {
+export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({
+  className,
+  onSave,
+  newCoordinateList,
+}) => {
   const [initialAddressKeyword, setInitialAddressKeyword] = useState<string>('')
-  const [initialAddressCoordinate, setInitialAddressCoordinate] =
-    useState<CoordinateItemType>(DEFAULT_KAKAO_MAP_COORDINATE)
+  const [initialAddressCoordinate, setInitialAddressCoordinate] = useState<CoordinateItemType | null>(
+    newCoordinateList ? newCoordinateList[0] : null
+  )
   const [initialAddressSelectOptions, setInitialAddressSelectOptions] = useState<AddressSelectOptionListType>([])
 
-  const [courseCoordinateList, setCourseCoordinateList] = useState<CourseCoordinateListType>([])
+  const [courseCoordinateList, setCourseCoordinateList] = useState<CourseCoordinateListType>(newCoordinateList ?? [])
   const { state: courseCoordinateFlagActivate, toggleState: toggleCourseCoordinateFlagActivate } =
     useBooleanState(false)
 
@@ -150,7 +155,7 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({ 
         <>
           <KakaoMapContainer>
             <Map
-              center={initialAddressCoordinate}
+              center={initialAddressCoordinate ?? courseCoordinateList[courseCoordinateList.length - 1]}
               style={{
                 width: '100%',
                 height: '400px',
