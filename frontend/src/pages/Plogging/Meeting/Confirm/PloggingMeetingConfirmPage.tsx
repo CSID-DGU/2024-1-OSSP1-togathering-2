@@ -118,7 +118,7 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
                 <InfoItemContentTypo>{`약 ${totalDistance}m`}</InfoItemContentTypo>
               </InfoItemContainer>
               <InfoItemContainer isDivided>
-                <InfoItemTitleTypo>예상 소요 시간</InfoItemTitleTypo>
+                <InfoItemTitleTypo>예상 소요 시간(평지 기준)</InfoItemTitleTypo>
                 <InfoItemContentTypo>
                   {totalDuration.minute === 0
                     ? `${totalDuration.second}초`
