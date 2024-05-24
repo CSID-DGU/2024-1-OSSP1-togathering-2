@@ -1,8 +1,13 @@
 import { IconCheck } from '@tabler/icons-react'
+import { getWeather } from 'apis/common/getWeather'
 import { Header } from 'components/Header'
-import { FC } from 'react'
+import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
+import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
+import { FC, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { CourseListType } from 'types/plogging'
 import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
+import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
   AlertContainer,
   AlertContentTypo,
@@ -27,13 +32,52 @@ type PloggingSoloAlertPageProps = {
 
 export const PloggingSoloAlertPage: FC<PloggingSoloAlertPageProps> = ({ className }) => {
   const { state } = useLocation()
-  const { selectedCategory } = state
-
+  const { selectedCategory, ploggingCourseId } = state
   const navigate = useNavigate()
+  const [courseList, setCourseList] = useState<CourseListType>([])
+  const [temp, setTemp] = useState<number>(0)
 
   const onClickCheckButton = () => {
     navigate('/solo/progress', { state })
   }
+
+  useEffect(() => {
+    let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
+    if (newCourseList) {
+      if (courseList.length === 0) {
+        setCourseList(JSON.parse(newCourseList).courseList)
+      }
+    } else {
+      setCourseList(PLOGGING_COURSE_LIST_SAMPLE.courseList)
+    }
+  }, [courseList, setCourseList])
+
+  const selectedPloggingCourseItem =
+    courseList.filter((courseItem) => courseItem.id === ploggingCourseId).length > 0
+      ? courseList.filter((courseItem) => courseItem.id === ploggingCourseId)[0]
+      : null
+
+  let address = selectedPloggingCourseItem ? selectedPloggingCourseItem.coordinateList[0]?.name : ''
+
+  if (selectedPloggingCourseItem) {
+    getWeather(
+      selectedPloggingCourseItem?.coordinateList[0].lat,
+      selectedPloggingCourseItem?.coordinateList[0].lng
+    ).then((res) => console.log({ res }))
+  }
+
+  useEffect(() => {
+    if (selectedPloggingCourseItem) {
+      getWeather(
+        selectedPloggingCourseItem?.coordinateList[0].lat,
+        selectedPloggingCourseItem?.coordinateList[0].lng
+      ).then((res: any) => {
+        if (res) {
+          setTemp(+res.TMP as number)
+        }
+      })
+    }
+  }, [selectedPloggingCourseItem])
 
   return (
     <Root className={className}>
@@ -51,7 +95,7 @@ export const PloggingSoloAlertPage: FC<PloggingSoloAlertPageProps> = ({ classNam
         <WeatherIcon size={36} />
         <WeatherTypoContainer>
           <WeatherAddressTypo>서울특별시 중구</WeatherAddressTypo>
-          <WeatherTemperatureTypo>9℃</WeatherTemperatureTypo>
+          <WeatherTemperatureTypo>{temp}℃</WeatherTemperatureTypo>
         </WeatherTypoContainer>
       </WeatherContainer>
       {selectedCategory === 'PLOGGING' && (

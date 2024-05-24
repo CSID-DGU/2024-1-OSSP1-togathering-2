@@ -15,7 +15,7 @@ import {
   SubtitleCircle,
   SubtitleCircleTypo,
   SubtitleContainer,
-  SubtitleTypo
+  SubtitleTypo,
 } from './styled'
 
 import { IconRun } from '@tabler/icons-react'
