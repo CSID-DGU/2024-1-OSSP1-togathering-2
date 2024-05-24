@@ -4,7 +4,7 @@ import { NearbyMap } from 'pages/Plogging/nearby/components/NearbyMap'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LocalStorageMeetingListType, MeetingCategoryType, MeetingListType } from 'types/meeting'
-import { getNearbyMeetingList } from 'utils/getNearbyMeetingList'
+import { getSortedNearbyMeetingList } from 'utils/getSortedNearbyMeetingList'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 import { ContentContainer, Root, TitleContainer, TitleTypo } from './styled'
 
@@ -59,7 +59,7 @@ export const NearbyMeetingSection: FC<NearbyMeetingSectionProps> = ({ className 
     return meetingList.map((item) => item.courseItem.coordinateList[0])
   })()
 
-  const sortedMeetingList = getNearbyMeetingList(meetingList, centerCoordinate)
+  const sortedMeetingList = getSortedNearbyMeetingList(meetingList, centerCoordinate)
 
   return (
     <Root className={className}>

@@ -5,7 +5,7 @@ import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LocalStorageMeetingListType, MeetingCategoryType, MeetingListType } from 'types/meeting'
-import { getNearbyMeetingList } from 'utils/getNearbyMeetingList'
+import { getSortedNearbyMeetingList } from 'utils/getSortedNearbyMeetingList'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
 import { PloggingMeetingViewer } from '../components/PloggingMeetingViewer'
 import { NearbyMap } from './components/NearbyMap'
@@ -62,7 +62,7 @@ export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) =
     return meetingList.map((item) => item.courseItem.coordinateList[0])
   })()
 
-  const sortedMeetingList = getNearbyMeetingList(meetingList, centerCoordinate)
+  const sortedMeetingList = getSortedNearbyMeetingList(meetingList, centerCoordinate)
 
   return (
     <Root className={className}>
