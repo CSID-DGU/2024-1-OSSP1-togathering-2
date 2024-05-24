@@ -90,7 +90,9 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
             </InfoItemContainer>
             <InfoItemContainer isDivided>
               <InfoItemTitleTypo>시간</InfoItemTitleTypo>
-              <InfoItemContentTypo>0분 0초</InfoItemContentTypo>
+              <InfoItemContentTypo>
+                {totalDuration.minute}분 {totalDuration.second}초
+              </InfoItemContentTypo>
             </InfoItemContainer>
           </InfoContainer>
           {selectedCategory === 'PLOGGING' ? (
