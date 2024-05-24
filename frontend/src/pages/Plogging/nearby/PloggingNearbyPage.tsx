@@ -52,10 +52,10 @@ export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) =
     }
   }, [])
 
-  // const centerCoordinate =
-  //   latitude && longitude ? { lat: latitude, lng: longitude } : { lat: 37.55954751374675, lng: 126.99813054145416 }
+  const centerCoordinate =
+    latitude && longitude ? { lat: latitude, lng: longitude } : { lat: 37.55954751374675, lng: 126.99813054145416 }
 
-  const centerCoordinate = { lat: 37.55954751374675, lng: 126.99813054145416 }
+  // const centerCoordinate = { lat: 37.55954751374675, lng: 126.99813054145416 }
 
   const startingPoints = (() => {
     // return ALL_MEETING_LIST_SAMPLE.map((item) => item.courseItem.coordinateList[0])
