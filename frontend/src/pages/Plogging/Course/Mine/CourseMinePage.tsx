@@ -73,8 +73,9 @@ export const CourseMinePage: FC<CourseMinePageProps> = ({ className }) => {
               <PloggingCourseViewer courseItem={courseItem} onEdit={onClickEditCourseButton(courseItem.id)} />
             </PloggingCourseViewerWrapper>
           ))}
-        {courseList.length === 0 ||
-          (myCourseIdList.length === 0 && <SubtitleTypo>나만의 코스가 없어요 ㅠㅠ</SubtitleTypo>)}
+        {(courseList.length === 0 || myCourseIdList.length === 0) && (
+          <SubtitleTypo>나만의 코스가 없어요 ㅠㅠ</SubtitleTypo>
+        )}
       </ContentContainer>
       <TabBar />
     </Root>
