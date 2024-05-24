@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-const apiKey = 'YOUR_PUBLIC_DATA_API_KEY' // 공공데이터 포털에서 발급받은 API 키를 입력하세요
+const apiKey = process.env['REACT_APP_PUBLIC_DATA_KEY'] // 공공데이터 포털에서 발급받은 API 키를 입력하세요
 
 export async function getWeather(lat: number, lng: number) {
   const grid: any = convertToGrid(lat, lng)
 
-  const url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst'
+  const url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst'
   const params = {
     ServiceKey: apiKey,
     numOfRows: '100',
@@ -19,7 +19,6 @@ export async function getWeather(lat: number, lng: number) {
 
   try {
     const response = await axios.get(url, { params })
-    console.log(response)
     const weatherData = response.data.response.body.items.item
 
     const weatherMap: any = {}
@@ -33,10 +32,6 @@ export async function getWeather(lat: number, lng: number) {
     for (const date in weatherMap) {
       for (const time in weatherMap[date]) {
         const data = weatherMap[date][time]
-        console.log(`Date: ${date}, Time: ${time}`)
-        console.log(` - SKY: ${data.SKY} (하늘 상태)`)
-        console.log(` - PTY: ${data.PTY} (강수 형태)`)
-        console.log(` - POP: ${data.POP}% (강수 확률)`)
         if (data.T1H) console.log(` - T1H: ${data.T1H}°C (1시간 기온)`)
         if (data.TMP) console.log(` - TMP: ${data.TMP}°C (예보 기온)`)
         return data
@@ -87,9 +82,3 @@ function getCurrentDate() {
 
   return date.getFullYear().toString() + month + day
 }
-
-// 예제 좌표 (위도, 경도)
-const lat = 37.5665
-const lon = 126.978
-
-getWeather(lat, lon)
