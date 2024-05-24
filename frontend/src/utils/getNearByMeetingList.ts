@@ -1,7 +1,7 @@
 import { MeetingListType } from 'types/meeting'
 import { getCoordinatesDistance } from './getCoordinatesDistance'
 
-export const getNearByMeetingList = (meetingList: MeetingListType, now: { lng: number; lat: number }) => {
+export const getNearbyMeetingList = (meetingList: MeetingListType, now: { lng: number; lat: number }) => {
   let newMeetingList: MeetingListType = []
 
   meetingList.forEach((meetingItem) => {

@@ -1,21 +1,18 @@
-import { Header } from 'components/Header'
-import { TabBar } from 'components/TabBar'
 import { MEETING_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
+import { NearbyMap } from 'pages/Plogging/nearby/components/NearbyMap'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LocalStorageMeetingListType, MeetingCategoryType, MeetingListType } from 'types/meeting'
 import { getNearbyMeetingList } from 'utils/getNearbyMeetingList'
 import { loadLocalStorage } from 'utils/handleLocalStorage'
-import { PloggingMeetingViewer } from '../components/PloggingMeetingViewer'
-import { NearbyMap } from './components/NearbyMap'
-import { ContentContainer, Root, SubtitleTypo, TitleContainer, TitleTypo } from './styled'
+import { ContentContainer, Root, TitleContainer, TitleTypo } from './styled'
 
-type PloggingNearbyPageProps = {
+type NearbyMeetingSectionProps = {
   className?: string
 }
 
-export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) => {
+export const NearbyMeetingSection: FC<NearbyMeetingSectionProps> = ({ className }) => {
   const [meetingList, setMeetingList] = useState<MeetingListType>(ALL_MEETING_LIST_SAMPLE)
   const [latitude, setLatitude] = useState<any>(null)
   const [longitude, setLongitude] = useState<any>(null)
@@ -66,15 +63,13 @@ export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) =
 
   return (
     <Root className={className}>
-      <Header showLogo={true} />
       <TitleContainer>
-        <TitleTypo>안녕하세요, 교수님</TitleTypo>
-        <SubtitleTypo>근처에 있는 활동을 모아봤어요!</SubtitleTypo>
+        <TitleTypo>우리 동네 예약된 모임</TitleTypo>
       </TitleContainer>
       <ContentContainer>
-        <NearbyMap center={centerCoordinate} startingPoints={startingPoints} />
+        <NearbyMap center={centerCoordinate} startingPoints={startingPoints} size={'sm'} />
       </ContentContainer>
-      {sortedMeetingList && (
+      {/* {sortedMeetingList && (
         <ContentContainer>
           {sortedMeetingList.map((meetingItem) => (
             <PloggingMeetingViewer
@@ -84,8 +79,7 @@ export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) =
             />
           ))}
         </ContentContainer>
-      )}
-      <TabBar />
+      )} */}
     </Root>
   )
 }

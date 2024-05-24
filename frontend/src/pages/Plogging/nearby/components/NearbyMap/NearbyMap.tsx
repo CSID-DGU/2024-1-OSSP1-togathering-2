@@ -7,11 +7,14 @@ type NearbyMapProps = {
   className?: string
   center: CoordinateItemType | null
   startingPoints: CoordinateItemType[]
+  size?: 'sm' | 'md'
 }
 
-export const NearbyMap: FC<NearbyMapProps> = ({ className, center, startingPoints }) => {
+type SizeType = 'sm' | 'md'
+
+export const NearbyMap: FC<NearbyMapProps> = ({ className, center, startingPoints, size = 'md' }) => {
   return (
-    <Root className={className}>
+    <Root className={className} size={size}>
       <Map
         center={center ?? startingPoints[0]}
         style={{
@@ -30,9 +33,9 @@ export const NearbyMap: FC<NearbyMapProps> = ({ className, center, startingPoint
   )
 }
 
-const Root = styled.div`
+const Root = styled.div<{ size: SizeType }>`
   width: 100%;
-  height: 400px;
+  height: ${(props) => (props.size === 'sm' ? 250 : 400)}px;
   display: flex;
   flex-direction: column;
 `
