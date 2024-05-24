@@ -1,6 +1,5 @@
 import { TeamOutlined, UserOutlined } from '@ant-design/icons'
 import { Header } from 'components/Header'
-import { StartingPointsMap } from 'components/StartingPointsMap'
 import { TabBar } from 'components/TabBar'
 import { MEETING_LIST_KEY, PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
@@ -10,14 +9,12 @@ import { useNavigate } from 'react-router-dom'
 import { LocalStorageMeetingListType, MeetingListType } from 'types/meeting'
 import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 import { LatestMeetingSection } from './components/LatestMeetingSection'
+import { NearbyMeetingSection } from './components/NearbyMeetingSection'
 import { PopularCourseSection } from './components/PopularCourseSection'
 import {
   PloggingMapButton,
   PloggingMapButtonContainer,
   PloggingMapContainer,
-  PloggingMapTitleContainer,
-  PloggingMapTitleTypo,
-  PloggingMapWrapper,
   Root,
   SubtitleTypo,
   TitleContainer,
@@ -88,15 +85,7 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
         <SubtitleTypo>오늘은 무슨 활동에 참여할까요?</SubtitleTypo>
       </TitleContainer>
       <PloggingMapContainer>
-        <PloggingMapTitleContainer>
-          <PloggingMapTitleTypo>우리 동네에 예정되어 있는 모임</PloggingMapTitleTypo>
-        </PloggingMapTitleContainer>
-        <PloggingMapWrapper>
-          <StartingPointsMap
-            center={{ lat: latitude, lng: longitude }}
-            startingPoints={meetingList.map((meetingItem) => meetingItem.courseItem.coordinateList[0])}
-          />
-        </PloggingMapWrapper>
+        <NearbyMeetingSection />
         <PloggingMapButtonContainer>
           <PloggingMapButton primary={true} icon={() => <UserOutlined />} text="혼자 시작" href="/solo/course" />
           <PloggingMapButton primary={true} icon={() => <TeamOutlined />} text="함께 시작" href="/meeting/list" />
