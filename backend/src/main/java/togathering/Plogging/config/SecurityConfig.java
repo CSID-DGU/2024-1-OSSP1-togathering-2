@@ -98,13 +98,11 @@ public class SecurityConfig {
 
         //경로별 인가 작업
         http.authorizeRequests((auth) -> auth
-                .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .antMatchers("/swagger-resources/**").permitAll() // swagger
-                .antMatchers("/user/login", "/", "/user/join").permitAll()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/reissue").permitAll()
-                .antMatchers("/").permitAll()   //이부분 조심
-                .anyRequest().authenticated());
+                        .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .antMatchers("/swagger-resources/**").permitAll()
+                        .antMatchers("/", "/user/login", "/user/**", "/reissue", "/social", "/courses/**","/course/**", "/group/**").permitAll()  // /group/** 추가
+                        .antMatchers("/admin").hasRole("ADMIN")
+                        .anyRequest().authenticated());
 
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
