@@ -65,6 +65,22 @@ export const SubmitButtonTypo = styled(Typography)`
   color: ${lightTheme.colors.base[50]};
 `
 
+export const StepBackButton = styled(Button)`
+  width: 100%;
+  height: 40px;
+  background: ${lightTheme.colors.base['50']};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+`
+
+export const StepBackButtonTypo = styled(Typography)`
+  font-size: 16px;
+  font-weight: bold;
+  color: ${lightTheme.colors.base[700]};
+`
+
 export const StepContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -74,7 +90,9 @@ export const StepContainer = styled.div`
 export const CreateTypeContainer = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 10px;
 `
 
 export const CreateTypeSelect = styled(Select)`
@@ -177,4 +195,11 @@ export const AISubmitButtonTypo = styled(Typography)<{ isLoading?: boolean }>`
   font-size: 16px;
   font-weight: 500;
   color: ${(props) => (props.isLoading ? lightTheme.colors.base['700'] : lightTheme.colors.base['50'])};
+`
+
+export const StepBackButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `

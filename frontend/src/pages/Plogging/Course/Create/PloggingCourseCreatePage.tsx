@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Header } from 'components/Header'
 import { MY_COURSE_LIST_KEY, PLOGGING_COURSE_LIST_KEY } from 'constants/common'
+import { AIQuestionList, DEFAULT_SELECT_LIST } from 'constants/course'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CourseCoordinateListType, LocalStorageCourseListType } from 'types/plogging'
@@ -22,6 +23,9 @@ import {
   CreateTypeContainer,
   CreateTypeSelect,
   Root,
+  StepBackButton,
+  StepBackButtonContainer,
+  StepBackButtonTypo,
   StepContainer,
   SubmitButtonButton,
   SubmitButtonTypo,
@@ -35,33 +39,6 @@ import { PloggingCourseCreateType } from './type'
 type CourseCreateProps = {
   className?: string
 }
-
-const AIQuestionList = [
-  {
-    title: '어떤 용도인가요?',
-    selectList: ['산책', '러닝', '라이딩', '플로깅'],
-  },
-  {
-    title: '누구와 함께 할까요?',
-    selectList: ['혼자', '친구', '애인', '부모님', '반려견'],
-  },
-
-  {
-    title: '어떤 특징이 있나요?',
-    selectList: ['편안한 산책로', '볼거리가 많은', '역사적 의미가 있는', '자연 경관이 아름다운'],
-  },
-  {
-    title: '어떤 단점이 있나요?',
-    selectList: ['사람 많은 곳', '가로등 적은 곳', '가로수 적은 곳', '복잡한 길', '좁은 골목', '언덕이나 계단'],
-  },
-]
-
-const DEFAULT_SELECT_LIST = [
-  [false, false, false, false],
-  [false, false, false, false, false],
-  [false, false, false, false],
-  [false, false, false, false, false, false],
-]
 
 export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) => {
   const [ploggingCourseCreateType, setPloggingCourseCreateType] = useState<PloggingCourseCreateType>()
@@ -160,6 +137,21 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
     return
   }
 
+  const onClickStepBack = () => {
+    if (step === '2') {
+      setStep('1')
+      return
+    }
+    if (step === '3') {
+      setStep('2')
+      return
+    }
+    if (step === '4') {
+      setStep('3')
+      return
+    }
+  }
+
   const onClickSelectList = (id: number, id2: number) => () => {
     setSelectList((prev) =>
       prev.map((value, index) =>
@@ -219,6 +211,9 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
                 onChange={onChangeSelectCreateType}
                 options={CREATE_TYPE_SELECT_OPTIONS}
               />
+              <StepBackButton onClick={onClickStepBack}>
+                <StepBackButtonTypo>이전 단계</StepBackButtonTypo>
+              </StepBackButton>
             </CreateTypeContainer>
           )}
         </>
@@ -232,10 +227,15 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
             {step === '3' ? <SubtitleTypo>경로 입력하기</SubtitleTypo> : <SubtitleTypo>경로 입력 완료</SubtitleTypo>}
           </SubtitleContainer>
           {step === '3' && (
-            <ContentContainer>
-              {ploggingCourseCreateType === 'ADDRESS' && <PloggingCourseCreateAddress onSave={onSave} />}
-              {ploggingCourseCreateType === 'CLICK' && <PloggingCourseCreateClick onSave={onSave} />}
-            </ContentContainer>
+            <StepBackButtonContainer>
+              <ContentContainer>
+                {ploggingCourseCreateType === 'ADDRESS' && <PloggingCourseCreateAddress onSave={onSave} />}
+                {ploggingCourseCreateType === 'CLICK' && <PloggingCourseCreateClick onSave={onSave} />}
+              </ContentContainer>
+              <StepBackButton onClick={onClickStepBack}>
+                <StepBackButtonTypo>이전 단계</StepBackButtonTypo>
+              </StepBackButton>
+            </StepBackButtonContainer>
           )}
         </>
       )}
@@ -271,20 +271,16 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
               ))}
             </AIQuestionContainer>
           </AIContainer>
-          <SubmitButtonButton onClick={onSubmit} type={'primary'}>
-            <SubmitButtonTypo> 코스 제작 완료하기</SubmitButtonTypo>
-          </SubmitButtonButton>
+          <StepBackButtonContainer>
+            <SubmitButtonButton onClick={onSubmit} type={'primary'}>
+              <SubmitButtonTypo> 코스 제작 완료하기</SubmitButtonTypo>
+            </SubmitButtonButton>
+            <StepBackButton onClick={onClickStepBack}>
+              <StepBackButtonTypo>이전 단계</StepBackButtonTypo>
+            </StepBackButton>
+          </StepBackButtonContainer>
         </>
       )}
-      {/* <MenuContainer>
-        <SeparateDivider />
-        <CourseResetButton type={'primary'} size={'large'} danger onClick={onClickButtonReset}>
-          초기화하기
-        </CourseResetButton>
-        <CourseGoBackButton type={'default'} size={'large'} onClick={onClickButtonGoBack}>
-          목록으로
-        </CourseGoBackButton>
-      </MenuContainer> */}
     </Root>
   )
 }
