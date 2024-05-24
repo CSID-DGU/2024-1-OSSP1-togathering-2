@@ -133,7 +133,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
 
   const getWashedMeetingList = (sortConditionIndex: number) => {
     let newMeetingList: MeetingListType = [...meetingList]
-    if (isSearchAvailable) {
+    if (isSearchAvailable || !(searchKeyword === '' && searchCategory === 'ALL')) {
       return newMeetingList.filter(
         (courseItem) =>
           courseItem?.name &&
