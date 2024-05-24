@@ -1,5 +1,4 @@
 import { IconCheck } from '@tabler/icons-react'
-import { getWeather } from 'apis/common/getWeather'
 import { Header } from 'components/Header'
 import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
@@ -58,26 +57,6 @@ export const PloggingSoloAlertPage: FC<PloggingSoloAlertPageProps> = ({ classNam
       : null
 
   let address = selectedPloggingCourseItem ? selectedPloggingCourseItem.coordinateList[0]?.name : ''
-
-  if (selectedPloggingCourseItem) {
-    getWeather(
-      selectedPloggingCourseItem?.coordinateList[0].lat,
-      selectedPloggingCourseItem?.coordinateList[0].lng
-    ).then((res) => console.log({ res }))
-  }
-
-  useEffect(() => {
-    if (selectedPloggingCourseItem) {
-      getWeather(
-        selectedPloggingCourseItem?.coordinateList[0].lat,
-        selectedPloggingCourseItem?.coordinateList[0].lng
-      ).then((res: any) => {
-        if (res) {
-          setTemp(+res.TMP as number)
-        }
-      })
-    }
-  }, [selectedPloggingCourseItem])
 
   return (
     <Root className={className}>
