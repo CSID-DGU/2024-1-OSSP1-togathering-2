@@ -48,6 +48,7 @@ root.render(
         <Routes>
           <Route path="/user/login" element={<UserLoginPage />} />
           <Route path="/user/join" element={<UserJoinPage />} />
+
           <Route path="/course/list" element={<PloggingCourseListPage />} />
           <Route path="/course/create" element={<PloggingCourseCreatePage />} />
           <Route path="/course/mine" element={<CourseMinePage />} />

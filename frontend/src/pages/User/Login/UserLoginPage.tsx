@@ -1,8 +1,7 @@
-import { Root } from './styled'
-import { Link } from 'react-router-dom'
-import React from 'react'
-import { TabBar } from 'components/TabBar'
 import { Header } from 'components/Header'
+import { TabBar } from 'components/TabBar'
+import { Link } from 'react-router-dom'
+import { Root } from './styled'
 
 export const UserLoginPage = () => {
   return (
