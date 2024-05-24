@@ -48,7 +48,11 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
   const [step3Name, setStep3Name] = useState<string>('')
   const [startAt, setStartAt] = useState<string>()
 
-  const handleStep2Count = (type: 'PLUS' | 'MINUS') => () => {
+  const handleStep2Count = (type: 'PLUS' | 'MINUS' | 'SET', value?: number) => () => {
+    if (type === 'SET' && value) {
+      setStep2Count(value)
+      return
+    }
     if (type === 'PLUS') {
       setStep2Count((prev) => {
         if (prev > 100) {

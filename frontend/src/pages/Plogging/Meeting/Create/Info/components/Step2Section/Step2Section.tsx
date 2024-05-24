@@ -5,7 +5,7 @@ import {
   Step2Button,
   Step2CaptionTypo,
   Step2Container,
-  Step2CountTypo,
+  Step2Input,
   Step2SubmitButton,
   Step2SubmitButtonTypo,
 } from './styled'
@@ -13,7 +13,7 @@ import {
 type Step2SectionProps = {
   className?: string
   step2Count: number
-  handleStep2Count: (type: 'MINUS' | 'PLUS') => () => void
+  handleStep2Count: (type: 'MINUS' | 'PLUS' | 'SET', value?: number) => () => void
   onSave: () => void
 }
 
@@ -58,6 +58,10 @@ export const Step2Section: FC<Step2SectionProps> = ({ className, step2Count, han
     setIsPressing(false)
   }
 
+  const onChangeInput = (e: any) => {
+    handleStep2Count('SET', +e.target.value)()
+  }
+
   return (
     <Root className={className}>
       <Step2Container>
@@ -73,7 +77,8 @@ export const Step2Section: FC<Step2SectionProps> = ({ className, step2Count, han
         >
           <IconMinus size={16} />
         </Step2Button>
-        <Step2CountTypo>{step2Count}</Step2CountTypo>
+        {/* <Step2CountTypo>{step2Count}</Step2CountTypo> */}
+        <Step2Input type={'number'} value={step2Count} onChange={onChangeInput} />
         <Step2Button
           shape={'circle'}
           disabled={step2Count >= 100}

@@ -1,4 +1,5 @@
 import { Button, Typography } from 'antd'
+import Input from 'antd/es/input/Input'
 import styled from 'styled-components'
 import { lightTheme } from 'styles/theme'
 
@@ -56,4 +57,10 @@ export const Step2CaptionTypo = styled(Typography)`
   align-items: center;
   font-size: 12px;
   color: ${lightTheme.colors.base['500']};
+`
+
+export const Step2Input = styled(Input)`
+  width: 100px;
+  font-size: 20px;
+  text-align: center;
 `
