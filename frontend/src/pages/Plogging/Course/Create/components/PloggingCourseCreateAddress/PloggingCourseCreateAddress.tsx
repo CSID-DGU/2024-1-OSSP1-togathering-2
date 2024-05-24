@@ -30,14 +30,21 @@ import {
 type PloggingCourseCreateAddressProps = {
   className?: string
   onSave: (courseItem: CourseCoordinateListType) => void
+  newCoordinateList?: any[]
 }
 
-export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> = ({ className, onSave }) => {
+export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> = ({
+  className,
+  onSave,
+  newCoordinateList,
+}) => {
   const [initialAddressKeyword, setInitialAddressKeyword] = useState<string>('')
-  const [initialAddressCoordinate, setInitialAddressCoordinate] = useState<CoordinateItemType | null>(null)
+  const [initialAddressCoordinate, setInitialAddressCoordinate] = useState<CoordinateItemType | null>(
+    newCoordinateList ? newCoordinateList[0] : null
+  )
+  const [courseCoordinateList, setCourseCoordinateList] = useState<CourseCoordinateListType>(newCoordinateList ?? [])
   const [initialAddressSelectOptions, setInitialAddressSelectOptions] = useState<AddressSelectOptionListType>([])
 
-  const [courseCoordinateList, setCourseCoordinateList] = useState<CourseCoordinateListType>([])
   const { state: courseCoordinateFlagActivate, toggleState: toggleCourseCoordinateFlagActivate } =
     useBooleanState(false)
 
