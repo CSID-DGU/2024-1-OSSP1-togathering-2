@@ -1,13 +1,27 @@
 import axios from 'axios'
+import { CourseListType } from 'types/plogging'
 import { OPEN_AI_API_KEY } from '../common'
 
 type Props = {
-  promptEngineering?: string
+  courseList?: CourseListType
   text: string
 }
 
-export const postSortCourseList = async ({ promptEngineering, text }: Props) => {
+export const postSortCourseList = async ({ courseList, text }: Props) => {
   const apiKey = OPEN_AI_API_KEY
+
+  const newCourseList = courseList?.map((courseItem) => ({
+    id: courseItem.id,
+    name: courseItem.name,
+    coordinateList: {
+      start: courseItem.coordinateList[0],
+      end: courseItem.coordinateList[courseItem.coordinateList.length - 1],
+    },
+  }))
+
+  const promptEngineering = `${JSON.stringify(
+    newCourseList
+  )} 다음의 코스가 있다고 할 때, 아래의 키워드에 가장 어울리는 순서로 id만 정렬해줘. [number, number, number] 형식만 넘겨줘`
 
   try {
     const result = await axios.post(

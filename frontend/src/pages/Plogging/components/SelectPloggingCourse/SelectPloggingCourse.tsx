@@ -1,6 +1,7 @@
 import { LoadingOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { IconSearch, IconThumbDown, IconThumbUp } from '@tabler/icons-react'
 import { Spin } from 'antd'
+import { postSortCourseList } from 'apis/openai/postSortCourseList'
 import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { PloggingCourseViewer } from 'pages/Plogging/Course/Create/components/PloggingCourseViewer'
@@ -117,6 +118,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
   const [courseList, setCourseList] = useState<CourseListType>([])
   const [sortedCourseList, setSortedCourseList] = useState<CourseListType>([])
   const [isSatisfied, setIsSatisfied] = useState<boolean>()
+  const [aiRecommendedCourseIdList, setAiRecommendedCourseIdList] = useState<number[]>([])
 
   const onClickSearchChip = () => {
     openSearch()
@@ -152,9 +154,21 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
 
   const onClickAISubmitButton = () => {
     setLoading('LOADING')
-    setTimeout(() => {
+
+    let text = ''
+    AIQuestionList.forEach((questionList, index) =>
+      questionList.selectList.forEach((questionItem, index2) => {
+        if (selectList[index][index2]) {
+          text += ` ${questionItem}`
+        }
+      })
+    )
+
+    postSortCourseList({ courseList, text }).then((res) => {
+      const newCourseIdList = JSON.parse(res) as number[]
+      setAiRecommendedCourseIdList(newCourseIdList)
       setLoading('DONE')
-    }, 3000)
+    })
   }
 
   const onClickSortConditionButton = (id: number) => () => {
@@ -203,6 +217,17 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
       return newCourseList.filter((courseItem) => courseItem?.name && courseItem.name.indexOf(searchKeyword) !== -1)
     }
 
+    if (sortConditionIndex === 0) {
+      newCourseList = []
+
+      aiRecommendedCourseIdList.forEach((value) => {
+        if (value <= courseList.length) {
+          newCourseList.push(courseList[value - 1])
+        }
+      })
+
+      return newCourseList
+    }
     if (sortConditionIndex === 1) {
       return newCourseList
     }
