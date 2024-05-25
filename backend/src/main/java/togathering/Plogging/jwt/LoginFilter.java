@@ -14,7 +14,9 @@ import org.springframework.util.StreamUtils;
 import togathering.Plogging.app.dto.CustomUserDetails;
 import togathering.Plogging.app.dto.LoginDTO;
 import togathering.Plogging.domain.RefreshEntity;
+import togathering.Plogging.domain.User;
 import togathering.Plogging.repository.RefreshRepository;
+import togathering.Plogging.repository.UserRepository;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletInputStream;
@@ -32,6 +34,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
+    private final UserRepository userRepository;
     private final RefreshRepository refreshRepository;
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -68,10 +71,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
-
+        User user = userRepository.findByUsername(username);
         //토큰 생성
-        String access = jwtUtil.createJwt("access", username, role, 600000L);
-        String refresh = jwtUtil.createJwt("refresh", username, role, 86400000L);
+        String access = jwtUtil.createJwt("access", user.getId(), username, role, 600000L);
+        String refresh = jwtUtil.createJwt("refresh", user.getId(), username, role, 86400000L);
 
         addRefreshEntity(username, refresh, 86400000L);
 
