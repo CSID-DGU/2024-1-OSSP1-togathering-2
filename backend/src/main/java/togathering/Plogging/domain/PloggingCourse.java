@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Table(name = "plogging_course")
 public class PloggingCourse extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +22,16 @@ public class PloggingCourse extends BaseEntity {
 
     @Lob
     private String metadata;
+
+    @Column(nullable = false)
+    private Long duration;
+
+    @Column(nullable = false)
+    private Long time;
+
+    @Lob
+    private String tag;
+
+    @Column(nullable = false)
+    private Boolean isHidden;
 }
