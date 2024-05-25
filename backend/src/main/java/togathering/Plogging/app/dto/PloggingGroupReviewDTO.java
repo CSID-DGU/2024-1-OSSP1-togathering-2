@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 public class PloggingGroupReviewDTO {
     @Getter
@@ -12,14 +14,15 @@ public class PloggingGroupReviewDTO {
     public static class RequestPloggingGroupReviewDTO {
         private Long group_id;
         private Long user_id;
-        private String content;
+        private int cleanliness;
         private int reward;
+        private int like;
+        List<MultipartFile> images;
     }
 
     @Getter
     @Builder
     public static class ResponsePloggingGroupReviewDTO {
         private Long review_id;
-        private String content;
     }
 }
