@@ -6,7 +6,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import togathering.Plogging.app.dto.CustomOAuth2User;
+import togathering.Plogging.domain.SocialUser;
+import togathering.Plogging.domain.User;
 import togathering.Plogging.jwt.JWTUtil;
+import togathering.Plogging.repository.SocialUserRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -21,6 +24,7 @@ import java.util.Iterator;
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JWTUtil jwtUtil;
+    private final SocialUserRepository socialUserRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -34,8 +38,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
+        SocialUser socialUser = socialUserRepository.findByUsername(username);
 
-        String token = jwtUtil.createJwt("refresh", username, role, 60*60*60L);
+        String token = jwtUtil.createJwt("refresh", socialUser.getId(), username, role, 60*60*60L);
 
         response.addCookie(createCookie("refresh", token));
         response.sendRedirect("http://localhost:3000/");

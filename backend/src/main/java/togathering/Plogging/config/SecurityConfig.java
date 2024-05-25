@@ -21,6 +21,7 @@ import togathering.Plogging.jwt.JWTUtil;
 import togathering.Plogging.jwt.LoginFilter;
 import togathering.Plogging.oauth2.CustomSuccessHandler;
 import togathering.Plogging.repository.RefreshRepository;
+import togathering.Plogging.repository.UserRepository;
 import togathering.Plogging.service.CustomOAuth2UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,7 @@ public class SecurityConfig {
     private final RefreshRepository refreshRepository;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
+    private final UserRepository userRepository;
 
 
     //AuthenticationManager Bean 등록
@@ -108,7 +110,7 @@ public class SecurityConfig {
                 .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
 
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshRepository), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, userRepository, refreshRepository), UsernamePasswordAuthenticationFilter.class);
         http
                 .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshRepository), LogoutFilter.class);
         //세션 설정
