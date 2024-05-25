@@ -21,6 +21,7 @@ import togathering.Plogging.jwt.JWTUtil;
 import togathering.Plogging.jwt.LoginFilter;
 import togathering.Plogging.oauth2.CustomSuccessHandler;
 import togathering.Plogging.repository.RefreshRepository;
+import togathering.Plogging.repository.UserRepository;
 import togathering.Plogging.service.CustomOAuth2UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,7 @@ public class SecurityConfig {
     private final RefreshRepository refreshRepository;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
+    private final UserRepository userRepository;
 
 
     //AuthenticationManager Bean 등록
@@ -98,19 +100,17 @@ public class SecurityConfig {
 
         //경로별 인가 작업
         http.authorizeRequests((auth) -> auth
-                .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .antMatchers("/swagger-resources/**").permitAll() // swagger
-                .antMatchers("/user/login", "/", "/user/join").permitAll()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/reissue").permitAll()
-                .antMatchers("/").permitAll()   //이부분 조심
-                .anyRequest().authenticated());
+                        .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .antMatchers("/swagger-resources/**").permitAll()
+                        .antMatchers("/", "/user/login", "/user/**", "/reissue", "/social", "/courses/**","/course/**", "/group/**").permitAll()  // /group/** 추가
+                        .antMatchers("/admin").hasRole("ADMIN")
+                        .anyRequest().authenticated());
 
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
 
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshRepository), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, userRepository, refreshRepository), UsernamePasswordAuthenticationFilter.class);
         http
                 .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshRepository), LogoutFilter.class);
         //세션 설정

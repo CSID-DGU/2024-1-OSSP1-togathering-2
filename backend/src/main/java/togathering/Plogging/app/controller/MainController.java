@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ResponseBody
 public class MainController {
 
-    @GetMapping("/")    //일단 소셜로그인 쪽경로
+    @GetMapping("/social")    //일단 소셜로그인 쪽경로
     @ResponseBody
     public String mainAPI() {
 
