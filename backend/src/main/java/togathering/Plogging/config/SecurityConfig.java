@@ -23,6 +23,7 @@ import togathering.Plogging.oauth2.CustomSuccessHandler;
 import togathering.Plogging.repository.RefreshRepository;
 import togathering.Plogging.repository.UserRepository;
 import togathering.Plogging.service.CustomOAuth2UserService;
+import togathering.Plogging.config.CustomAuthenticationEntryPoint;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
@@ -38,7 +39,7 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
     private final UserRepository userRepository;
-
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     //AuthenticationManager Bean 등록
     @Bean
@@ -105,6 +106,8 @@ public class SecurityConfig {
                         .antMatchers("/", "/user/login", "/user/**", "/reissue", "/social", "/courses/**","/course/**", "/group/**").permitAll()  // /group/** 추가
                         .antMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated());
+        http.exceptionHandling()
+                .authenticationEntryPoint(customAuthenticationEntryPoint);
 
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
