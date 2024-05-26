@@ -119,24 +119,48 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({
   }
 
   const onDeleteCourseCoordinateItem = (id: number) => () => {
-    let previousIsFlagCoordinate = 0
-    for (let i = 1; i < courseCoordinateList.length; i++) {
-      if (i === id) {
-        break
-      }
+    let previousIsFlagCoordinate = 0,
+      nextIsFlagCoordinate = courseCoordinateList.length
+    for (let i = id - 1; i >= 0; i--) {
       if (courseCoordinateList[i].isFlag) {
         previousIsFlagCoordinate = i
+        break
       }
     }
-    setCourseCoordinateList((prev) =>
-      prev.filter((_value, index) => !(index <= id && index > previousIsFlagCoordinate))
-    )
+    for (let i = id + 1; i < courseCoordinateList.length; i++) {
+      if (courseCoordinateList[i].isFlag) {
+        nextIsFlagCoordinate = i
+        break
+      }
+    }
+
+    if (previousIsFlagCoordinate === 0 && nextIsFlagCoordinate === courseCoordinateList.length) {
+      setCourseCoordinateList((prev) => [prev[0]])
+      return
+    }
+
+    let startCoordinate = courseCoordinateList[previousIsFlagCoordinate],
+      endCoordinate = courseCoordinateList[nextIsFlagCoordinate]
+    tmapRoutePedestrian({
+      start: startCoordinate,
+      end: endCoordinate,
+    }).then((response) => {
+      setCourseCoordinateList((prev) => {
+        let leftCoordinateList = prev.slice(0, previousIsFlagCoordinate + 1)
+        let rightCoordinateList = prev.slice(nextIsFlagCoordinate + 1)
+        let resultCoordinateList = [...leftCoordinateList, ...response, ...rightCoordinateList]
+
+        return resultCoordinateList
+      })
+    })
   }
 
   const onClickButtonSave = () => {
     onSave(courseCoordinateList)
     return
   }
+
+  console.log({ courseCoordinateList })
 
   return (
     <Root className={className}>
@@ -206,23 +230,30 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({
             </KakaoMapMenuContainer>
           </KakaoMapContainer>
           <CourseEditorContainer>
-            {courseCoordinateList.length === 1 && (
-              <CourseEditorAlertTypo>지도를 클릭하여 코스를 완성해주세요!</CourseEditorAlertTypo>
-            )}
-            {courseCoordinateList.length > 1 &&
+            {courseCoordinateList.length > 0 &&
               courseCoordinateList.map(
                 (courseCoordinateItem, index) =>
                   courseCoordinateItem.isFlag && (
                     <CourseEditorWrapper
                       key={`course_coordinate_item_${courseCoordinateItem.lat}_${courseCoordinateItem.lng}__${index}`}
                     >
-                      <CourseEditorDisplayButton>경유지 {index + 1}</CourseEditorDisplayButton>
-                      <CourseEditorDeleteButton type={'primary'} danger onClick={onDeleteCourseCoordinateItem(index)}>
-                        삭제하기
-                      </CourseEditorDeleteButton>
+                      <CourseEditorDisplayButton>
+                        {index === 0 && '출발지점 '}
+                        {index !== 0 && index !== courseCoordinateList.length - 1 && `경유지 ${index + 1} `}
+                        {index !== 0 && index === courseCoordinateList.length - 1 && '종착지점 '}
+                        {courseCoordinateItem?.name && `: ${courseCoordinateItem.name}`}
+                      </CourseEditorDisplayButton>
+                      {index !== 0 && (
+                        <CourseEditorDeleteButton type={'primary'} danger onClick={onDeleteCourseCoordinateItem(index)}>
+                          삭제하기
+                        </CourseEditorDeleteButton>
+                      )}
                     </CourseEditorWrapper>
                   )
               )}
+            {courseCoordinateList.length === 1 && (
+              <CourseEditorAlertTypo>지도를 클릭하여 코스를 완성해주세요!</CourseEditorAlertTypo>
+            )}
           </CourseEditorContainer>
         </>
       )}

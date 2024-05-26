@@ -96,18 +96,40 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
   }
 
   const onDeleteStopoverItem = (id: number) => () => {
-    let previousIsFlagCoordinate = 0
-    for (let i = 1; i < courseCoordinateList.length; i++) {
-      if (i === id) {
-        break
-      }
+    let previousIsFlagCoordinate = 0,
+      nextIsFlagCoordinate = courseCoordinateList.length
+    for (let i = id - 1; i >= 0; i--) {
       if (courseCoordinateList[i].isFlag) {
         previousIsFlagCoordinate = i
+        break
       }
     }
-    setCourseCoordinateList((prev) =>
-      prev.filter((_value, index) => !(index <= id && index > previousIsFlagCoordinate))
-    )
+    for (let i = id + 1; i < courseCoordinateList.length; i++) {
+      if (courseCoordinateList[i].isFlag) {
+        nextIsFlagCoordinate = i
+        break
+      }
+    }
+
+    if (previousIsFlagCoordinate === 0 && nextIsFlagCoordinate === courseCoordinateList.length) {
+      setCourseCoordinateList((prev) => [prev[0]])
+      return
+    }
+
+    let startCoordinate = courseCoordinateList[previousIsFlagCoordinate],
+      endCoordinate = courseCoordinateList[nextIsFlagCoordinate]
+    tmapRoutePedestrian({
+      start: startCoordinate,
+      end: endCoordinate,
+    }).then((response) => {
+      setCourseCoordinateList((prev) => {
+        let leftCoordinateList = prev.slice(0, previousIsFlagCoordinate + 1)
+        let rightCoordinateList = prev.slice(nextIsFlagCoordinate + 1)
+        let resultCoordinateList = [...leftCoordinateList, ...response, ...rightCoordinateList]
+
+        return resultCoordinateList
+      })
+    })
   }
 
   const onClickButtonStopoverCreate = () => {
