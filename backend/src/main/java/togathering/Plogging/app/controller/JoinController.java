@@ -9,6 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import togathering.Plogging.apiPayload.ApiResponse;
+import togathering.Plogging.apiPayload.code.status.ErrorStatus;
+import togathering.Plogging.apiPayload.code.status.StatusResponse;
+import togathering.Plogging.apiPayload.code.status.SuccessStatus;
 import togathering.Plogging.app.dto.JoinDTO;
 import togathering.Plogging.app.dto.ResponseDTO;
 import togathering.Plogging.service.JoinService;
@@ -21,19 +25,12 @@ public class JoinController {
 
     private final JoinService joinService;
     @PostMapping("/join")
-     public ResponseEntity<ResponseDTO> joinProcess(@RequestBody JoinDTO joinDTO) {
-        boolean joinSuccess = joinService.joinProcess(joinDTO);
-        ResponseDTO response = new ResponseDTO();
-        if(joinSuccess) {
-            response.setSuccess(true);
-            response.setCode(200);
-            response.setMessage("회원가입 성공");
-            return new ResponseEntity<>(response, HttpStatus.OK);
+     public ApiResponse<String> joinProcess(@RequestBody JoinDTO joinDTO) {
+        StatusResponse statusResponse = joinService.joinProcess(joinDTO);
+        if(statusResponse.isSuccess()) {
+            return ApiResponse.of(statusResponse.getSuccessStatus(), "");
         } else {
-            response.setSuccess(false);
-            response.setCode(400);
-            response.setMessage("회원가입 실패");
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return ApiResponse.errorof(statusResponse.getErrorStatus(), "");
         }
     }
 
