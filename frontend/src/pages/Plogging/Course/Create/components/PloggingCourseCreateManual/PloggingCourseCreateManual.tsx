@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { tmapRoutePedestrian } from 'apis/tmap/tmapRoutePedestrian'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { FC, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
@@ -110,12 +109,15 @@ export const PloggingCourseCreateManual: FC<PloggingCourseCreateManualProps> = (
       lng: mouseEvent.latLng.getLng(),
     }
 
-    tmapRoutePedestrian({
-      start: courseCoordinateList[courseCoordinateList.length - 1],
-      end: newCourseCoordinateItem,
-    }).then((response) => {
-      setCourseCoordinateList((prev) => [...prev, ...response])
-    })
+    setCourseCoordinateList((prev) => [
+      ...prev,
+      {
+        lat: newCourseCoordinateItem.lat,
+        lng: newCourseCoordinateItem.lng,
+        isFlag: true,
+        isPassed: true,
+      },
+    ])
   }
 
   const onDeleteCourseCoordinateItem = (id: number) => () => {

@@ -8,6 +8,7 @@ import { CourseCoordinateListType, LocalStorageCourseListType } from 'types/plog
 import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 import { PloggingCourseCreateAddress } from './components/PloggingCourseCreateAddress'
 import { PloggingCourseCreateClick } from './components/PloggingCourseCreateClick'
+import { PloggingCourseCreateManual } from './components/PloggingCourseCreateManual'
 import { CREATE_TYPE_SELECT_OPTIONS, PLOGGING_COURSE_LIST_SAMPLE } from './constant'
 import {
   AIContainer,
@@ -232,6 +233,7 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
               <ContentContainer>
                 {ploggingCourseCreateType === 'ADDRESS' && <PloggingCourseCreateAddress onSave={onSave} />}
                 {ploggingCourseCreateType === 'CLICK' && <PloggingCourseCreateClick onSave={onSave} />}
+                {ploggingCourseCreateType === 'MANUAL' && <PloggingCourseCreateManual onSave={onSave} />}
               </ContentContainer>
               <StepBackButton onClick={onClickStepBack}>
                 <StepBackButtonTypo>이전 단계</StepBackButtonTypo>
