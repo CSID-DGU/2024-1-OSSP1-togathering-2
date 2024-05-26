@@ -7,6 +7,7 @@ export const DEFAULT_KAKAO_MAP_COORDINATE: CoordinateItemType = { lat: 37.558936
 export const CREATE_TYPE_SELECT_OPTIONS: CreateTypeSelectOptionListType = [
   { label: '추천 경로로 만들기(주소)', value: 'ADDRESS' },
   { label: '상세하게 만들기(클릭)', value: 'CLICK' },
+  { label: '수동으로 만들기(클릭)', value: 'MANUAL' },
 ]
 
 export const PLOGGING_COURSE_LIST_SAMPLE: LocalStorageCourseListType = {

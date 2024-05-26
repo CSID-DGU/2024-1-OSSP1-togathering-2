@@ -197,8 +197,9 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
               <SubtitleTypo>코스 제작 방식을 선택해주세요.</SubtitleTypo>
             ) : (
               <SubtitleTypo>
-                제작 방식:{' '}
-                {ploggingCourseCreateType === 'ADDRESS' ? '추천 경로로 만들기(주소)' : '상세하게 만들기(클릭)'}
+                제작 방식: {ploggingCourseCreateType === 'ADDRESS' && '추천 경로로 만들기(주소)'}
+                {ploggingCourseCreateType === 'CLICK' && '상세하게 만들기(클릭)'}
+                {ploggingCourseCreateType === 'MANUAL' && '수동으로 만들기(클릭)'}
               </SubtitleTypo>
             )}
           </SubtitleContainer>
