@@ -48,8 +48,6 @@ export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps>
       }
 
       let allMeetingList = parsedMeetingList ? parsedMeetingList : ALL_MEETING_LIST_SAMPLE
-
-      console.log(allMeetingList)
       setMeetingList(
         parsedMeetingIdList.selectedMeetingList.map((value) => {
           return allMeetingList.filter((value2) => value2.id === value.id)[0]

@@ -32,8 +32,8 @@ export async function getWeather(lat: number, lng: number) {
     for (const date in weatherMap) {
       for (const time in weatherMap[date]) {
         const data = weatherMap[date][time]
-        if (data.T1H) console.log(` - T1H: ${data.T1H}°C (1시간 기온)`)
-        if (data.TMP) console.log(` - TMP: ${data.TMP}°C (예보 기온)`)
+        // if (data.T1H) console.log(` - T1H: ${data.T1H}°C (1시간 기온)`)
+        // if (data.TMP) console.log(` - TMP: ${data.TMP}°C (예보 기온)`)
         return data
       }
     }

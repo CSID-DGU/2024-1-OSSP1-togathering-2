@@ -69,7 +69,6 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
     let currentPloggingCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
     if (currentPloggingCourseList) {
       let newPloggingCourseList: LocalStorageCourseListType = JSON.parse(currentPloggingCourseList)
-      console.log(newPloggingCourseList)
       let newId = newPloggingCourseList.courseList.length
 
       newPloggingCourseList = {

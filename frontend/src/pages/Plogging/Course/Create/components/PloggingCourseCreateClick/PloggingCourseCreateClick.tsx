@@ -160,8 +160,6 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({
     return
   }
 
-  console.log({ courseCoordinateList })
-
   return (
     <Root className={className}>
       <InitialAddressSearchBarContainer>
