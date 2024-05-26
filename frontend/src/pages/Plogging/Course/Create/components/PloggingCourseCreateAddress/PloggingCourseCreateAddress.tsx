@@ -96,7 +96,18 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
   }
 
   const onDeleteStopoverItem = (id: number) => () => {
-    setCourseCoordinateList((prev) => prev.filter((_value, index) => index !== id))
+    let previousIsFlagCoordinate = 0
+    for (let i = 1; i < courseCoordinateList.length; i++) {
+      if (i === id) {
+        break
+      }
+      if (courseCoordinateList[i].isFlag) {
+        previousIsFlagCoordinate = i
+      }
+    }
+    setCourseCoordinateList((prev) =>
+      prev.filter((_value, index) => !(index <= id && index > previousIsFlagCoordinate))
+    )
   }
 
   const onClickButtonStopoverCreate = () => {
@@ -222,23 +233,26 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
           </KakaoMapContainer>
           <CourseEditorContainer>
             {courseCoordinateList.length > 0 &&
-              courseCoordinateList.map((courseCoordinateItem, index) => (
-                <CourseEditorWrapper
-                  key={`course_coordinate_item_${courseCoordinateItem.lat}_${courseCoordinateItem.lng}__${index}`}
-                >
-                  <CourseEditorDisplayButton onClick={onClickButtonStopoverMoreDetails(index)}>
-                    {index === 0 && '출발지점 '}
-                    {index !== 0 && index !== courseCoordinateList.length - 1 && `경유지 ${index + 1} `}
-                    {index !== 0 && index === courseCoordinateList.length - 1 && '종착지점 '}
-                    {courseCoordinateItem?.name && `: ${courseCoordinateItem.name}`}
-                  </CourseEditorDisplayButton>
-                  {index !== 0 && (
-                    <CourseEditorDeleteButton type={'primary'} danger onClick={onDeleteStopoverItem(index)}>
-                      삭제하기
-                    </CourseEditorDeleteButton>
-                  )}
-                </CourseEditorWrapper>
-              ))}
+              courseCoordinateList.map(
+                (courseCoordinateItem, index) =>
+                  courseCoordinateItem.isFlag && (
+                    <CourseEditorWrapper
+                      key={`course_coordinate_item_${courseCoordinateItem.lat}_${courseCoordinateItem.lng}__${index}`}
+                    >
+                      <CourseEditorDisplayButton onClick={onClickButtonStopoverMoreDetails(index)}>
+                        {index === 0 && '출발지점 '}
+                        {index !== 0 && index !== courseCoordinateList.length - 1 && `경유지 ${index + 1} `}
+                        {index !== 0 && index === courseCoordinateList.length - 1 && '종착지점 '}
+                        {courseCoordinateItem?.name && `: ${courseCoordinateItem.name}`}
+                      </CourseEditorDisplayButton>
+                      {index !== 0 && (
+                        <CourseEditorDeleteButton type={'primary'} danger onClick={onDeleteStopoverItem(index)}>
+                          삭제하기
+                        </CourseEditorDeleteButton>
+                      )}
+                    </CourseEditorWrapper>
+                  )
+              )}
             {courseCoordinateList.length === 1 && (
               <CourseEditorAlertTypo>경유지를 추가하여 코스를 완성해주세요!</CourseEditorAlertTypo>
             )}

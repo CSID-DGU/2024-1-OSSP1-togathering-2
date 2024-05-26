@@ -8,6 +8,7 @@ import { CourseCoordinateListType, CourseListType, LocalStorageCourseListType } 
 import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 import { PloggingCourseCreateAddress } from '../Create/components/PloggingCourseCreateAddress'
 import { PloggingCourseCreateClick } from '../Create/components/PloggingCourseCreateClick'
+import { PloggingCourseCreateManual } from '../Create/components/PloggingCourseCreateManual'
 import { CREATE_TYPE_SELECT_OPTIONS, PLOGGING_COURSE_LIST_SAMPLE } from '../Create/constant'
 import { PloggingCourseCreateType } from '../Create/type'
 import {
@@ -210,8 +211,9 @@ export const CourseEditPage: FC<CourseEditPageProps> = ({ className }) => {
               <SubtitleTypo>코스 제작 방식을 선택해주세요.</SubtitleTypo>
             ) : (
               <SubtitleTypo>
-                제작 방식:{' '}
-                {ploggingCourseCreateType === 'ADDRESS' ? '추천 경로로 만들기(주소)' : '상세하게 만들기(클릭)'}
+                제작 방식: {ploggingCourseCreateType === 'ADDRESS' && '추천 경로로 만들기(주소)'}
+                {ploggingCourseCreateType === 'CLICK' && '상세하게 만들기(클릭)'}
+                {ploggingCourseCreateType === 'MANUAL' && '수동으로 만들기(클릭)'}
               </SubtitleTypo>
             )}
           </SubtitleContainer>
@@ -243,6 +245,9 @@ export const CourseEditPage: FC<CourseEditPageProps> = ({ className }) => {
               )}
               {ploggingCourseCreateType === 'CLICK' && (
                 <PloggingCourseCreateClick newCoordinateList={newCoordinateList} onSave={onSave} />
+              )}
+              {ploggingCourseCreateType === 'MANUAL' && (
+                <PloggingCourseCreateManual newCoordinateList={newCoordinateList} onSave={onSave} />
               )}
             </ContentContainer>
           )}

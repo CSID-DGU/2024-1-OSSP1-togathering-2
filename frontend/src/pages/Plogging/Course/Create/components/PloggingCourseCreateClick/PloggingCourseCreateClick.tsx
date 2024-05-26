@@ -119,7 +119,18 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({
   }
 
   const onDeleteCourseCoordinateItem = (id: number) => () => {
-    setCourseCoordinateList((prev) => prev.filter((_value, index) => index !== id))
+    let previousIsFlagCoordinate = 0
+    for (let i = 1; i < courseCoordinateList.length; i++) {
+      if (i === id) {
+        break
+      }
+      if (courseCoordinateList[i].isFlag) {
+        previousIsFlagCoordinate = i
+      }
+    }
+    setCourseCoordinateList((prev) =>
+      prev.filter((_value, index) => !(index <= id && index > previousIsFlagCoordinate))
+    )
   }
 
   const onClickButtonSave = () => {
@@ -199,16 +210,19 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({
               <CourseEditorAlertTypo>지도를 클릭하여 코스를 완성해주세요!</CourseEditorAlertTypo>
             )}
             {courseCoordinateList.length > 1 &&
-              courseCoordinateList.map((courseCoordinateItem, index) => (
-                <CourseEditorWrapper
-                  key={`course_coordinate_item_${courseCoordinateItem.lat}_${courseCoordinateItem.lng}__${index}`}
-                >
-                  <CourseEditorDisplayButton>경유지 {index + 1}</CourseEditorDisplayButton>
-                  <CourseEditorDeleteButton type={'primary'} danger onClick={onDeleteCourseCoordinateItem(index)}>
-                    삭제하기
-                  </CourseEditorDeleteButton>
-                </CourseEditorWrapper>
-              ))}
+              courseCoordinateList.map(
+                (courseCoordinateItem, index) =>
+                  courseCoordinateItem.isFlag && (
+                    <CourseEditorWrapper
+                      key={`course_coordinate_item_${courseCoordinateItem.lat}_${courseCoordinateItem.lng}__${index}`}
+                    >
+                      <CourseEditorDisplayButton>경유지 {index + 1}</CourseEditorDisplayButton>
+                      <CourseEditorDeleteButton type={'primary'} danger onClick={onDeleteCourseCoordinateItem(index)}>
+                        삭제하기
+                      </CourseEditorDeleteButton>
+                    </CourseEditorWrapper>
+                  )
+              )}
           </CourseEditorContainer>
         </>
       )}
