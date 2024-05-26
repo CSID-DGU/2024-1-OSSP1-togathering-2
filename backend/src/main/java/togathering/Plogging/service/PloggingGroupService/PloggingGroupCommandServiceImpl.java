@@ -1,6 +1,7 @@
 package togathering.Plogging.service.PloggingGroupService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import togathering.Plogging.apiPayload.code.status.ErrorStatus;
@@ -10,12 +11,14 @@ import togathering.Plogging.app.dto.PloggingGroupResponseDTO;
 import togathering.Plogging.converter.PloggingGroupConverter;
 import togathering.Plogging.domain.*;
 import togathering.Plogging.domain.enums.PloggingGroupStatus;
+import togathering.Plogging.jwt.JWTUtil;
 import togathering.Plogging.repository.PloggingCourseRepository.PloggingCourseRepository;
 import togathering.Plogging.repository.PloggingGroupRepository.PloggingGroupRepository;
 import togathering.Plogging.repository.UserPloggingGroupApplymentRepository.UserPloggingGroupApplymentRepository;
 import togathering.Plogging.repository.UserRepository;
 import togathering.Plogging.service.UserPloggingGroupApplymentService.UserPloggingGroupApplymentCommandServiceImpl;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +32,7 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
 
     private final UserPloggingGroupApplymentCommandServiceImpl applymentCommandService;
 
+    private final JWTUtil jwtUtil;
 
     // 플로깅 그룹 조회
     public List<PloggingGroupResponseDTO.getPloggingGroupListDTO> getPloggingGroupList() {
@@ -40,8 +44,16 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
 
     // 플로깅 그룹 생성
     @Transactional
-    public PloggingGroupResponseDTO.CreatePloggingGroupDTO createPloggingGroup(PloggingGroupRequestDTO.CreatePloggingGroupDTO request) throws AppHandler {
-        User user = userRepository.findById(request.getUserId())
+    public PloggingGroupResponseDTO.CreatePloggingGroupDTO createPloggingGroup(PloggingGroupRequestDTO.CreatePloggingGroupDTO request, HttpServletRequest httpRequest) throws AppHandler {
+        // token 가져오고 공백 제거
+        String accessToken = httpRequest.getHeader("Bearer");
+        String token = accessToken.split(" ")[1];
+
+        // id 가져오기
+        long id = jwtUtil.getId(token);
+
+        // 사용자 정보 조회
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_USER)); // 존재하지 않는 user
         PloggingCourse course = ploggingCourseRepository.findById(request.getCourseId())
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_COURSE)); // 존재하지 않는 course
@@ -59,7 +71,7 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
         ploggingGroupRepository.save(ploggingGroup);
 
         // applyment 객체 생성 - applyment service에서 호출
-        applymentCommandService.createApplyment(request.getUserId(), ploggingGroup.getId(), true);
+        applymentCommandService.createApplyment(user.getId(), ploggingGroup.getId(), true);
 
         // plogging group 반환
         return PloggingGroupConverter.toCreatePloggingGroupDTO(ploggingGroup);
@@ -67,8 +79,14 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
 
     // 유저가 그룹에 참여
     @Transactional
-    public void joinPloggingGroup(Long groupId, PloggingGroupRequestDTO.JoinPloggingGroupDTO request) throws AppHandler {
-        User user = userRepository.findById(request.getUserId())
+    public void joinPloggingGroup(Long groupId, HttpServletRequest httpRequest) throws AppHandler {
+        String accessToken = httpRequest.getHeader("Bearer");
+        String token = accessToken.split(" ")[1];
+
+        // id 가져오기
+        long id = jwtUtil.getId(token);
+
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_USER));
         PloggingGroup ploggingGroup = ploggingGroupRepository.findById(groupId)
                 .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_GROUP));
@@ -89,8 +107,14 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
 
     // 플로깅 그룹 탈퇴
     @Transactional
-    public void exitPloggingGroup(Long groupId, PloggingGroupRequestDTO.ExitPloggingGroupDTO request) throws AppHandler {
-        applymentCommandService.exitPloggingGroup(request.getUserId(), groupId);
+    public void exitPloggingGroup(Long groupId, HttpServletRequest httpRequest) throws AppHandler {
+        String accessToken = httpRequest.getHeader("Bearer");
+        String token = accessToken.split(" ")[1];
+
+        // id 가져오기
+        long id = jwtUtil.getId(token);
+
+        applymentCommandService.exitPloggingGroup(id, groupId);
     }
 
 }

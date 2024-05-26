@@ -8,6 +8,7 @@ import togathering.Plogging.app.dto.PloggingGroupRequestDTO;
 import togathering.Plogging.app.dto.PloggingGroupResponseDTO;
 import togathering.Plogging.service.PloggingGroupService.PloggingGroupCommandServiceImpl;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -25,8 +26,9 @@ public class PloggingGroupController {
 
     // plogging group 생성
     @PostMapping("/create")
-    public ApiResponse<PloggingGroupResponseDTO.CreatePloggingGroupDTO> createPloggingGroup(@RequestBody PloggingGroupRequestDTO.CreatePloggingGroupDTO dto) {
-        PloggingGroupResponseDTO.CreatePloggingGroupDTO responseDTO = ploggingGroupCommandService.createPloggingGroup(dto);
+    public ApiResponse<PloggingGroupResponseDTO.CreatePloggingGroupDTO> createPloggingGroup(@RequestBody PloggingGroupRequestDTO.CreatePloggingGroupDTO dto, HttpServletRequest httpRequest) {
+
+        PloggingGroupResponseDTO.CreatePloggingGroupDTO responseDTO = ploggingGroupCommandService.createPloggingGroup(dto, httpRequest);
         return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_CREATE_OK, responseDTO);
     }
 
