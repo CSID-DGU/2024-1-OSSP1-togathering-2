@@ -104,6 +104,7 @@ public class SecurityConfig {
                         .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .antMatchers("/swagger-resources/**").permitAll()
                         .antMatchers("/", "/user/login", "/user/**", "/reissue", "/social", "/courses/**","/course/**", "/group/**").permitAll()  // /group/** 추가
+                        .antMatchers("/api/v1/**").permitAll()  // /group/** 추가
                         .antMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated());
         http.exceptionHandling()
