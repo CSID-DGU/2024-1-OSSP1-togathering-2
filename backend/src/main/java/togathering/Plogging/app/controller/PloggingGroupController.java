@@ -24,6 +24,29 @@ public class PloggingGroupController {
         return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_LIST_OK, ploggingGroups);
     }
 
+    // plogging group type으로 검색
+    @GetMapping("/list")
+    public ApiResponse<List<PloggingGroupResponseDTO.getPloggingGroupListDTO>> getPloggingGroupTypeOfList(@RequestParam PloggingGroupRequestDTO.FilterSearchPloggingGroupListDTO dto) {
+        List<PloggingGroupResponseDTO.getPloggingGroupListDTO> ploggingGroups = ploggingGroupCommandService.getPloggingGroupListByType(dto);
+        return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_LIST_OK, ploggingGroups);
+    }
+
+    // plogging group name으로 검색
+    @GetMapping("/list")
+    public ApiResponse<List<PloggingGroupResponseDTO.getPloggingGroupListDTO>> getPloggingGroupTypeOfList(@RequestParam PloggingGroupRequestDTO.NameSearchPloggingGroupListDTO dto) {
+        List<PloggingGroupResponseDTO.getPloggingGroupListDTO> ploggingGroups = ploggingGroupCommandService.getPloggingGroupListByName(dto);
+        return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_LIST_OK, ploggingGroups);
+    }
+
+
+    // 내가 예약한 plogging group 검색
+    @GetMapping("/my-list")
+    public ApiResponse<List<PloggingGroupResponseDTO.getPloggingGroupListDTO>> getUsersPloggingGroupList(HttpServletRequest httpRequest) {
+        List<PloggingGroupResponseDTO.getPloggingGroupListDTO> ploggingGroups = ploggingGroupCommandService.getUsersPloggingGroupList(httpRequest);
+        return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_LIST_OK, ploggingGroups);
+    }
+
+
     // plogging group 생성
     @PostMapping("/create")
     public ApiResponse<PloggingGroupResponseDTO.CreatePloggingGroupDTO> createPloggingGroup(@RequestBody PloggingGroupRequestDTO.CreatePloggingGroupDTO dto, HttpServletRequest httpRequest) {
@@ -34,16 +57,15 @@ public class PloggingGroupController {
 
     // plogging group 참여
     @PostMapping("/{groupId}/join")
-    public ApiResponse<String> joinPloggingGroup(@PathVariable Long groupId, @RequestBody PloggingGroupRequestDTO.JoinPloggingGroupDTO dto) {
-        ploggingGroupCommandService.joinPloggingGroup(groupId, dto);
+    public ApiResponse<String> joinPloggingGroup(@PathVariable Long groupId, HttpServletRequest httpRequest) {
+        ploggingGroupCommandService.joinPloggingGroup(groupId, httpRequest);
         return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_JOIN_OK, "");
     }
 
     // plogging group 탈퇴
     @PostMapping("/{groupId}/exit")
-    public ApiResponse<String> exitPloggingGroup(@PathVariable Long groupId, @RequestBody PloggingGroupRequestDTO.ExitPloggingGroupDTO dto) {
-        ploggingGroupCommandService.exitPloggingGroup(groupId, dto);
+    public ApiResponse<String> exitPloggingGroup(@PathVariable Long groupId, HttpServletRequest httpRequest) {
+        ploggingGroupCommandService.exitPloggingGroup(groupId, httpRequest);
         return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_EXIT_OK, "");
     }
-
 }

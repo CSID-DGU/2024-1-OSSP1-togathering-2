@@ -11,6 +11,7 @@ import togathering.Plogging.app.dto.PloggingGroupResponseDTO;
 import togathering.Plogging.converter.PloggingGroupConverter;
 import togathering.Plogging.domain.*;
 import togathering.Plogging.domain.enums.PloggingGroupStatus;
+import togathering.Plogging.domain.enums.PloggingGroupType;
 import togathering.Plogging.jwt.JWTUtil;
 import togathering.Plogging.repository.PloggingCourseRepository.PloggingCourseRepository;
 import togathering.Plogging.repository.PloggingGroupRepository.PloggingGroupRepository;
@@ -61,7 +62,7 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
         // 객체 생성
         PloggingGroup ploggingGroup = PloggingGroup.builder()
                 .name(request.getGroupName())
-                .address(request.getAddress())
+                .type(request.getType())
                 .date_of_progress(request.getDateOfProgress())
                 .status(PloggingGroupStatus.BEFORE)
                 .ploggingCourse(course)
@@ -96,7 +97,7 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
                 .anyMatch(a -> a.getUser().equals(user));
         if (!alreadyMember) {
             // applyment 객체 생성 - applyment service에서 호출
-            applymentCommandService.createApplyment(request.getUserId(), groupId, false);
+            applymentCommandService.createApplyment(id, groupId, false);
         } else {
             throw new AppHandler(ErrorStatus.ALREADY_JOIN_GROUP);
         }
@@ -117,4 +118,37 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
         applymentCommandService.exitPloggingGroup(id, groupId);
     }
 
+    // 모임 타입으로 모임 리스트 모임
+    public List<PloggingGroupResponseDTO.getPloggingGroupListDTO> getPloggingGroupListByType(PloggingGroupRequestDTO.FilterSearchPloggingGroupListDTO request) {
+        List<PloggingGroup> ploggingGroupList = ploggingGroupRepository.findByType(request.getType());
+        return ploggingGroupList.stream()
+                .map(PloggingGroupConverter::getPloggingGroupListDTO)
+                .collect(Collectors.toList());
+    }
+
+    // 검색으로 플로깅 모임 리스트 조회
+    public List<PloggingGroupResponseDTO.getPloggingGroupListDTO> getPloggingGroupListByName(PloggingGroupRequestDTO.NameSearchPloggingGroupListDTO request) {
+        List<PloggingGroup> ploggingGroupList = ploggingGroupRepository.findByNameContaining(request.getGroupName());
+        return ploggingGroupList.stream()
+                .map(PloggingGroupConverter::getPloggingGroupListDTO)
+                .collect(Collectors.toList());
+    }
+
+    // 내가 예약한 플로깅 모임 리스트 조회
+    public List<PloggingGroupResponseDTO.getPloggingGroupListDTO> getUsersPloggingGroupList(HttpServletRequest httpRequest) {
+        String accessToken = httpRequest.getHeader("Bearer");
+        String token = accessToken.split(" ")[1];
+
+        // id 가져오기
+        long id = jwtUtil.getId(token);
+        // id로 user 정보 조회
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_USER));
+
+        // user가 포함된 모든 그룹 조회
+        List<PloggingGroup> ploggingGroupList = ploggingGroupRepository.findByUserPloggingGroupApplymentsUser(user);
+        return ploggingGroupList.stream()
+                .map(PloggingGroupConverter::getPloggingGroupListDTO)
+                .collect(Collectors.toList());
+    }
 }
