@@ -15,6 +15,7 @@ import togathering.Plogging.domain.mapping.PloggingGroupReview;
 import togathering.Plogging.repository.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +28,6 @@ public class PCsQueryServiceImpl implements PCsQueryService {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final ReivewPictureRepository reivewPictureRepository;
-
-    @Autowired
-    private S3Uploader uploader;
 
     @Override
     public List<PloggingCourseDTO.GetPloggingCourseInfoDTO> getCoursesList() {
@@ -67,22 +65,6 @@ public class PCsQueryServiceImpl implements PCsQueryService {
     }
 
     @Override
-    public PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO createPloggingGroupReivew(PloggingGroupReviewDTO.RequestPloggingGroupReviewDTO request) {
-        List<PloggingGroupReview> images;
-
-        for (MultipartFile image : request.getImages()){
-
-        }
-
-    }
-
-
-    public PloggingGroupReview getReview(Long review_id) {
-        PloggingGroupReview review = reviewRepository.getReferenceById(review_id);
-        return review;
-    }
-
-    @Override
     @PutMapping
     public PloggingCourseDTO.ResponseModifyCourseTagDTO modifyCourseTag(PloggingCourseDTO.RequestModifyCourseTagDTO request, Long id){
         PloggingCourse ploggingCourse = pgcsRepository.getReferenceById(id);
@@ -115,20 +97,38 @@ public class PCsQueryServiceImpl implements PCsQueryService {
         return PCsConverter.toResponsePloggingCourseDTO(p);
     }
 
-    @Override
-    public List<PloggingCourseDTO.ResponsePloggingCourseDTO> getRecommendCourseList(String tag){
+    public List<PloggingCourseDTO.ResponsePloggingCourseDTO> getCourseListRecommendedByAI(PloggingCourseDTO.RequestRecommendCourseDTO dto){
         List<PloggingCourse> courseList = pgcsRepository.findAll();
+        List<PloggingCourse> response = new ArrayList<>(List.of());
 
-        for (PloggingCourse ploggingCourse: courseList) {
-            if (!ploggingCourse.getTag().equals(tag)) {
-                courseList.remove(ploggingCourse);
+        StringBuilder sb;
+
+        List<String> types = dto.getTypes();
+        List<String> togethers = dto.getTogethers();
+        List<String> preference = dto.getPreference();
+        List<String> avoidance = dto.getAvoidance();
+
+        for (String type : types){
+            for (String together : togethers){
+                for (String prefer : preference){
+                    for (String avoid : avoidance){
+                        sb = new StringBuilder();
+                        sb.append(type).append(together).append(prefer).append(avoid);
+
+                        for (PloggingCourse p : courseList){
+                            if (p.getTag().contentEquals(sb))
+                                response.add(p);
+                        }
+                    }
+                }
             }
         }
 
-        return courseList.stream()
+        return response.stream()
                 .map(PCsConverter::toResponsePloggingCourseDTO)
                 .collect(Collectors.toList());
     }
+
 
 
     @Override
@@ -144,24 +144,5 @@ public class PCsQueryServiceImpl implements PCsQueryService {
         return courseList.stream()
                 .map(PCsConverter::toResponsePloggingCourseDTO)
                 .collect(Collectors.toList());
-    }
-    public void uploadCoursePicture(PloggingCourse ploggingCourse, MultipartFile file) {
-
-    }
-
-    @Override
-    public PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO createPloggingGroupReivew(PloggingGroupReviewDTO.RequestPloggingGroupReviewDTO request) {
-        PloggingGroupReview ploggingGroupReview = PloggingGroupReview.builder()
-                .ploggingGroup(null)
-                .content(request.getContent())
-                .reward(request.getReward())
-                .user(null)
-                .build();
-        return PCsConverter.toResponsePloggingGroupReviewDTO(reviewRepository.save(ploggingGroupReview));
-    }
-
-    public PloggingGroupReview getReview(Long review_id) {
-        PloggingGroupReview review = reviewRepository.getReferenceById(review_id);
-        return review;
     }
 }
