@@ -11,6 +11,7 @@ import togathering.Plogging.converter.PCsConverter;
 import togathering.Plogging.domain.mapping.PloggingGroupReview;
 import togathering.Plogging.service.PCsQueryService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -72,27 +73,27 @@ public class PloggingCourseController{
 
     // plogging group review 생성하기
     @PostMapping("/course/{course_id}/review")
-    public String reviewCourse(
-            @RequestPart("images") List<MultipartFile> images,
-            @RequestParam("review") String reivew
-    ){
+    public ApiResponse<PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO> reviewCourse(
+            @RequestBody PloggingGroupReviewDTO.RequestPloggingGroupReivewFormDTO dto
+    ) throws IOException {
+        Long user_id = 1L;
         PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO responseDTO =
-                pcsQueryService.createPloggingGroupReivew(PCsConverter.toRequestPloggingGroupReviewDTO(reivew, images));
+                pcsQueryService.createPloggingGroupReivew(PCsConverter.toRequestPloggingGroupReviewDTO(dto, user_id));
 
-        return reivew;
+        return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_REVIEW_OK, responseDTO);
     }
 
-    @GetMapping("/course/recommend")
-    public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> recommendCourse(
+    @PostMapping("/course/recommend")
+    public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> recommendCourseListByAI(
             @RequestBody PloggingCourseDTO.RequestRecommendCourseDTO dto
     ){
         List<PloggingCourseDTO.ResponsePloggingCourseDTO> recommendList =
-                pcsQueryService.getRecommendCourseList(dto.getTag());
+                pcsQueryService.getRecommendCourseListByAI(dto);
 
         return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_LIST_OK, recommendList);
     }
 
-    @GetMapping("/course/search")
+    @PostMapping("/course/search")
     public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> searchCourse(
             @RequestBody PloggingCourseDTO.RequestSearchCourseDTO dto
     ){
