@@ -24,7 +24,6 @@ public class PloggingGroupResponseDTO {
     public static class getPloggingGroupListDTO {
         private Long id;
         private String name;
-        private PloggingGroupType type;
         private LocalDateTime dateOfProgress;
         private PloggingGroupStatus status;
         private List<UserPloggingGroupApplymentResponseDTO.GroupUserInfoApplymentDTO> users;
