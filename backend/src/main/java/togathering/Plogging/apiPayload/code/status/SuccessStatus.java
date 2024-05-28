@@ -21,6 +21,8 @@ public enum SuccessStatus implements BaseCode {
     PLOGGING_NAME_GROUP_LIST_OK(HttpStatus.OK, 200, "groupName 리스트 조회 성공!"),
     PLOGGING_TYPE_GROUP_LIST_OK(HttpStatus.OK, 200, "type 그룹 리스트 조회 성공!"),
     PLOGGING_RESERVED_GROUP_LIST_OK(HttpStatus.OK, 200, "내가 예약한 그룹 리스트 조회 성공!"),
+    PLOGGING_START_OK(HttpStatus.OK, 200, "플로깅 시작 성공!"),
+    PLOGGING_FINISH_OK(HttpStatus.OK, 200, "플로깅 종료 성공!"),
 
     PLOGGING_COURSE_CREATE_OK(HttpStatus.OK, 200, "코스 생성 성공!"),
     PLOGGING_COURSE_LIST_OK(HttpStatus.OK, 200, "코스 리스트 조회 성공!"),

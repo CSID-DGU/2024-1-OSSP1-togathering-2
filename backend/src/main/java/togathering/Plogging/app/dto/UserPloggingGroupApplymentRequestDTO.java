@@ -16,7 +16,6 @@ public class UserPloggingGroupApplymentRequestDTO {
     @Getter
     @NoArgsConstructor
     public static class PloggingGroupUserDTO {
-        private Long userId; // 아직 헤더가 없어서 임시로 지정
         private Long ploggingGroupId;
         private boolean isPloggingGroupAdmin;
     }

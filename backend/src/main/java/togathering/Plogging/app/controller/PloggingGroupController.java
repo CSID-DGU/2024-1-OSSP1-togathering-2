@@ -68,4 +68,18 @@ public class PloggingGroupController {
         ploggingGroupCommandService.exitPloggingGroup(groupId, httpRequest);
         return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_EXIT_OK, "");
     }
+
+    // 플로깅 시작하기
+    @PostMapping("/{groupId}/start")
+    public ApiResponse<String> startPloggingGroup(@PathVariable Long groupId, HttpServletRequest httpRequest) {
+        ploggingGroupCommandService.startGroupPlogging(groupId, httpRequest);
+        return ApiResponse.of(SuccessStatus.PLOGGING_START_OK, "");
+    }
+
+    // 플로깅 끝내기
+    @PostMapping("/{groupId}/finish")
+    public ApiResponse<String> finishPloggingGroup(@PathVariable Long groupId, HttpServletRequest httpRequest) {
+        ploggingGroupCommandService.finishGroupPlogging(groupId, httpRequest);
+        return ApiResponse.of(SuccessStatus.PLOGGING_FINISH_OK, "");
+    }
 }

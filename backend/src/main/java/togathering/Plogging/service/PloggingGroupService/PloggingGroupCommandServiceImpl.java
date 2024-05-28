@@ -118,6 +118,68 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
         applymentCommandService.exitPloggingGroup(id, groupId);
     }
 
+    // 플로깅 시작하기
+    @Transactional
+    public void startGroupPlogging(Long groupId, HttpServletRequest httpRequest) throws AppHandler {
+        String accessToken = httpRequest.getHeader("Bearer");
+        String token = accessToken.split(" ")[1];
+
+        // id 가져오기
+        long id = jwtUtil.getId(token);
+        // 그룹 찾기
+        PloggingGroup ploggingGroup = ploggingGroupRepository.findById(groupId)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_GROUP));
+
+        // 그룹에 포함된 유저 찾기
+        UserPloggingGroupApplyment applyment = applymentRepository.findByUserIdAndPloggingGroupId(id, groupId)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_APPLYMENT));
+        if (!applyment.isPloggingGroupAdmin()) { // 유저가 그룹장인지 확인
+            throw new AppHandler(ErrorStatus.NOT_GROUP_ADMIN);
+        }
+
+        // 상태 변경
+        if (ploggingGroup.getStatus() == PloggingGroupStatus.BEFORE) {
+            ploggingGroup.setStatus(PloggingGroupStatus.DURING);
+            ploggingGroupRepository.save(ploggingGroup); // 저장
+        } else {
+            throw new AppHandler(ErrorStatus.INVALID_STATUS_CHANGE);
+        }
+    }
+
+    // 플로깅 끝내기
+    @Transactional
+    public void finishGroupPlogging(Long groupId, HttpServletRequest httpRequest) throws AppHandler {
+        String accessToken = httpRequest.getHeader("Bearer");
+        String token = accessToken.split(" ")[1];
+
+        // id 가져오기
+        long id = jwtUtil.getId(token);
+        // 그룹 찾기
+        PloggingGroup ploggingGroup = ploggingGroupRepository.findById(groupId)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_GROUP));
+        // 그룹에 포함된 유저 찾기
+        UserPloggingGroupApplyment applyment = applymentRepository.findByUserIdAndPloggingGroupId(id, groupId)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_APPLYMENT));
+        if (!applyment.isPloggingGroupAdmin()) { // 유저가 그룹장인지 확인
+            throw new AppHandler(ErrorStatus.NOT_GROUP_ADMIN);
+        }
+
+        // 해당 유저의 isFinished 상태를 true로 변경
+        applyment.setFinished(true);
+        applymentRepository.save(applyment);
+
+        // 모든 유저가 플로깅을 끝냈는지 확인
+        boolean allFinished = applymentRepository.findByPloggingGroupId(groupId).stream()
+                .allMatch(UserPloggingGroupApplyment::isFinished);
+        // 끝냈다면 staus를 AFTER로 변경
+        if (allFinished) {
+            ploggingGroup.setStatus(PloggingGroupStatus.AFTER);
+            ploggingGroupRepository.save(ploggingGroup);
+        }
+
+    }
+
+
     // 모임 타입으로 모임 리스트 모임
     public List<PloggingGroupResponseDTO.getPloggingGroupListDTO> getPloggingGroupListByType(PloggingGroupRequestDTO.FilterSearchPloggingGroupListDTO request) {
         List<PloggingGroup> ploggingGroupList = ploggingGroupRepository.findByType(request.getType());

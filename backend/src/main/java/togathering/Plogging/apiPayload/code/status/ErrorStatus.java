@@ -26,7 +26,11 @@ public enum ErrorStatus implements BaseErrorCode {
 
     ALREADY_JOIN_GROUP(HttpStatus.BAD_REQUEST, 40901, "이미 참가 중인 그룹입니다."),
     ALREADY_EXIT_GROUP(HttpStatus.BAD_REQUEST, 40902, "이미 탈퇴한 그룹입니다."),
-    ADMIN_CANNOT_EXIT(HttpStatus.BAD_REQUEST, 40903, "그룹장은 탈퇴할 수 없습니다.");
+    ADMIN_CANNOT_EXIT(HttpStatus.BAD_REQUEST, 40903, "그룹장은 탈퇴할 수 없습니다."),
+
+    INVALID_STATUS_CHANGE(HttpStatus.BAD_REQUEST, 40601, "플로깅 시작에 실패하였습니다."),
+    NOT_GROUP_ADMIN(HttpStatus.BAD_REQUEST, 40602, "그룹장이 아닙니다."),
+    NOT_FOUND_APPLYMENT(HttpStatus.BAD_REQUEST, 40603, "해당 그룹에 참여하지 않은 유저입니다.");
 
 
     // 여기 관련해서 하고싶은 응답들 정의해주세요..

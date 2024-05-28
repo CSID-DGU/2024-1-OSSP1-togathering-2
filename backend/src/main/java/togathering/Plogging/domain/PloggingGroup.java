@@ -41,6 +41,8 @@ public class PloggingGroup extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime date_of_progress;
 
+    // 상태 변경 메서드
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(15) DEFAULT 'BEFORE'")
     private PloggingGroupStatus status;
