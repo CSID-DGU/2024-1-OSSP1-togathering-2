@@ -5,13 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.multipart.MultipartFile;
-import togathering.Plogging.Uploader.S3Uploader;
 import togathering.Plogging.apiPayload.exception.handler.AppHandler;
 import togathering.Plogging.app.dto.PloggingCourseDTO;
-import togathering.Plogging.app.dto.PloggingGroupReviewDTO;
 import togathering.Plogging.converter.PCsConverter;
 import togathering.Plogging.domain.PloggingCourse;
-import togathering.Plogging.domain.mapping.PloggingGroupReview;
 import togathering.Plogging.repository.*;
 
 import javax.transaction.Transactional;
@@ -27,9 +24,6 @@ public class PCsQueryServiceImpl implements PCsQueryService {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final ReivewPictureRepository reivewPictureRepository;
-
-    @Autowired
-    private S3Uploader uploader;
 
     @Override
     public List<PloggingCourseDTO.GetPloggingCourseInfoDTO> getCoursesList() {
@@ -64,22 +58,6 @@ public class PCsQueryServiceImpl implements PCsQueryService {
                 build();
 
         return PCsConverter.toResponsePloggingCourseDTO(pgcsRepository.save(ploggingCourse));
-    }
-
-    @Override
-    public PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO createPloggingGroupReivew(PloggingGroupReviewDTO.RequestPloggingGroupReviewDTO request) {
-        List<PloggingGroupReview> images;
-
-        for (MultipartFile image : request.getImages()){
-
-        }
-
-    }
-
-
-    public PloggingGroupReview getReview(Long review_id) {
-        PloggingGroupReview review = reviewRepository.getReferenceById(review_id);
-        return review;
     }
 
     @Override
@@ -147,21 +125,5 @@ public class PCsQueryServiceImpl implements PCsQueryService {
     }
     public void uploadCoursePicture(PloggingCourse ploggingCourse, MultipartFile file) {
 
-    }
-
-    @Override
-    public PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO createPloggingGroupReivew(PloggingGroupReviewDTO.RequestPloggingGroupReviewDTO request) {
-        PloggingGroupReview ploggingGroupReview = PloggingGroupReview.builder()
-                .ploggingGroup(null)
-                .content(request.getContent())
-                .reward(request.getReward())
-                .user(null)
-                .build();
-        return PCsConverter.toResponsePloggingGroupReviewDTO(reviewRepository.save(ploggingGroupReview));
-    }
-
-    public PloggingGroupReview getReview(Long review_id) {
-        PloggingGroupReview review = reviewRepository.getReferenceById(review_id);
-        return review;
     }
 }
