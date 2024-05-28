@@ -6,6 +6,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import togathering.Plogging.domain.common.BaseEntity;
 import togathering.Plogging.domain.enums.PloggingGroupStatus;
+import togathering.Plogging.domain.enums.PloggingGroupType;
 import togathering.Plogging.domain.mapping.PloggingGroupPicture;
 import togathering.Plogging.domain.mapping.PloggingGroupReview;
 
@@ -34,12 +35,14 @@ public class PloggingGroup extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String address;
+    @Enumerated(EnumType.STRING)
+    private PloggingGroupType type;
 
     @Column(nullable = false)
     private LocalDateTime date_of_progress;
 
+    // 상태 변경 메서드
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(15) DEFAULT 'BEFORE'")
     private PloggingGroupStatus status;

@@ -31,9 +31,9 @@ public class PloggingGroupConverter {
         return PloggingGroupResponseDTO.getPloggingGroupListDTO.builder()
                 .id(ploggingGroup.getId())
                 .name(ploggingGroup.getName())
-                .address(ploggingGroup.getAddress())
-                .dateOfProgress(ploggingGroup.getDate_of_progress())
-                .status(ploggingGroup.getStatus())
+                .type(ploggingGroup.getType().toString())
+                .status(ploggingGroup.getStatus().toString())
+                .dateOfProgress(ploggingGroup.getDate_of_progress().toString())
                 .users(userDTOs)
                 .build();
     }

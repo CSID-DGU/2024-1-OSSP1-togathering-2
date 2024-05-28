@@ -33,5 +33,9 @@ public class UserPloggingGroupApplyment extends BaseEntity implements Serializab
 
     private boolean isPloggingGroupAdmin;
 
+    @Setter
+    @Builder.Default
+    private boolean isFinished = false; // 플로깅 끝냈는지 여부 확인
+
 }
 
