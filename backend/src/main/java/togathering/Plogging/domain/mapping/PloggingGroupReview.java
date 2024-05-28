@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Table(name = "plogging_group_reivew")
 public class PloggingGroupReview extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +30,8 @@ public class PloggingGroupReview extends BaseEntity {
 
     private int reward;
 
-    @Lob
-    private String content;
+    @Column(nullable = false)
+    private int cleanliness;
 
     @OneToMany(mappedBy = "ploggingGroupReview", cascade = CascadeType.ALL)
     private List<PloggingGroupReviewPicture> ploggingGroupReviewPictures;
