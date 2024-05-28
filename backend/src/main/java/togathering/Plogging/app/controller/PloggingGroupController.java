@@ -6,6 +6,7 @@ import togathering.Plogging.apiPayload.ApiResponse;
 import togathering.Plogging.apiPayload.code.status.SuccessStatus;
 import togathering.Plogging.app.dto.PloggingGroupRequestDTO;
 import togathering.Plogging.app.dto.PloggingGroupResponseDTO;
+import togathering.Plogging.domain.enums.PloggingGroupType;
 import togathering.Plogging.service.PloggingGroupService.PloggingGroupCommandServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,16 +26,16 @@ public class PloggingGroupController {
     }
 
     // plogging group type으로 검색
-    @GetMapping("/list")
-    public ApiResponse<List<PloggingGroupResponseDTO.getPloggingGroupListDTO>> getPloggingGroupTypeOfList(@RequestParam PloggingGroupRequestDTO.FilterSearchPloggingGroupListDTO dto) {
-        List<PloggingGroupResponseDTO.getPloggingGroupListDTO> ploggingGroups = ploggingGroupCommandService.getPloggingGroupListByType(dto);
+    @GetMapping("/list/by-type")
+    public ApiResponse<List<PloggingGroupResponseDTO.getPloggingGroupListDTO>> getPloggingGroupTypeOfList(@RequestParam PloggingGroupType type) {
+        List<PloggingGroupResponseDTO.getPloggingGroupListDTO> ploggingGroups = ploggingGroupCommandService.getPloggingGroupListByType(type);
         return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_LIST_OK, ploggingGroups);
     }
 
     // plogging group name으로 검색
-    @GetMapping("/list")
-    public ApiResponse<List<PloggingGroupResponseDTO.getPloggingGroupListDTO>> getPloggingGroupTypeOfList(@RequestParam PloggingGroupRequestDTO.NameSearchPloggingGroupListDTO dto) {
-        List<PloggingGroupResponseDTO.getPloggingGroupListDTO> ploggingGroups = ploggingGroupCommandService.getPloggingGroupListByName(dto);
+    @GetMapping("/list/by-name")
+    public ApiResponse<List<PloggingGroupResponseDTO.getPloggingGroupListDTO>> getPloggingGroupTypeOfList(@RequestParam String groupName) {
+        List<PloggingGroupResponseDTO.getPloggingGroupListDTO> ploggingGroups = ploggingGroupCommandService.getPloggingGroupListByName(groupName);
         return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_LIST_OK, ploggingGroups);
     }
 

@@ -181,16 +181,16 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
 
 
     // 모임 타입으로 모임 리스트 모임
-    public List<PloggingGroupResponseDTO.getPloggingGroupListDTO> getPloggingGroupListByType(PloggingGroupRequestDTO.FilterSearchPloggingGroupListDTO request) {
-        List<PloggingGroup> ploggingGroupList = ploggingGroupRepository.findByType(request.getType());
+    public List<PloggingGroupResponseDTO.getPloggingGroupListDTO> getPloggingGroupListByType(PloggingGroupType type) {
+        List<PloggingGroup> ploggingGroupList = ploggingGroupRepository.findByType(type);
         return ploggingGroupList.stream()
                 .map(PloggingGroupConverter::getPloggingGroupListDTO)
                 .collect(Collectors.toList());
     }
 
     // 검색으로 플로깅 모임 리스트 조회
-    public List<PloggingGroupResponseDTO.getPloggingGroupListDTO> getPloggingGroupListByName(PloggingGroupRequestDTO.NameSearchPloggingGroupListDTO request) {
-        List<PloggingGroup> ploggingGroupList = ploggingGroupRepository.findByNameContaining(request.getGroupName());
+    public List<PloggingGroupResponseDTO.getPloggingGroupListDTO> getPloggingGroupListByName(String groupName) {
+        List<PloggingGroup> ploggingGroupList = ploggingGroupRepository.findByNameContaining(groupName);
         return ploggingGroupList.stream()
                 .map(PloggingGroupConverter::getPloggingGroupListDTO)
                 .collect(Collectors.toList());
