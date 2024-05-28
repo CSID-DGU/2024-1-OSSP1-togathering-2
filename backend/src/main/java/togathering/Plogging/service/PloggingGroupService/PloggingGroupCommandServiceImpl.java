@@ -43,6 +43,13 @@ public class PloggingGroupCommandServiceImpl implements PloggingGroupCommandServ
                 .collect(Collectors.toList());
     }
 
+    // 플로깅 그룹 상세 조회
+    public PloggingGroupResponseDTO.getPloggingGroupDetailDTO getPloggingGroupDetail(Long groupId) {
+        PloggingGroup ploggingGroup = ploggingGroupRepository.findById(groupId)
+                .orElseThrow(() -> new AppHandler(ErrorStatus.NOT_FOUND_GROUP));
+        return PloggingGroupConverter.getPloggingGroupDetailDTO(ploggingGroup);
+    }
+
     // 플로깅 그룹 생성
     @Transactional
     public PloggingGroupResponseDTO.CreatePloggingGroupDTO createPloggingGroup(PloggingGroupRequestDTO.CreatePloggingGroupDTO request, HttpServletRequest httpRequest) throws AppHandler {

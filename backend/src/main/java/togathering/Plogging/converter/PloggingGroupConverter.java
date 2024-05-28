@@ -37,4 +37,18 @@ public class PloggingGroupConverter {
                 .users(userDTOs)
                 .build();
     }
+
+    public static PloggingGroupResponseDTO.getPloggingGroupDetailDTO getPloggingGroupDetailDTO(PloggingGroup ploggingGroup) {
+        // 유저 리스트 dto 변환
+        List<UserPloggingGroupApplymentResponseDTO.GroupUserInfoApplymentDTO> userDTOs = toGroupUserInfoApplymentDTOList(ploggingGroup.getUserPloggingGroupApplyments());
+
+        return PloggingGroupResponseDTO.getPloggingGroupDetailDTO.builder()
+                .id(ploggingGroup.getId())
+                .name(ploggingGroup.getName())
+                .type(ploggingGroup.getType().toString())
+                .status(ploggingGroup.getStatus().toString())
+                .dateOfProgress(ploggingGroup.getDate_of_progress().toString())
+                .users(userDTOs)
+                .build();
+    }
 }

@@ -31,4 +31,16 @@ public class PloggingGroupResponseDTO {
         private String dateOfProgress;
         private List<UserPloggingGroupApplymentResponseDTO.GroupUserInfoApplymentDTO> users;
     }
+
+    @Getter
+    @Builder
+    public static class getPloggingGroupDetailDTO {
+        private Long id;
+        private String name;
+        private String type;
+        private String status;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        private String dateOfProgress;
+        private List<UserPloggingGroupApplymentResponseDTO.GroupUserInfoApplymentDTO> users;
+    }
 }

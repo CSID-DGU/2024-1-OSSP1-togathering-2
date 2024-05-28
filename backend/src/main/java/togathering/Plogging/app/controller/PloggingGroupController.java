@@ -25,6 +25,14 @@ public class PloggingGroupController {
         return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_LIST_OK, ploggingGroups);
     }
 
+    // plogging group 상세 정보 조회
+    @GetMapping("/{groupId}/detail")
+    public ApiResponse<PloggingGroupResponseDTO.getPloggingGroupDetailDTO> getPloggingGroupDetail(@PathVariable Long groupId) {
+        PloggingGroupResponseDTO.getPloggingGroupDetailDTO ploggingGroup = ploggingGroupCommandService.getPloggingGroupDetail(groupId);
+        return ApiResponse.of(SuccessStatus.PLOGGING_GROUP_DETAIL_OK, ploggingGroup);
+    }
+
+
     // plogging group type으로 검색
     @GetMapping("/list/by-type")
     public ApiResponse<List<PloggingGroupResponseDTO.getPloggingGroupListDTO>> getPloggingGroupTypeOfList(@RequestParam PloggingGroupType type) {
