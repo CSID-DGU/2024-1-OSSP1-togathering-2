@@ -1,18 +1,18 @@
 package togathering.Plogging.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.multipart.MultipartFile;
+import togathering.Plogging.Uploader.S3Uploader;
 import togathering.Plogging.apiPayload.exception.handler.AppHandler;
 import togathering.Plogging.app.dto.PloggingCourseDTO;
 import togathering.Plogging.app.dto.PloggingGroupReviewDTO;
 import togathering.Plogging.converter.PCsConverter;
 import togathering.Plogging.domain.PloggingCourse;
 import togathering.Plogging.domain.mapping.PloggingGroupReview;
-import togathering.Plogging.repository.GroupRepository;
-import togathering.Plogging.repository.PGCsRepository;
-import togathering.Plogging.repository.ReviewRepository;
-import togathering.Plogging.repository.UserRepository;
+import togathering.Plogging.repository.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -26,6 +26,10 @@ public class PCsQueryServiceImpl implements PCsQueryService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
+    private final ReivewPictureRepository reivewPictureRepository;
+
+    @Autowired
+    private S3Uploader uploader;
 
     @Override
     public List<PloggingCourseDTO.GetPloggingCourseInfoDTO> getCoursesList() {
@@ -44,20 +48,103 @@ public class PCsQueryServiceImpl implements PCsQueryService {
                 .course_id(ploggingCourse.getId())
                 .title(ploggingCourse.getTitle())
                 .metadata(ploggingCourse.getMetadata())
+                .duration(ploggingCourse.getDuration())
+                .time(ploggingCourse.getTime())
                 .build();
     }
 
     @Transactional
     public PloggingCourseDTO.ResponsePloggingCourseDTO createPloggingCourse(PloggingCourseDTO.RequestPloggingCourseDTO request) throws AppHandler {
-        PloggingCourse ploggingCourse = PloggingCourse.builder()
-                                .title(request.getTitle())
-                                .metadata(request.getMetadata())
-                                .build();
+        PloggingCourse ploggingCourse = PloggingCourse.builder().
+                title(request.getTitle()).
+                metadata(request.getMetadata()).
+                duration(request.getDuration()).
+                time(request.getTime()).
+                tag(request.getTag()).
+                build();
 
         return PCsConverter.toResponsePloggingCourseDTO(pgcsRepository.save(ploggingCourse));
     }
 
     @Override
+    public PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO createPloggingGroupReivew(PloggingGroupReviewDTO.RequestPloggingGroupReviewDTO request) {
+        List<PloggingGroupReview> images;
+
+        for (MultipartFile image : request.getImages()){
+
+        }
+
+    }
+
+
+    public PloggingGroupReview getReview(Long review_id) {
+        PloggingGroupReview review = reviewRepository.getReferenceById(review_id);
+        return review;
+    }
+
+    @Override
+    @PutMapping
+    public PloggingCourseDTO.ResponseModifyCourseTagDTO modifyCourseTag(PloggingCourseDTO.RequestModifyCourseTagDTO request, Long id){
+        PloggingCourse ploggingCourse = pgcsRepository.getReferenceById(id);
+
+        PloggingCourse ploggingCourse1 = PCsConverter.toUpdatePloggingCourseTag(request, ploggingCourse);
+
+        pgcsRepository.save(ploggingCourse1);
+
+        return PCsConverter.toResponseModifyCourseTagDTO(ploggingCourse1);
+    }
+
+    @Override
+    @PutMapping
+    public PloggingCourseDTO.ResponsePloggingCourseDTO modifyCourse(PloggingCourseDTO.RequestPloggingCourseDTO request, Long id){
+        PloggingCourse ploggingCourse = pgcsRepository.getReferenceById(id);
+        PloggingCourse ploggingCourse1 = PCsConverter.toUpdatePloggingCourseHidden(ploggingCourse);
+
+        pgcsRepository.save(ploggingCourse1);
+
+        PloggingCourse p = PloggingCourse.builder()
+                .metadata(request.getMetadata())
+                .title(request.getTitle())
+                .duration(request.getDuration())
+                .time(request.getTime())
+                .tag(request.getTag())
+                .build();
+
+        pgcsRepository.save(p);
+
+        return PCsConverter.toResponsePloggingCourseDTO(p);
+    }
+
+    @Override
+    public List<PloggingCourseDTO.ResponsePloggingCourseDTO> getRecommendCourseList(String tag){
+        List<PloggingCourse> courseList = pgcsRepository.findAll();
+
+        for (PloggingCourse ploggingCourse: courseList) {
+            if (!ploggingCourse.getTag().equals(tag)) {
+                courseList.remove(ploggingCourse);
+            }
+        }
+
+        return courseList.stream()
+                .map(PCsConverter::toResponsePloggingCourseDTO)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<PloggingCourseDTO.ResponsePloggingCourseDTO> getCourseListSearchBy(String word){
+        List<PloggingCourse> courseList = pgcsRepository.findAll();
+
+        for (PloggingCourse ploggingCourse: courseList) {
+            if(!ploggingCourse.getTitle().toLowerCase().contains(word.toLowerCase())) {
+                courseList.remove(ploggingCourse);
+            }
+        }
+
+        return courseList.stream()
+                .map(PCsConverter::toResponsePloggingCourseDTO)
+                .collect(Collectors.toList());
+    }
     public void uploadCoursePicture(PloggingCourse ploggingCourse, MultipartFile file) {
 
     }
@@ -77,5 +164,4 @@ public class PCsQueryServiceImpl implements PCsQueryService {
         PloggingGroupReview review = reviewRepository.getReferenceById(review_id);
         return review;
     }
-
 }

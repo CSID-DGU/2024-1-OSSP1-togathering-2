@@ -7,6 +7,7 @@ import togathering.Plogging.apiPayload.ApiResponse;
 import togathering.Plogging.apiPayload.code.status.SuccessStatus;
 import togathering.Plogging.app.dto.PloggingCourseDTO;
 import togathering.Plogging.app.dto.PloggingGroupReviewDTO;
+import togathering.Plogging.converter.PCsConverter;
 import togathering.Plogging.domain.mapping.PloggingGroupReview;
 import togathering.Plogging.service.PCsQueryService;
 
@@ -42,6 +43,27 @@ public class PloggingCourseController{
         return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_CREATE_OK, responseDTO);
    }
 
+    @PostMapping("/courses/{course_id}/modify")
+    public ApiResponse<PloggingCourseDTO.ResponsePloggingCourseDTO> modifyPloggingCourse(
+            @PathVariable String course_id,
+            @RequestBody PloggingCourseDTO.RequestPloggingCourseDTO dto
+    ){
+        PloggingCourseDTO.ResponsePloggingCourseDTO responseDTO = pcsQueryService.modifyCourse(dto, Long.parseLong(course_id));
+
+
+        return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_MODIFY_OK, responseDTO);
+    }
+
+   @PostMapping("/course/{course_id}/modify-tag")
+   public ApiResponse<PloggingCourseDTO.ResponseModifyCourseTagDTO> modifyCourseTag(
+           @PathVariable String course_id,
+           @RequestBody PloggingCourseDTO.RequestModifyCourseTagDTO dto){
+
+       PloggingCourseDTO.ResponseModifyCourseTagDTO responseDTO = pcsQueryService.modifyCourseTag(dto, Long.parseLong(course_id));
+
+       return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_TAG_MODIFY_OK, responseDTO);
+   }
+
     // plogging course review 사진 업로드하기
     @PostMapping("/course/{course_id}/photos")
     public void uploadPGCsPicture(@RequestBody MultipartFile file){
@@ -50,12 +72,33 @@ public class PloggingCourseController{
 
     // plogging group review 생성하기
     @PostMapping("/course/{course_id}/review")
-    public ApiResponse<PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO> reviewPGCourse(
-            @RequestBody PloggingGroupReviewDTO.RequestPloggingGroupReviewDTO dto,
-            @PathVariable String course_id){
+    public String reviewCourse(
+            @RequestPart("images") List<MultipartFile> images,
+            @RequestParam("review") String reivew
+    ){
+        PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO responseDTO =
+                pcsQueryService.createPloggingGroupReivew(PCsConverter.toRequestPloggingGroupReviewDTO(reivew, images));
 
-        PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO responseDTO = pcsQueryService.createPloggingGroupReivew(dto);
+        return reivew;
+    }
 
-        return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_REVIEW_OK, responseDTO);
+    @GetMapping("/course/recommend")
+    public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> recommendCourse(
+            @RequestBody PloggingCourseDTO.RequestRecommendCourseDTO dto
+    ){
+        List<PloggingCourseDTO.ResponsePloggingCourseDTO> recommendList =
+                pcsQueryService.getRecommendCourseList(dto.getTag());
+
+        return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_LIST_OK, recommendList);
+    }
+
+    @GetMapping("/course/search")
+    public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> searchCourse(
+            @RequestBody PloggingCourseDTO.RequestSearchCourseDTO dto
+    ){
+        List<PloggingCourseDTO.ResponsePloggingCourseDTO> resultCourseList =
+                pcsQueryService.getCourseListSearchBy(dto.getWord());
+
+        return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_LIST_OK, resultCourseList);
     }
 }
