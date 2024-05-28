@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import togathering.Plogging.apiPayload.code.BaseCode;
+import togathering.Plogging.apiPayload.code.status.ErrorStatus;
 import togathering.Plogging.apiPayload.code.status.SuccessStatus;
 
 @Getter
@@ -31,9 +32,15 @@ public class ApiResponse<T> {
         return new ApiResponse<>(true, code.getReasonHttpStatus().getCode() , code.getReasonHttpStatus().getMessage(), result);
     }
 
+    public static <T> ApiResponse<T> errorof(ErrorStatus errorStatus, T result){
+        return new ApiResponse<>(true, errorStatus.getReasonHttpStatus().getCode() , errorStatus.getReasonHttpStatus().getMessage(), result);
+    }
+
 
     // 실패한 경우 응답 생성
     public static <T> ApiResponse<T> onFailure(int code, String message, T data){
         return new ApiResponse<>(true, code, message, data);
     }
+
+
 }

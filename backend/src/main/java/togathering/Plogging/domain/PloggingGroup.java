@@ -6,11 +6,13 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import togathering.Plogging.domain.common.BaseEntity;
 import togathering.Plogging.domain.enums.PloggingGroupStatus;
+import togathering.Plogging.domain.enums.PloggingGroupType;
 import togathering.Plogging.domain.mapping.PloggingGroupPicture;
 import togathering.Plogging.domain.mapping.PloggingGroupReview;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,15 +29,20 @@ public class PloggingGroup extends BaseEntity {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "plogging_course_id")
     private PloggingCourse ploggingCourse;
 
     @Column(nullable = false)
-    private String address;
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private PloggingGroupType type;
 
     @Column(nullable = false)
     private LocalDateTime date_of_progress;
 
+    // 상태 변경 메서드
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(15) DEFAULT 'BEFORE'")
     private PloggingGroupStatus status;
@@ -48,4 +55,5 @@ public class PloggingGroup extends BaseEntity {
 
     @OneToMany(mappedBy = "ploggingGroup", cascade = CascadeType.ALL)
     private List<PloggingGroupPicture> ploggingGroupPictures;
+
 }

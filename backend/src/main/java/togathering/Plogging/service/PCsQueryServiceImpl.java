@@ -14,7 +14,6 @@ import togathering.Plogging.domain.PloggingCourse;
 import togathering.Plogging.domain.mapping.PloggingGroupReview;
 import togathering.Plogging.repository.*;
 
-
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -145,5 +144,24 @@ public class PCsQueryServiceImpl implements PCsQueryService {
         return courseList.stream()
                 .map(PCsConverter::toResponsePloggingCourseDTO)
                 .collect(Collectors.toList());
+    }
+    public void uploadCoursePicture(PloggingCourse ploggingCourse, MultipartFile file) {
+
+    }
+
+    @Override
+    public PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO createPloggingGroupReivew(PloggingGroupReviewDTO.RequestPloggingGroupReviewDTO request) {
+        PloggingGroupReview ploggingGroupReview = PloggingGroupReview.builder()
+                .ploggingGroup(null)
+                .content(request.getContent())
+                .reward(request.getReward())
+                .user(null)
+                .build();
+        return PCsConverter.toResponsePloggingGroupReviewDTO(reviewRepository.save(ploggingGroupReview));
+    }
+
+    public PloggingGroupReview getReview(Long review_id) {
+        PloggingGroupReview review = reviewRepository.getReferenceById(review_id);
+        return review;
     }
 }
