@@ -2,6 +2,8 @@ package togathering.Plogging.app.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 public class PloggingCourseDTO {
 
     @Getter
@@ -48,7 +50,10 @@ public class PloggingCourseDTO {
     @Getter
     @NoArgsConstructor
     public static class RequestRecommendCourseDTO{
-        private String tag;
+        private List<String> types;
+        private List<String> togethers;
+        private List<String> preference;
+        private List<String> avoidance;
     }
 
     @Getter
