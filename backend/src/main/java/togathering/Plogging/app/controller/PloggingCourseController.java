@@ -70,28 +70,15 @@ public class PloggingCourseController{
 
     }
 
-    // plogging group review 생성하기
-    @PostMapping("/course/{course_id}/review")
-    public String reviewCourse(
-            @RequestPart("images") List<MultipartFile> images,
-            @RequestParam("review") String reivew
-    ){
-        PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO responseDTO =
-                pcsQueryService.createPloggingGroupReivew(PCsConverter.toRequestPloggingGroupReviewDTO(reivew, images));
-
-        return reivew;
-    }
-
-    @GetMapping("/course/recommend")
-    public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> recommendCourse(
+    @PostMapping("/course/recommend")
+    public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> recommendCourseListByAI(
             @RequestBody PloggingCourseDTO.RequestRecommendCourseDTO dto
-    ){
+    ) {
         List<PloggingCourseDTO.ResponsePloggingCourseDTO> recommendList =
-                pcsQueryService.getRecommendCourseList(dto.getTag());
+                pcsQueryService.getCourseListRecommendedByAI(dto);
 
         return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_LIST_OK, recommendList);
     }
-
     @GetMapping("/course/search")
     public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> searchCourse(
             @RequestBody PloggingCourseDTO.RequestSearchCourseDTO dto
