@@ -33,7 +33,11 @@
   "react-styled-components-skeleton": {
     "scope": "typescript",
     "prefix": "rsc",
-    "body": ["import styled from 'styled-components'", "", "export const Root = styled.div``"]
+    "body": [
+      "import styled from 'styled-components'",
+      "",
+      "export const Root = styled.div``"
+    ]
   },
   "api-query-skeleton": {
     "scope": "typescript",
@@ -95,28 +99,21 @@
     "scope": "typescript",
     "prefix": "api-mutation",
     "body": [
-      "import { axiosPOST } from 'api/base'",
-      "import { AxiosRequestConfig } from 'axios'",
-      "import { useMutation, UseMutationOptions } from 'react-query'",
+      "import { commonAxios, CommonResponse } from 'apis/common'",
+      "import { AxiosResponse } from 'axios'",
       "",
-      "export type ${TM_FILENAME_BASE/^(.)(.*)$/${1:/upcase}${2}/}RequestType = {}",
+      "type Props = {",
       "",
-      "export type ${TM_FILENAME_BASE/^(.)(.*)$/${1:/upcase}${2}/}ResponseType = {}",
-      "",
-      "const ${TM_FILENAME_BASE}MutationPath = (param: ${TM_FILENAME_BASE/^(.)(.*)$/${1:/upcase}${2}/}RequestType) => `/api/v1/${}`",
-      "",
-      "const ${TM_FILENAME_BASE} = (params: ${TM_FILENAME_BASE/^(.)(.*)$/${1:/upcase}${2}/}RequestType, config?: AxiosRequestConfig) => {",
-      "  return axiosPOST<${TM_FILENAME_BASE/^(.)(.*)$/${1:/upcase}${2}/}RequestType, ${TM_FILENAME_BASE/^(.)(.*)$/${1:/upcase}${2}/}ResponseType>(${TM_FILENAME_BASE}MutationPath(params), params, config)",
       "}",
       "",
-      "export const use${TM_FILENAME_BASE/^(.)(.*)$/${1:/upcase}${2}/}Mutation = (",
-      "  options?: Omit<UseMutationOptions<${TM_FILENAME_BASE/^(.)(.*)$/${1:/upcase}${2}/}ResponseType, unknown, ${TM_FILENAME_BASE/^(.)(.*)$/${1:/upcase}${2}/}RequestType>, 'mutationKey' | 'mutationFn'>,",
-      "  axiosConfig?: AxiosRequestConfig",
-      ") => {",
-      "  return useMutation<${TM_FILENAME_BASE/^(.)(.*)$/${1:/upcase}${2}/}ResponseType, unknown, ${TM_FILENAME_BASE/^(.)(.*)$/${1:/upcase}${2}/}RequestType>(",
-      "    (variables) => ${TM_FILENAME_BASE}(variables, axiosConfig),",
-      "    options",
-      "  )",
+      "type Type = {",
+      "",
+      "}",
+      "",
+      "export const ${TM_FILENAME_BASE} = async (value: Props) => {",
+      "  return commonAxios.post('$1', value, {}).then((res: AxiosResponse<CommonResponse<Type>>) => {",
+      "    return res",
+      "  })",
       "}"
     ]
   }
