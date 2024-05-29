@@ -61,17 +61,17 @@ public class PloggingCourseController{
        return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_TAG_MODIFY_OK, responseDTO);
    }
 
-    @GetMapping("/course/recommend")
-    public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> recommendCourse(
+    @PostMapping("/course/recommend")
+    public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> recommendCourseListByAI(
             @RequestBody PloggingCourseDTO.RequestRecommendCourseDTO dto
-    ){
+    ) {
         List<PloggingCourseDTO.ResponsePloggingCourseDTO> recommendList =
-                pcsQueryService.getRecommendCourseListByAI(dto);
+                pcsQueryService.getCourseListRecommendedByAI(dto);
 
         return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_LIST_OK, recommendList);
     }
-
-    @PostMapping("/course/search")
+  
+    @GetMapping("/course/search")
     public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> searchCourse(
             @RequestBody PloggingCourseDTO.RequestSearchCourseDTO dto
     ){

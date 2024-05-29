@@ -18,8 +18,6 @@ public interface PCsQueryService {
     PloggingCourseDTO.GetPloggingCourseInfoDTO getCourseInfo(Long course_id);
 
     PloggingCourseDTO.ResponsePloggingCourseDTO modifyCourse(PloggingCourseDTO.RequestPloggingCourseDTO request, Long id);
-    List<PloggingCourseDTO.ResponsePloggingCourseDTO> getRecommendCourseListByAI(PloggingCourseDTO.RequestRecommendCourseDTO dto);
+    List<PloggingCourseDTO.ResponsePloggingCourseDTO> getCourseListRecommendedByAI(PloggingCourseDTO.RequestRecommendCourseDTO dto);
     List<PloggingCourseDTO.ResponsePloggingCourseDTO> getCourseListSearchBy(String word);
-  
-    void uploadCoursePicture(PloggingCourse ploggingCourse, MultipartFile file);
 }
