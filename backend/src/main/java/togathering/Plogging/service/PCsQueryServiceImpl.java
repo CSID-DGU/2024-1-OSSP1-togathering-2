@@ -2,6 +2,7 @@ package togathering.Plogging.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,10 +12,14 @@ import togathering.Plogging.app.dto.PloggingCourseDTO;
 import togathering.Plogging.app.dto.PloggingGroupReviewDTO;
 import togathering.Plogging.converter.PCsConverter;
 import togathering.Plogging.domain.PloggingCourse;
+import togathering.Plogging.domain.PloggingGroup;
+import togathering.Plogging.domain.User;
 import togathering.Plogging.domain.mapping.PloggingGroupReview;
+import togathering.Plogging.domain.mapping.PloggingGroupReviewPicture;
 import togathering.Plogging.repository.*;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

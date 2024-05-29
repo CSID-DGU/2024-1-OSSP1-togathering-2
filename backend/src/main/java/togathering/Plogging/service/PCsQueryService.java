@@ -6,12 +6,12 @@ import togathering.Plogging.app.dto.PloggingGroupReviewDTO;
 import togathering.Plogging.domain.PloggingCourse;
 import togathering.Plogging.domain.mapping.PloggingGroupReview;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface PCsQueryService {
     List<PloggingCourseDTO.GetPloggingCourseInfoDTO> getCoursesList();
     PloggingCourseDTO.ResponsePloggingCourseDTO createPloggingCourse(PloggingCourseDTO.RequestPloggingCourseDTO request);
-
 
     PloggingCourseDTO.ResponseModifyCourseTagDTO modifyCourseTag(PloggingCourseDTO.RequestModifyCourseTagDTO request, Long id);
 
