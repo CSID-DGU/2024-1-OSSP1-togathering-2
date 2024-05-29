@@ -6,18 +6,11 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.multipart.MultipartFile;
-import togathering.Plogging.Uploader.S3Uploader;
 import togathering.Plogging.apiPayload.exception.handler.AppHandler;
 import togathering.Plogging.app.dto.PloggingCourseDTO;
-import togathering.Plogging.app.dto.PloggingGroupReviewDTO;
 import togathering.Plogging.converter.PCsConverter;
 import togathering.Plogging.domain.PloggingCourse;
-import togathering.Plogging.domain.PloggingGroup;
-import togathering.Plogging.domain.User;
-import togathering.Plogging.domain.mapping.PloggingGroupReview;
-import togathering.Plogging.domain.mapping.PloggingGroupReviewPicture;
 import togathering.Plogging.repository.*;
-
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -34,9 +27,6 @@ public class PCsQueryServiceImpl implements PCsQueryService {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final ReivewPictureRepository reivewPictureRepository;
-
-    @Autowired
-    private S3Uploader uploader;
 
     @Override
     public List<PloggingCourseDTO.GetPloggingCourseInfoDTO> getCoursesList() {
@@ -71,52 +61,6 @@ public class PCsQueryServiceImpl implements PCsQueryService {
                 build();
 
         return PCsConverter.toResponsePloggingCourseDTO(pgcsRepository.save(ploggingCourse));
-    }
-
-    @Override
-    @PutMapping
-    public PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO createPloggingGroupReivew(PloggingGroupReviewDTO.RequestPloggingGroupReviewDTO request) throws IOException {
-        List<PloggingGroupReviewPicture> images = new ArrayList<>();
-
-        PloggingGroup group = groupRepository.getReferenceById(request.getGroup_id());
-        User user = userRepository.getReferenceById(request.getUser_id());
-        PloggingGroupReview ploggingGroupReview = PloggingGroupReview.builder().
-                ploggingGroup(group).
-                user(user).
-                reward(request.getReward()).
-                cleanliness(request.getCleanliness()).
-                build();
-
-        Long id = reviewRepository.save(ploggingGroupReview).getId();
-
-        for (MultipartFile image : request.getImages()){
-            PloggingGroupReviewPicture picture = PloggingGroupReviewPicture.builder().
-                    image_url(uploader.upload(image, "reivewPicture")).
-                    ploggingGroupReview(ploggingGroupReview).
-                    build();
-
-            reivewPictureRepository.save(picture);
-            images.add(picture);
-        }
-
-        PloggingGroupReview p = reviewRepository.getReferenceById(id);
-
-        p = PloggingGroupReview.builder().
-                id(id).
-                ploggingGroup(p.getPloggingGroup()).
-                user(p.getUser()).
-                reward(p.getReward()).
-                cleanliness(p.getCleanliness()).
-                ploggingGroup(p.getPloggingGroup()).
-                ploggingGroupReviewPictures(images).build();
-
-        return PCsConverter.toResponsePloggingGroupReviewDTO(reviewRepository.save(p));
-    }
-
-
-    public PloggingGroupReview getReview(Long review_id) {
-        PloggingGroupReview review = reviewRepository.getReferenceById(review_id);
-        return review;
     }
 
     @Override
@@ -201,5 +145,8 @@ public class PCsQueryServiceImpl implements PCsQueryService {
         return courseList.stream()
                 .map(PCsConverter::toResponsePloggingCourseDTO)
                 .collect(Collectors.toList());
+    }
+    public void uploadCoursePicture(PloggingCourse ploggingCourse, MultipartFile file) {
+
     }
 }

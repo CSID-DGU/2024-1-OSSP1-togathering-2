@@ -1,4 +1,5 @@
 import { LeftOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
 import { COMMON_CONTAINER_WIDTH } from 'constants/layout'
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -26,9 +27,9 @@ export const Header: FC<HeaderProps> = ({ showBackButton, onBackButtonClick, tit
   return (
     <Root showBackButton={showBackButton}>
       {showBackButton && (
-        <button onClick={onClickBackButton}>
+        <Button onClick={onClickBackButton} shape={'circle'}>
           <LeftOutlined />
-        </button>
+        </Button>
       )}
       {title && <h1 className="line-clamp-1">{title}</h1>}
       {showLogo && <h1 className="logo">TOGATHERING</h1>}
@@ -39,7 +40,8 @@ export const Header: FC<HeaderProps> = ({ showBackButton, onBackButtonClick, tit
 const Root = styled.header<{ showBackButton?: boolean }>`
   position: fixed;
   z-index: 10;
-  top: 0.5rem;
+  padding-top: 0.5rem;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
 
@@ -68,6 +70,8 @@ const Root = styled.header<{ showBackButton?: boolean }>`
     justify-content: center;
     align-items: center;
 
+    border: 0;
+
     &:hover {
       background-color: ${lightTheme.colors.base['200']};
     }
@@ -78,9 +82,15 @@ const Root = styled.header<{ showBackButton?: boolean }>`
   }
 
   & > h1 {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1.5rem;
     font-weight: 700;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-top: 10px;
   }
 
   .logo {

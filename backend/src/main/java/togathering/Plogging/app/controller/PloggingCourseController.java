@@ -2,13 +2,9 @@ package togathering.Plogging.app.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import togathering.Plogging.apiPayload.ApiResponse;
 import togathering.Plogging.apiPayload.code.status.SuccessStatus;
 import togathering.Plogging.app.dto.PloggingCourseDTO;
-import togathering.Plogging.app.dto.PloggingGroupReviewDTO;
-import togathering.Plogging.converter.PCsConverter;
-import togathering.Plogging.domain.mapping.PloggingGroupReview;
 import togathering.Plogging.service.PCsQueryService;
 
 import java.io.IOException;
@@ -65,26 +61,8 @@ public class PloggingCourseController{
        return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_TAG_MODIFY_OK, responseDTO);
    }
 
-    // plogging course review 사진 업로드하기
-    @PostMapping("/course/{course_id}/photos")
-    public void uploadPGCsPicture(@RequestBody MultipartFile file){
-
-    }
-
-    // plogging group review 생성하기
-    @PostMapping("/course/{course_id}/review")
-    public ApiResponse<PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO> reviewCourse(
-            @RequestBody PloggingGroupReviewDTO.RequestPloggingGroupReivewFormDTO dto
-    ) throws IOException {
-        Long user_id = 1L;
-        PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO responseDTO =
-                pcsQueryService.createPloggingGroupReivew(PCsConverter.toRequestPloggingGroupReviewDTO(dto, user_id));
-
-        return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_REVIEW_OK, responseDTO);
-    }
-
-    @PostMapping("/course/recommend")
-    public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> recommendCourseListByAI(
+    @GetMapping("/course/recommend")
+    public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> recommendCourse(
             @RequestBody PloggingCourseDTO.RequestRecommendCourseDTO dto
     ){
         List<PloggingCourseDTO.ResponsePloggingCourseDTO> recommendList =

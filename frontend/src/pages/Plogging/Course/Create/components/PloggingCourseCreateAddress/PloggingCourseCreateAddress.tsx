@@ -3,7 +3,6 @@ import { tmapRoutePedestrian } from 'apis/tmap/tmapRoutePedestrian'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { FC, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
-import { useNavigate } from 'react-router-dom'
 import { CoordinateItemType, CourseCoordinateListType } from 'types/plogging'
 import { AddressSelectOptionListType } from '../../type'
 import {
@@ -31,16 +30,21 @@ import {
 type PloggingCourseCreateAddressProps = {
   className?: string
   onSave: (courseItem: CourseCoordinateListType) => void
+  newCoordinateList?: any[]
 }
 
-export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> = ({ className, onSave }) => {
-  const navigate = useNavigate()
-
+export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> = ({
+  className,
+  onSave,
+  newCoordinateList,
+}) => {
   const [initialAddressKeyword, setInitialAddressKeyword] = useState<string>('')
-  const [initialAddressCoordinate, setInitialAddressCoordinate] = useState<CoordinateItemType | null>(null)
+  const [initialAddressCoordinate, setInitialAddressCoordinate] = useState<CoordinateItemType | null>(
+    newCoordinateList ? newCoordinateList[0] : null
+  )
+  const [courseCoordinateList, setCourseCoordinateList] = useState<CourseCoordinateListType>(newCoordinateList ?? [])
   const [initialAddressSelectOptions, setInitialAddressSelectOptions] = useState<AddressSelectOptionListType>([])
 
-  const [courseCoordinateList, setCourseCoordinateList] = useState<CourseCoordinateListType>([])
   const { state: courseCoordinateFlagActivate, toggleState: toggleCourseCoordinateFlagActivate } =
     useBooleanState(false)
 
@@ -50,8 +54,8 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
         data.map((addressItem: any) => ({
           label: `${addressItem.place_name}(${addressItem.address_name})`,
           value: JSON.stringify({
-            lat: addressItem.y,
-            lng: addressItem.x,
+            lat: +addressItem.y,
+            lng: +addressItem.x,
             name: `${addressItem.place_name}(${addressItem.address_name})`,
           }),
         }))
@@ -92,7 +96,40 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
   }
 
   const onDeleteStopoverItem = (id: number) => () => {
-    setCourseCoordinateList((prev) => prev.filter((_value, index) => index !== id))
+    let previousIsFlagCoordinate = 0,
+      nextIsFlagCoordinate = courseCoordinateList.length
+    for (let i = id - 1; i >= 0; i--) {
+      if (courseCoordinateList[i].isFlag) {
+        previousIsFlagCoordinate = i
+        break
+      }
+    }
+    for (let i = id + 1; i < courseCoordinateList.length; i++) {
+      if (courseCoordinateList[i].isFlag) {
+        nextIsFlagCoordinate = i
+        break
+      }
+    }
+
+    if (previousIsFlagCoordinate === 0 && nextIsFlagCoordinate === courseCoordinateList.length) {
+      setCourseCoordinateList((prev) => [prev[0]])
+      return
+    }
+
+    let startCoordinate = courseCoordinateList[previousIsFlagCoordinate],
+      endCoordinate = courseCoordinateList[nextIsFlagCoordinate]
+    tmapRoutePedestrian({
+      start: startCoordinate,
+      end: endCoordinate,
+    }).then((response) => {
+      setCourseCoordinateList((prev) => {
+        let leftCoordinateList = prev.slice(0, previousIsFlagCoordinate + 1)
+        let rightCoordinateList = prev.slice(nextIsFlagCoordinate + 1)
+        let resultCoordinateList = [...leftCoordinateList, ...response, ...rightCoordinateList]
+
+        return resultCoordinateList
+      })
+    })
   }
 
   const onClickButtonStopoverCreate = () => {
@@ -128,7 +165,6 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
 
   const onClickButtonSave = () => {
     onSave(courseCoordinateList)
-    navigate('/plogging/course/list', { replace: false })
     return
   }
 
@@ -148,7 +184,7 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
             onKeyPress={onKeyPressEnterInitialAddress}
           />
           <InitialAddressButton size={'large'} type="primary" onClick={onClickSearchInitialAddress}>
-            입력
+            검색
           </InitialAddressButton>
         </InitialAddressInputContainer>
         {initialAddressSelectOptions.length > 0 && (
@@ -169,7 +205,7 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
               type={'primary'}
               onClick={onClickButtonStopoverCreate}
             >
-              추가하기
+              경로 추가하기
             </StopoverCreateButton>
           </>
         )}
@@ -195,7 +231,8 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
               />
               {courseCoordinateList.map(
                 (value, index) =>
-                  (index === 0 || index === courseCoordinateList.length - 1 || courseCoordinateFlagActivate) && (
+                  (index === 0 || index === courseCoordinateList.length - 1 || courseCoordinateFlagActivate) &&
+                  value.isFlag && (
                     <MapMarker position={value} key={`flag_list_${index}`} clickable={true}>
                       {courseCoordinateFlagActivate && (
                         <MapMarkerContentContainer>
@@ -218,39 +255,44 @@ export const PloggingCourseCreateAddress: FC<PloggingCourseCreateAddressProps> =
           </KakaoMapContainer>
           <CourseEditorContainer>
             {courseCoordinateList.length > 0 &&
-              courseCoordinateList.map((courseCoordinateItem, index) => (
-                <CourseEditorWrapper
-                  key={`course_coordinate_item_${courseCoordinateItem.lat}_${courseCoordinateItem.lng}__${index}`}
-                >
-                  <CourseEditorDisplayButton onClick={onClickButtonStopoverMoreDetails(index)}>
-                    {index === 0 && '출발지점 '}
-                    {index !== 0 && index !== courseCoordinateList.length - 1 && `경유지 ${index + 1} `}
-                    {index !== 0 && index === courseCoordinateList.length - 1 && '종착지점 '}
-                    {courseCoordinateItem?.name && `: ${courseCoordinateItem.name}`}
-                  </CourseEditorDisplayButton>
-                  {index !== 0 && (
-                    <CourseEditorDeleteButton type={'primary'} danger onClick={onDeleteStopoverItem(index)}>
-                      삭제하기
-                    </CourseEditorDeleteButton>
-                  )}
-                </CourseEditorWrapper>
-              ))}
+              courseCoordinateList.map(
+                (courseCoordinateItem, index) =>
+                  courseCoordinateItem.isFlag && (
+                    <CourseEditorWrapper
+                      key={`course_coordinate_item_${courseCoordinateItem.lat}_${courseCoordinateItem.lng}__${index}`}
+                    >
+                      <CourseEditorDisplayButton onClick={onClickButtonStopoverMoreDetails(index)}>
+                        {index === 0 && '출발지점 '}
+                        {index !== 0 && index !== courseCoordinateList.length - 1 && `경유지 ${index + 1} `}
+                        {index !== 0 && index === courseCoordinateList.length - 1 && '종착지점 '}
+                        {courseCoordinateItem?.name && `: ${courseCoordinateItem.name}`}
+                      </CourseEditorDisplayButton>
+                      {index !== 0 && (
+                        <CourseEditorDeleteButton type={'primary'} danger onClick={onDeleteStopoverItem(index)}>
+                          삭제하기
+                        </CourseEditorDeleteButton>
+                      )}
+                    </CourseEditorWrapper>
+                  )
+              )}
             {courseCoordinateList.length === 1 && (
               <CourseEditorAlertTypo>경유지를 추가하여 코스를 완성해주세요!</CourseEditorAlertTypo>
             )}
           </CourseEditorContainer>
         </>
       )}
-      <MenuContainer>
-        <CourseSaveButton
-          disabled={courseCoordinateList.length <= 1}
-          type={'primary'}
-          size={'large'}
-          onClick={onClickButtonSave}
-        >
-          저장하기
-        </CourseSaveButton>
-      </MenuContainer>
+      {courseCoordinateList.length > 1 && (
+        <MenuContainer>
+          <CourseSaveButton
+            disabled={courseCoordinateList.length <= 1}
+            type={'primary'}
+            size={'large'}
+            onClick={onClickButtonSave}
+          >
+            경로 입력 완료하기
+          </CourseSaveButton>
+        </MenuContainer>
+      )}
     </Root>
   )
 }

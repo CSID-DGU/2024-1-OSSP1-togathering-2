@@ -12,8 +12,6 @@ import java.util.List;
 public interface PCsQueryService {
     List<PloggingCourseDTO.GetPloggingCourseInfoDTO> getCoursesList();
     PloggingCourseDTO.ResponsePloggingCourseDTO createPloggingCourse(PloggingCourseDTO.RequestPloggingCourseDTO request);
-    PloggingGroupReviewDTO.ResponsePloggingGroupReviewDTO createPloggingGroupReivew(PloggingGroupReviewDTO.RequestPloggingGroupReviewDTO request) throws IOException;
-    PloggingGroupReview getReview(Long review_id);
 
     PloggingCourseDTO.ResponseModifyCourseTagDTO modifyCourseTag(PloggingCourseDTO.RequestModifyCourseTagDTO request, Long id);
 
@@ -22,4 +20,6 @@ public interface PCsQueryService {
     PloggingCourseDTO.ResponsePloggingCourseDTO modifyCourse(PloggingCourseDTO.RequestPloggingCourseDTO request, Long id);
     List<PloggingCourseDTO.ResponsePloggingCourseDTO> getRecommendCourseListByAI(PloggingCourseDTO.RequestRecommendCourseDTO dto);
     List<PloggingCourseDTO.ResponsePloggingCourseDTO> getCourseListSearchBy(String word);
+  
+    void uploadCoursePicture(PloggingCourse ploggingCourse, MultipartFile file);
 }
