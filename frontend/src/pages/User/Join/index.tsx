@@ -1,0 +1,1 @@
+export { UserJoinPage } from './UserJoinPage'

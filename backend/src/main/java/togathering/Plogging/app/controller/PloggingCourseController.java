@@ -2,15 +2,12 @@ package togathering.Plogging.app.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import togathering.Plogging.apiPayload.ApiResponse;
 import togathering.Plogging.apiPayload.code.status.SuccessStatus;
 import togathering.Plogging.app.dto.PloggingCourseDTO;
-import togathering.Plogging.app.dto.PloggingGroupReviewDTO;
-import togathering.Plogging.converter.PCsConverter;
-import togathering.Plogging.domain.mapping.PloggingGroupReview;
 import togathering.Plogging.service.PCsQueryService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -64,12 +61,6 @@ public class PloggingCourseController{
        return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_TAG_MODIFY_OK, responseDTO);
    }
 
-    // plogging course review 사진 업로드하기
-    @PostMapping("/course/{course_id}/photos")
-    public void uploadPGCsPicture(@RequestBody MultipartFile file){
-
-    }
-
     @PostMapping("/course/recommend")
     public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> recommendCourseListByAI(
             @RequestBody PloggingCourseDTO.RequestRecommendCourseDTO dto
@@ -79,6 +70,7 @@ public class PloggingCourseController{
 
         return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_LIST_OK, recommendList);
     }
+  
     @GetMapping("/course/search")
     public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> searchCourse(
             @RequestBody PloggingCourseDTO.RequestSearchCourseDTO dto

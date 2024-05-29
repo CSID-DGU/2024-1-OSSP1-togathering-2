@@ -1,4 +1,5 @@
-import { ClockCircleOutlined, DeleteOutlined, EnvironmentOutlined, HomeOutlined } from '@ant-design/icons'
+import { ClockCircleOutlined, EnvironmentOutlined, HomeOutlined } from '@ant-design/icons'
+import { IconUser } from '@tabler/icons-react'
 import { COMMON_CONTAINER_MIN_WIDTH, COMMON_CONTAINER_WIDTH } from 'constants/layout'
 import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -8,9 +9,8 @@ import { lightTheme } from 'styles/theme'
 const items = [
   { href: '/', text: '홈', icon: HomeOutlined },
   { href: '/nearby', text: '내 근처', icon: EnvironmentOutlined },
-  // XXX: 탭이 네 개가 되니까 좀 많아 보이는데 예정된 플로깅을 내 플로깅이랑 합치면 어떨까요?
-  { href: '/arranged', text: '예정된 플로깅', icon: ClockCircleOutlined },
-  { href: '/report', text: '쓰레기 제보', icon: DeleteOutlined },
+  { href: '/meeting/scheduled', text: '예정된 모임', icon: ClockCircleOutlined },
+  { href: '/course/mine', text: '나만의 코스', icon: IconUser },
 ]
 
 export const TabBar: FC = () => {

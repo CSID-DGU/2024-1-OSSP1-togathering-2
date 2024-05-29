@@ -16,14 +16,16 @@ export const PloggingCourseListPage: FC<PloggingCourseListPageProps> = ({ classN
   const [courseList, setCourseList] = useState<CourseListType>([])
 
   const onClickButtonPlogginCourseCreate = () => {
-    navigate('/plogging/course/create')
+    navigate('/course/create')
     return
   }
 
   useEffect(() => {
     let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
     if (newCourseList) {
-      setCourseList(JSON.parse(newCourseList).courseList)
+      if (courseList.length === 0) {
+        setCourseList(JSON.parse(newCourseList).courseList)
+      }
     } else {
       saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(PLOGGING_COURSE_LIST_SAMPLE))
       setCourseList(PLOGGING_COURSE_LIST_SAMPLE.courseList)
@@ -33,17 +35,19 @@ export const PloggingCourseListPage: FC<PloggingCourseListPageProps> = ({ classN
   return (
     <Root className={className}>
       <TitleContainer>
-        <TitleTypo>플로깅 코스 추천받기</TitleTypo>
+        <TitleTypo>코스 추천받기</TitleTypo>
       </TitleContainer>
       <ContentButtonContainer>
         <ContentButton type={'primary'} onClick={onClickButtonPlogginCourseCreate}>
-          플로깅 코스 만들기
+          코스 만들기
         </ContentButton>
       </ContentButtonContainer>
       <CourseContainer>
-        {courseList.map((courseItem, index) => (
-          <PloggingCourseViewer courseItem={courseItem} key={`plogging_course_viewer_${index}`} />
-        ))}
+        {courseList
+          .filter((courseItem) => !courseItem?.isHidden)
+          .map((courseItem, index) => (
+            <PloggingCourseViewer courseItem={courseItem} key={`plogging_course_viewer_${index}`} />
+          ))}
       </CourseContainer>
     </Root>
   )

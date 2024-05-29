@@ -2,14 +2,13 @@ package togathering.Plogging.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
-import togathering.Plogging.Uploader.S3Uploader;
 import togathering.Plogging.apiPayload.exception.handler.AppHandler;
 import togathering.Plogging.app.dto.PloggingCourseDTO;
 import togathering.Plogging.converter.PCsConverter;
 import togathering.Plogging.domain.PloggingCourse;
-import togathering.Plogging.domain.mapping.PloggingGroupReview;
 import togathering.Plogging.repository.*;
 
 import javax.transaction.Transactional;
@@ -60,11 +59,6 @@ public class PCsQueryServiceImpl implements PCsQueryService {
                 build();
 
         return PCsConverter.toResponsePloggingCourseDTO(pgcsRepository.save(ploggingCourse));
-    }
-
-    public PloggingGroupReview getReview(Long review_id) {
-        PloggingGroupReview review = reviewRepository.getReferenceById(review_id);
-        return review;
     }
 
     @Override
