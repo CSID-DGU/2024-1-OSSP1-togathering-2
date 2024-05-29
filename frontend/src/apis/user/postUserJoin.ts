@@ -1,4 +1,5 @@
-import { commonAxios } from 'apis/common'
+import { commonAxios, CommonResponse } from 'apis/common'
+import { AxiosResponse } from 'axios'
 
 type Props = {
   nickname: string
@@ -7,8 +8,10 @@ type Props = {
   username: string
 }
 
-export const postUserJoin = (value: Props) => {
-  commonAxios.post('/user/join', value, {}).then((res) => {
-    console.log({ res })
+type Type = {}
+
+export const postUserJoin = async (value: Props) => {
+  return commonAxios.post('/user/join', value, {}).then((res: AxiosResponse<CommonResponse<Type>>) => {
+    return res
   })
 }

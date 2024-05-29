@@ -11,3 +11,10 @@ export const commonAxios = axios.create({
     'Content-Type': 'application/json', // 기본 헤더 설정
   },
 })
+
+export type CommonResponse<P> = {
+  isSuccess: Boolean
+  code: number
+  message: string
+  result: P
+}
