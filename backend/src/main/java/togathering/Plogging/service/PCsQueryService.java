@@ -6,6 +6,7 @@ import togathering.Plogging.app.dto.PloggingGroupReviewDTO;
 import togathering.Plogging.domain.PloggingCourse;
 import togathering.Plogging.domain.mapping.PloggingGroupReview;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface PCsQueryService {
@@ -17,7 +18,7 @@ public interface PCsQueryService {
     PloggingCourseDTO.GetPloggingCourseInfoDTO getCourseInfo(Long course_id);
 
     PloggingCourseDTO.ResponsePloggingCourseDTO modifyCourse(PloggingCourseDTO.RequestPloggingCourseDTO request, Long id);
-    List<PloggingCourseDTO.ResponsePloggingCourseDTO> getRecommendCourseList(String tag);
+    List<PloggingCourseDTO.ResponsePloggingCourseDTO> getRecommendCourseListByAI(PloggingCourseDTO.RequestRecommendCourseDTO dto);
     List<PloggingCourseDTO.ResponsePloggingCourseDTO> getCourseListSearchBy(String word);
   
     void uploadCoursePicture(PloggingCourse ploggingCourse, MultipartFile file);

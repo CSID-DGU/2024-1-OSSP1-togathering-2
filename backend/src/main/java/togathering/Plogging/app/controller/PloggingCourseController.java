@@ -7,6 +7,7 @@ import togathering.Plogging.apiPayload.code.status.SuccessStatus;
 import togathering.Plogging.app.dto.PloggingCourseDTO;
 import togathering.Plogging.service.PCsQueryService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -65,12 +66,12 @@ public class PloggingCourseController{
             @RequestBody PloggingCourseDTO.RequestRecommendCourseDTO dto
     ){
         List<PloggingCourseDTO.ResponsePloggingCourseDTO> recommendList =
-                pcsQueryService.getRecommendCourseList(dto.getTag());
+                pcsQueryService.getRecommendCourseListByAI(dto);
 
         return ApiResponse.of(SuccessStatus.PLOGGING_COURSE_LIST_OK, recommendList);
     }
 
-    @GetMapping("/course/search")
+    @PostMapping("/course/search")
     public ApiResponse<List<PloggingCourseDTO.ResponsePloggingCourseDTO>> searchCourse(
             @RequestBody PloggingCourseDTO.RequestSearchCourseDTO dto
     ){
