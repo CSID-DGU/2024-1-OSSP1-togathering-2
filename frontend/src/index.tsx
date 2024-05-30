@@ -20,6 +20,8 @@ import { PloggingSoloConfirmPage } from 'pages/Plogging/Solo/Confirm'
 import { PloggingSoloCoursePage } from 'pages/Plogging/Solo/Course'
 import { PloggingSoloProgressPage } from 'pages/Plogging/Solo/Progress'
 import { PloggingSoloReviewPage } from 'pages/Plogging/Solo/Review'
+import { UserLoginPage } from 'pages/User/Login'
+import { UserJoinPage } from 'pages/User/Join'
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
@@ -44,6 +46,9 @@ root.render(
       <CommonContainer>
         <ScrollControl />
         <Routes>
+          <Route path="/user/login" element={<UserLoginPage />} />
+          <Route path="/user/join" element={<UserJoinPage />} />
+
           <Route path="/course/list" element={<PloggingCourseListPage />} />
           <Route path="/course/create" element={<PloggingCourseCreatePage />} />
           <Route path="/course/mine" element={<CourseMinePage />} />
