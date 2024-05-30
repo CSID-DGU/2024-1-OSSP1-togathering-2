@@ -1,10 +1,21 @@
-import { Root } from './styled'
-import { Link } from 'react-router-dom'
-import React from 'react'
-import { TabBar } from 'components/TabBar'
 import { Header } from 'components/Header'
+import { TabBar } from 'components/TabBar'
+import { Link, useNavigate } from 'react-router-dom'
+import { Root } from './styled'
 
 export const UserLoginPage = () => {
+  const navigate = useNavigate()
+
+  const onClickLoginButton = () => {
+    navigate('/')
+  }
+
+  const onKeyPressEnter = (e: any) => {
+    if (e.key === 'Enter') {
+      onClickLoginButton()
+    }
+  }
+
   return (
     <Root>
       <Header showLogo={true} />
@@ -12,7 +23,7 @@ export const UserLoginPage = () => {
         <div className="PageTitle">LOGIN</div>
         <form className="LoginBox">
           <input className="InputBox" name="ID" type="text" placeholder="아이디 또는 이메일" />
-          <input className="InputBox" name="PW" type="text" placeholder="패스워드" />
+          <input className="InputBox" name="PW" type="password" placeholder="패스워드" onKeyDown={onKeyPressEnter} />
           <Link className="LinkStyle" to="/">
             <input className="LoginButton" type="submit" value="Log In" />
           </Link>
