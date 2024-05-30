@@ -1,6 +1,6 @@
 import { Header } from 'components/Header'
 import { TabBar } from 'components/TabBar'
-import { MEETING_LIST_KEY } from 'constants/common'
+import { MEETING_LIST_KEY, SAMPLE_USERNAME } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -68,7 +68,7 @@ export const PloggingNearbyPage: FC<PloggingNearbyPageProps> = ({ className }) =
     <Root className={className}>
       <Header showLogo={true} />
       <TitleContainer>
-        <TitleTypo>안녕하세요, 교수님</TitleTypo>
+        <TitleTypo>안녕하세요, {SAMPLE_USERNAME}</TitleTypo>
         <SubtitleTypo>근처에 있는 활동을 모아봤어요!</SubtitleTypo>
       </TitleContainer>
       <ContentContainer>

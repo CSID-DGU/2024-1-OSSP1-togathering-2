@@ -1,6 +1,6 @@
 import { Header } from 'components/Header'
 import { TabBar } from 'components/TabBar'
-import { MEETING_LIST_KEY, SELECTED_MEETING_LIST_KEY } from 'constants/common'
+import { MEETING_LIST_KEY, SAMPLE_USERNAME, SELECTED_MEETING_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { PloggingMeetingViewer } from 'pages/Plogging/components/PloggingMeetingViewer'
 import { FC, useEffect, useState } from 'react'
@@ -60,7 +60,7 @@ export const PloggingMeetingScheduledPage: FC<PloggingMeetingScheduledPageProps>
     <Root className={className}>
       <Header showLogo={true} />
       <TitleContainer>
-        <TitleTypo>안녕하세요, 교수님</TitleTypo>
+        <TitleTypo>안녕하세요, {SAMPLE_USERNAME}</TitleTypo>
         <SubtitleTypo>예정된 모임들을 모아봤어요!</SubtitleTypo>
       </TitleContainer>
       <ContentContainer>

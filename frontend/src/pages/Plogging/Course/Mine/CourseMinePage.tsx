@@ -1,7 +1,7 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { Header } from 'components/Header'
 import { TabBar } from 'components/TabBar'
-import { MY_COURSE_LIST_KEY, PLOGGING_COURSE_LIST_KEY } from 'constants/common'
+import { MY_COURSE_LIST_KEY, PLOGGING_COURSE_LIST_KEY, SAMPLE_USERNAME } from 'constants/common'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CourseItemType, CourseListType } from 'types/plogging'
@@ -57,7 +57,7 @@ export const CourseMinePage: FC<CourseMinePageProps> = ({ className }) => {
     <Root className={className}>
       <Header showLogo={true} />
       <TitleContainer>
-        <TitleTypo>반가워요, 교수님</TitleTypo>
+        <TitleTypo>반가워요, {SAMPLE_USERNAME}</TitleTypo>
         <SubtitleTypo>우리가 만든 코스에요!</SubtitleTypo>
       </TitleContainer>
 

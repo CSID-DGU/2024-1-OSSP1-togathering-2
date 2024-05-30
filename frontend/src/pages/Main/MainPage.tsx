@@ -1,7 +1,7 @@
 import { TeamOutlined, UserOutlined } from '@ant-design/icons'
 import { Header } from 'components/Header'
 import { TabBar } from 'components/TabBar'
-import { MEETING_LIST_KEY, PLOGGING_COURSE_LIST_KEY } from 'constants/common'
+import { MEETING_LIST_KEY, PLOGGING_COURSE_LIST_KEY, SAMPLE_USERNAME } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
 import { FC, useEffect, useState } from 'react'
@@ -81,7 +81,7 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
     <Root className={className}>
       <Header showLogo={true} />
       <TitleContainer>
-        <TitleTypo>반가워요, 교수님</TitleTypo>
+        <TitleTypo>반가워요, {SAMPLE_USERNAME}</TitleTypo>
         <SubtitleTypo>오늘은 무슨 활동에 참여할까요?</SubtitleTypo>
       </TitleContainer>
       <PloggingMapContainer>
