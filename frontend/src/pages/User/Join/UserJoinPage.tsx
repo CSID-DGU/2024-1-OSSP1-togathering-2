@@ -170,7 +170,7 @@ export const UserJoinPage = () => {
                 onChange={(e: any) => setUserPW(e.target.value)}
                 placeholder={'4~20자리 / 영문, 숫자, 특수문자 조합'}
                 type={'password'}
-                onKeyDown={(e: any) => e.key === 'Enter' && onClickSubmitStep2Button()}
+                onKeyDown={(e: any) => e.key === 'Enter' && onClickSubmitStep3Button()}
               />
               <SubmitButtonButton onClick={onClickSubmitStep3Button} type={'primary'}>
                 <SubmitButtonTypo>비밀번호 입력 완료</SubmitButtonTypo>
@@ -202,7 +202,7 @@ export const UserJoinPage = () => {
                 onChange={(e: any) => setCheckPW(e.target.value)}
                 placeholder={'비밀번호 다시 입력'}
                 type={'password'}
-                onKeyDown={(e: any) => e.key === 'Enter' && onClickSubmitStep2Button()}
+                onKeyDown={(e: any) => e.key === 'Enter' && onClickSubmitStep4Button()}
               />
               <SubmitButtonButton onClick={onClickSubmitStep4Button} type={'primary'}>
                 <SubmitButtonTypo>비밀번호 입력 완료</SubmitButtonTypo>
@@ -233,7 +233,7 @@ export const UserJoinPage = () => {
                 value={userEmail}
                 onChange={(e: any) => setUserEmail(e.target.value)}
                 placeholder={'이메일 입력'}
-                onKeyDown={(e: any) => e.key === 'Enter' && onClickSubmitStep2Button()}
+                onKeyDown={(e: any) => e.key === 'Enter' && onSubmit()}
               />
               <SubmitButtonButton onClick={onSubmit} type={'primary'}>
                 <SubmitButtonTypo>가입 완료</SubmitButtonTypo>
