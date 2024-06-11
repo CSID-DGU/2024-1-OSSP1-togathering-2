@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.multipart.MultipartFile;
 import togathering.Plogging.apiPayload.exception.handler.AppHandler;
 import togathering.Plogging.app.dto.PloggingCourseDTO;
 import togathering.Plogging.converter.PCsConverter;
@@ -13,7 +12,6 @@ import togathering.Plogging.domain.PloggingCourse;
 import togathering.Plogging.repository.*;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -97,36 +95,35 @@ public class PCsQueryServiceImpl implements PCsQueryService {
     }
 
     @Override
-    public List<PloggingCourseDTO.ResponsePloggingCourseDTO> getRecommendCourseListByAI(PloggingCourseDTO.RequestRecommendCourseDTO dto){
+    public List<PloggingCourseDTO.ResponsePloggingCourseDTO> getCourseListRecommendedByAI(PloggingCourseDTO.RequestRecommendCourseDTO dto){
         List<PloggingCourse> courseList = pgcsRepository.findAll();
 
-        List<PloggingCourse> response = new ArrayList<>(List.of());
+        List<String> types = dto.getTypes();
+        List<String> pref = dto.getPreference();
+        List<String> avo = dto.getAvoidance();
+        List<String> together = dto.getTogethers();
+
+        List<PloggingCourse> p = new ArrayList<>(List.of());
 
         StringBuilder sb;
 
-        List<String> types = dto.getTypes();
-        List<String> togethers = dto.getTogethers();
-        List<String> preference = dto.getPreference();
-        List<String> avoidance = dto.getAvoidance();
-
         for (String type : types){
-            for (String together : togethers){
-                for (String prefer : preference){
-                    for (String avoid : avoidance){
+            for (String toge : together){
+                for (String prefer : pref){
+                    for (String avoe : avo){
                         sb = new StringBuilder();
-                        sb.append(type).append(together).append(prefer).append(avoid);
+                        sb.append(type).append(toge).append(prefer).append(avoe);
 
-                        for (PloggingCourse p : courseList){
-                            if (p.getTag().contentEquals(sb))
-                                response.add(p);
+                        for (PloggingCourse c : courseList){
+                            if (c.getTag().contentEquals(sb))
+                                p.add(c);
                         }
-
                     }
                 }
             }
         }
 
-        return response.stream()
+        return p.stream()
                 .map(PCsConverter::toResponsePloggingCourseDTO)
                 .collect(Collectors.toList());
     }
@@ -145,8 +142,5 @@ public class PCsQueryServiceImpl implements PCsQueryService {
         return courseList.stream()
                 .map(PCsConverter::toResponsePloggingCourseDTO)
                 .collect(Collectors.toList());
-    }
-    public void uploadCoursePicture(PloggingCourse ploggingCourse, MultipartFile file) {
-
     }
 }
