@@ -42,6 +42,7 @@ export const Root = styled.div`
 
     border: 2px solid ${lightTheme.colors.primary['600']};
     border-radius: 8px;
+    padding: 0 5px;
   }
   .InputBox:focus {
     outline: none;

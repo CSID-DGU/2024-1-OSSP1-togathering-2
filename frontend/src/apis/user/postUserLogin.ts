@@ -12,7 +12,7 @@ type Type = {
 }
 
 export const postUserLogin = async (value: Props) => {
-  return commonAxios.post('/login', value, {}).then((res: AxiosResponse<CommonResponse<Type>>) => {
+  return commonAxios.post('/user/login/', value, {}).then((res: AxiosResponse<CommonResponse<Type>>) => {
     return res
   })
 }
