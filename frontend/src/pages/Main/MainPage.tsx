@@ -3,6 +3,7 @@ import { Header } from 'components/Header'
 import { TabBar } from 'components/TabBar'
 import { MEETING_LIST_KEY, PLOGGING_COURSE_LIST_KEY, SAMPLE_USERNAME } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
+import { useUserProfile } from 'hooks/useUserProfile'
 import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -26,6 +27,7 @@ type MainPageProps = {
 }
 
 export const MainPage: FC<MainPageProps> = ({ className }) => {
+  const { userProfile } = useUserProfile()
   const navigate = useNavigate()
   const [meetingList, setMeetingList] = useState<MeetingListType>([])
   const [latitude, setLatitude] = useState<any>(null)
