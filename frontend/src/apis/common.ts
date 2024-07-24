@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const OPEN_AI_API_KEY = process.env['REACT_APP_OPENAI_KEY']
-export const API_URL = process.env['REACT_APP_API_URL']
+export const API_URL = 'http://127.0.0.1:8000'
 
 // 공통 설정을 위한 axios 인스턴스 생성
 export const commonAxios = axios.create({

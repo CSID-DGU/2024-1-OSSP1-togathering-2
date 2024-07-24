@@ -1,3 +1,4 @@
+import { postUserJoin } from 'apis/user/postUserJoin'
 import { Header } from 'components/Header'
 import { TabBar } from 'components/TabBar'
 import { useState } from 'react'
@@ -88,7 +89,18 @@ export const UserJoinPage = () => {
       alert('이메일을 입력해주세요.')
       return
     }
-    navigate('/user/login')
+    postUserJoin({ nickname: userName, password: userPW, email: userEmail, username: userID })
+      .then((res) => {
+        if (res) {
+          alert(res.data.message)
+          navigate('/user/login')
+        }
+      })
+      .catch((res) => {
+        if (res) {
+          alert(res.response.data.message)
+        }
+      })
     return
   }
 
@@ -100,9 +112,9 @@ export const UserJoinPage = () => {
           <SubtitleCircleTypo>1</SubtitleCircleTypo>
         </SubtitleCircle>
         {step === '1' ? (
-          <SubtitleTypo> 이름을 입력해주세요.</SubtitleTypo>
+          <SubtitleTypo> 닉네임을 입력해주세요.</SubtitleTypo>
         ) : (
-          <SubtitleTypo> 이름 : {userName}</SubtitleTypo>
+          <SubtitleTypo> 닉네임 : {userName}</SubtitleTypo>
         )}
       </SubtitleContainer>
       {step === '1' && (
@@ -111,11 +123,11 @@ export const UserJoinPage = () => {
             size={'large'}
             value={userName}
             onChange={(e: any) => setUserName(e.target.value)}
-            placeholder={'2~10자 / 이름 입력'}
+            placeholder={'2~10자 / 닉네임 입력'}
             onKeyDown={(e: any) => e.key === 'Enter' && onClickSubmitStep1Button()}
           />
           <SubmitButtonButton onClick={onClickSubmitStep1Button} type={'primary'}>
-            <SubmitButtonTypo>이름 입력 완료</SubmitButtonTypo>
+            <SubmitButtonTypo>닉네임 입력 완료</SubmitButtonTypo>
           </SubmitButtonButton>
         </StepContainer>
       )}
