@@ -1,5 +1,6 @@
+import { getCourseList } from 'apis/course/getCourseList'
 import { Header } from 'components/Header'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SelectPloggingCourse } from '../../components/SelectPloggingCourse'
 import { ContentContainer, Root, SubtitleCircle, SubtitleCircleTypo, SubtitleContainer, SubtitleTypo } from './styled'
@@ -14,6 +15,12 @@ export const PloggingSoloCoursePage: FC<PloggingSoloCoursePageProps> = ({ classN
   const onSelectPloggingCourse = (id: number) => {
     navigate('/solo/confirm', { state: { ploggingCourseId: id } })
   }
+
+  useEffect(() => {
+    getCourseList({}).then((res) => {
+      console.log({ res })
+    })
+  }, [])
 
   return (
     <Root className={className}>
