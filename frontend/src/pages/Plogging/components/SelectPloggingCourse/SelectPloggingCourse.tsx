@@ -1,11 +1,10 @@
 import { LoadingOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { IconSearch, IconThumbDown, IconThumbUp } from '@tabler/icons-react'
 import { Spin } from 'antd'
+import { getCourseList } from 'apis/course/getCourseList'
 import { postSortCourseList } from 'apis/openai/postSortCourseList'
-import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { PloggingCourseViewer } from 'pages/Plogging/Course/Create/components/PloggingCourseViewer'
-import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { lightTheme } from 'styles/theme'
@@ -13,7 +12,6 @@ import { CourseItemType, CourseListType } from 'types/plogging'
 import { sortCoursesNearBy } from 'utils/getCoordinatesDistance'
 import { getTotalDistance } from 'utils/getCourseItemInfo'
 import { getRandomOrder } from 'utils/getRandomOrder'
-import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
   AIContainer,
   AIQuestionContainer,
@@ -196,15 +194,19 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
   }
 
   useEffect(() => {
-    let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
-    if (newCourseList) {
-      if (courseList.length === 0) {
-        setCourseList(JSON.parse(newCourseList).courseList)
+    getCourseList({}).then((res) => {
+      if (res) {
+        const newCourseList = res.data.result.map((value) => ({
+          id: value.course_id,
+          name: value.title,
+          coordinateList: JSON.parse(value.metadata),
+        }))
+
+        console.log(newCourseList)
+        setCourseList(newCourseList)
       }
-    } else {
-      setCourseList(PLOGGING_COURSE_LIST_SAMPLE.courseList)
-    }
-  }, [courseList, setCourseList])
+    })
+  }, [])
 
   const getWashedCourseListNearBy = async () => {
     return await sortCoursesNearBy(courseList)

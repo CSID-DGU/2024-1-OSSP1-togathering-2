@@ -7,8 +7,8 @@ type Props = {}
 
 type Type = {
   course_id: number
-  course_name: string
-  flagList: string
+  title: string
+  metadata: string
 }[]
 
 export const getCourseList = async (value: Props) => {
