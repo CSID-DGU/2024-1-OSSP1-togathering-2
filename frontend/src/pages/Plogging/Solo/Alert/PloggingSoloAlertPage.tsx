@@ -110,7 +110,7 @@ export const PloggingSoloAlertPage: FC<PloggingSoloAlertPageProps> = ({ classNam
           </ul>
         </AlertContainer>
       )}
-      {selectedCategory === 'WALK' && (
+      {selectedCategory === 'WALKING' && (
         <AlertContainer>
           <ul>
             <li>
@@ -172,7 +172,7 @@ export const PloggingSoloAlertPage: FC<PloggingSoloAlertPageProps> = ({ classNam
           </ul>
         </AlertContainer>
       )}
-      {selectedCategory === 'BICYCLE' && (
+      {selectedCategory === 'RIDING' && (
         <AlertContainer>
           <ul>
             <li>

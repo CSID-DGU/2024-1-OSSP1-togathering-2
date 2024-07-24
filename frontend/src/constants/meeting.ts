@@ -594,7 +594,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     },
     maxCount: 6,
     name: '내가 학교가는 코스~',
-    category: 'WALK',
+    category: 'WALKING',
     startAt: '2024-05-25T12:00',
     createdAt: '2024-05-23T17:24',
   },
@@ -1089,7 +1089,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     },
     maxCount: 5,
     name: '동국이를 볼 수도 있는 코스!',
-    category: 'WALK',
+    category: 'WALKING',
     startAt: '2024-05-25T12:00',
     createdAt: '2024-05-23T17:23',
   },
@@ -2366,7 +2366,7 @@ export const COMMON_MEETING_LIST_SAMPLE: MeetingListType = [
     createdAt: '2024-05-19T15:53:00',
     maxCount: 9,
     name: '산책하고 같이 족발 드실 분 있나요?!',
-    category: 'WALK',
+    category: 'WALKING',
   },
 ]
 

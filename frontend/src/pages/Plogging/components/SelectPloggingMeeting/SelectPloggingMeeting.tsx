@@ -59,9 +59,9 @@ type SearchCategoryType = MeetingCategoryType | 'ALL'
 
 export const SEARCH_CATEGORY_SELECT_OPTIONS: { label: string; value: SearchCategoryType }[] = [
   { label: '전체', value: 'ALL' },
-  { label: '산책', value: 'WALK' },
+  { label: '산책', value: 'WALKING' },
   { label: '러닝', value: 'RUNNING' },
-  { label: '라이딩', value: 'BICYCLE' },
+  { label: '라이딩', value: 'RIDING' },
   { label: '플로깅', value: 'PLOGGING' },
 ]
 

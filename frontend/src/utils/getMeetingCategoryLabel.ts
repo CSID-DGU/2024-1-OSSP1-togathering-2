@@ -1,7 +1,7 @@
 import { MeetingCategoryType } from 'types/meeting'
 
 export const getMeetingCategoryLabel = (category: MeetingCategoryType) => {
-  if (category === 'BICYCLE') {
+  if (category === 'RIDING') {
     return '라이딩'
   }
   if (category === 'PLOGGING') {

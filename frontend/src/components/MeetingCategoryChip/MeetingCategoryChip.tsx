@@ -8,7 +8,7 @@ type MeetingCategoryChipProps = {
 }
 
 export const MeetingCategoryChip: FC<MeetingCategoryChipProps> = ({ className, category }) => {
-  if (category === 'BICYCLE') {
+  if (category === 'RIDING') {
     return (
       <Root className={className} background={'#4CAF50'}>
         <TitleTypo>라이딩</TitleTypo>
@@ -24,7 +24,7 @@ export const MeetingCategoryChip: FC<MeetingCategoryChipProps> = ({ className, c
     )
   }
 
-  if (category === 'WALK') {
+  if (category === 'WALKING') {
     return (
       <Root className={className} background={'#3F51B5'}>
         <TitleTypo>산책</TitleTypo>

@@ -32,9 +32,9 @@ type PloggingSoloConfirmPageProps = {
 }
 
 export const CREATE_TYPE_SELECT_OPTIONS: { label: string; value: MeetingCategoryType }[] = [
-  { label: '산책', value: 'WALK' },
+  { label: '산책', value: 'WALKING' },
   { label: '러닝', value: 'RUNNING' },
-  { label: '라이딩', value: 'BICYCLE' },
+  { label: '라이딩', value: 'RIDING' },
   { label: '플로깅', value: 'PLOGGING' },
 ]
 

@@ -1,6 +1,6 @@
 import { CourseItemType } from './plogging'
 
-export type MeetingCategoryType = 'PLOGGING' | 'BICYCLE' | 'WALK' | 'RUNNING'
+export type MeetingCategoryType = 'PLOGGING' | 'RIDING' | 'WALKING' | 'RUNNING'
 
 export type MeetingItemType = {
   id: number

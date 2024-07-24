@@ -82,7 +82,7 @@ export const PloggingMeetingAlertPage: FC<PloggingMeetingAlertPageProps> = ({ cl
           </ul>
         </AlertContainer>
       )}
-      {selectedCategory === 'WALK' && (
+      {selectedCategory === 'WALKING' && (
         <AlertContainer>
           <ul>
             <li>
@@ -144,7 +144,7 @@ export const PloggingMeetingAlertPage: FC<PloggingMeetingAlertPageProps> = ({ cl
           </ul>
         </AlertContainer>
       )}
-      {selectedCategory === 'BICYCLE' && (
+      {selectedCategory === 'RIDING' && (
         <AlertContainer>
           <ul>
             <li>

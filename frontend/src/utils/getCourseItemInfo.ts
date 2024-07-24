@@ -21,13 +21,13 @@ export const getTotalDuration = (type: MeetingCategoryType, distance: number) =>
 
   switch (type) {
     case 'PLOGGING':
-    case 'WALK':
+    case 'WALKING':
       speed = 5 // 걷는 속도 (예시: 1.4 m/s)
       break
     case 'RUNNING':
       speed = 10 // 뛰는 속도 (예시: 3 m/s)
       break
-    case 'BICYCLE':
+    case 'RIDING':
       speed = 20 // 자전거 타는 속도 (예시: 5.5 m/s)
       break
     default:

@@ -18,8 +18,6 @@ type Type = {
 export const postCourseCreate = async (value: Props) => {
   const accessToken = loadLocalStorage(USER_ACCESS_TOKEN_KEY)
 
-  console.log(accessToken)
-
   return commonAxios
     .post('/course/courses/create/', value, {
       headers: {

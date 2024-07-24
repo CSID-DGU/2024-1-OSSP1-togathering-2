@@ -1,14 +1,12 @@
+import { getCourseList } from 'apis/course/getCourseList'
+import { postGroupCreate } from 'apis/group/postGroupCreate'
 import { Header } from 'components/Header'
-import { MEETING_LIST_KEY, PLOGGING_COURSE_LIST_KEY, SELECTED_MEETING_LIST_KEY } from 'constants/common'
-import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import dayjs from 'dayjs'
-import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
 import { FC, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { LocalSelectedMeetingListType, LocalStorageMeetingListType, MeetingCategoryType } from 'types/meeting'
+import { MeetingCategoryType } from 'types/meeting'
 import { CourseListType } from 'types/plogging'
 import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
-import { loadLocalStorage, saveLocalStorage } from 'utils/handleLocalStorage'
 import { Step2Section } from './components/Step2Section'
 import { Step3Section } from './components/Step3Section'
 import {
@@ -30,9 +28,9 @@ type PloggingMeetingCreateInfoPageProps = {
 }
 
 export const CREATE_TYPE_SELECT_OPTIONS: { label: string; value: MeetingCategoryType }[] = [
-  { label: '산책', value: 'WALK' },
+  { label: '산책', value: 'WALKING' },
   { label: '러닝', value: 'RUNNING' },
-  { label: '라이딩', value: 'BICYCLE' },
+  { label: '라이딩', value: 'RIDING' },
   { label: '플로깅', value: 'PLOGGING' },
 ]
 
@@ -111,87 +109,31 @@ export const PloggingMeetingCreateInfoPage: FC<PloggingMeetingCreateInfoPageProp
     let now = new Date()
     let nowDayjs = dayjs(now)
 
-    let currentMeetingList = loadLocalStorage(MEETING_LIST_KEY)
-    if (typeof currentMeetingList === 'string') {
-      let parsedMeetingList = JSON.parse(currentMeetingList) as LocalStorageMeetingListType
+    postGroupCreate({
+      groupName: step3Name,
+      type: selectedCategory,
+      dateOfProgress: nowDayjs.format('YYYY-MM-DDTHH:mm'),
+      courseId: selectedPloggingCourseItem.id,
+    }).then((res) => {
+      console.log({ res })
+    })
 
-      let maxId = 0
-      parsedMeetingList.meetingList.forEach((value) => {
-        if (maxId < value.id) {
-          maxId = value.id
-        }
-      })
-      maxId = maxId + 1
-      parsedMeetingList.meetingList = [
-        {
-          id: maxId,
-          courseItem: selectedPloggingCourseItem,
-          maxCount: step2Count,
-          name: step3Name,
-          category: selectedCategory,
-          startAt,
-          createdAt: nowDayjs.format('YYYY-MM-DDTHH:mm'),
-        },
-        ...parsedMeetingList.meetingList,
-      ]
-      saveLocalStorage(MEETING_LIST_KEY, JSON.stringify(parsedMeetingList))
-
-      let currentMeetingIdList = loadLocalStorage(SELECTED_MEETING_LIST_KEY)
-      if (typeof currentMeetingIdList === 'string') {
-        let parsedMeetingIdList: LocalSelectedMeetingListType = JSON.parse(
-          currentMeetingIdList
-        ) as LocalSelectedMeetingListType
-        parsedMeetingIdList.selectedMeetingList = [{ id: maxId }, ...parsedMeetingIdList.selectedMeetingList]
-        saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify(parsedMeetingIdList))
-      } else {
-        saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify({ selectedMeetingList: [{ id: maxId }] }))
-      }
-
-      navigate('/meeting/scheduled')
-      return
-    }
-
-    let maxId = 35
-
-    let parsedMeetingList = [
-      {
-        id: maxId,
-        courseItem: selectedPloggingCourseItem,
-        maxCount: step2Count,
-        name: step3Name,
-        category: selectedCategory,
-        startAt,
-        createdAt: nowDayjs.format('YYYY-MM-DDTHH:mm'),
-      },
-      ...ALL_MEETING_LIST_SAMPLE,
-    ]
-    saveLocalStorage(MEETING_LIST_KEY, JSON.stringify({ meetingList: parsedMeetingList }))
-
-    let currentMeetingIdList = loadLocalStorage(SELECTED_MEETING_LIST_KEY)
-    if (typeof currentMeetingIdList === 'string') {
-      let parsedMeetingIdList: LocalSelectedMeetingListType = JSON.parse(
-        currentMeetingIdList
-      ) as LocalSelectedMeetingListType
-      parsedMeetingIdList.selectedMeetingList = [{ id: maxId }, ...parsedMeetingIdList.selectedMeetingList]
-      saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify({ meetingList: parsedMeetingList }))
-    } else {
-      saveLocalStorage(SELECTED_MEETING_LIST_KEY, JSON.stringify({ selectedMeetingList: [{ id: maxId }] }))
-    }
-
-    navigate('/meeting/scheduled')
+    // navigate('/meeting/scheduled')
     return
   }
 
   useEffect(() => {
-    let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
-    if (newCourseList) {
-      if (courseList.length === 0) {
-        setCourseList(JSON.parse(newCourseList).courseList)
+    getCourseList({}).then((res) => {
+      if (res) {
+        const newCourseList = res.data.result.map((value) => ({
+          id: value.course_id,
+          name: value.title,
+          coordinateList: JSON.parse(value.metadata),
+        }))
+        setCourseList(newCourseList)
       }
-    } else {
-      setCourseList(PLOGGING_COURSE_LIST_SAMPLE.courseList)
-    }
-  }, [courseList, setCourseList])
+    })
+  }, [])
 
   const onChangeSelectCreateType = (value: any) => {
     setSelectedCategory(value)
