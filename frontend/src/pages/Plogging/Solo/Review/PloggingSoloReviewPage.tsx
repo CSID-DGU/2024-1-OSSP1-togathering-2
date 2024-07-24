@@ -1,13 +1,11 @@
 import { IconCheck, IconPhoto } from '@tabler/icons-react'
+import { getCourseList } from 'apis/course/getCourseList'
 import { Header } from 'components/Header'
-import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
-import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
 import { FC, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CourseListType } from 'types/plogging'
 import { getTotalDistance, getTotalDuration } from 'utils/getCourseItemInfo'
 import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
-import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
   ButtonContainer,
   ContentContainer,
@@ -42,17 +40,6 @@ export const PloggingSoloReviewPage: FC<PloggingSoloReviewPageProps> = ({ classN
   const [ratingList, setRatingList] = useState<[number, number]>([0, 0])
   const [courseList, setCourseList] = useState<CourseListType>([])
 
-  useEffect(() => {
-    let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
-    if (newCourseList) {
-      if (courseList.length === 0) {
-        setCourseList(JSON.parse(newCourseList).courseList)
-      }
-    } else {
-      setCourseList(PLOGGING_COURSE_LIST_SAMPLE.courseList)
-    }
-  }, [courseList, setCourseList])
-
   const selectedPloggingCourseItem =
     courseList.filter((courseItem) => courseItem.id === ploggingCourseId).length > 0
       ? courseList.filter((courseItem) => courseItem.id === ploggingCourseId)[0]
@@ -73,6 +60,19 @@ export const PloggingSoloReviewPage: FC<PloggingSoloReviewPageProps> = ({ classN
     selectedPloggingCourseItem && selectedCategory && totalDistance
       ? getTotalDuration(selectedCategory, totalDistance)
       : null
+
+  useEffect(() => {
+    getCourseList({}).then((res) => {
+      if (res) {
+        const newCourseList = res.data.result.map((value) => ({
+          id: value.course_id,
+          name: value.title,
+          coordinateList: JSON.parse(value.metadata),
+        }))
+        setCourseList(newCourseList)
+      }
+    })
+  }, [])
 
   return (
     <Root className={className}>

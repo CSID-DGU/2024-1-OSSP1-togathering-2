@@ -1,15 +1,13 @@
 import { IconCheck, IconPhoto } from '@tabler/icons-react'
+import { getCourseList } from 'apis/course/getCourseList'
 import { Header } from 'components/Header'
-import { PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { useBooleanState } from 'hooks/useBooleanState'
 import { PloggingCourseViewer } from 'pages/Plogging/Course/Create/components/PloggingCourseViewer'
-import { PLOGGING_COURSE_LIST_SAMPLE } from 'pages/Plogging/Course/Create/constant'
 import { FC, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CourseListType } from 'types/plogging'
 import { getTotalDistance, getTotalDuration } from 'utils/getCourseItemInfo'
 import { getMeetingCategoryLabel } from 'utils/getMeetingCategoryLabel'
-import { loadLocalStorage } from 'utils/handleLocalStorage'
 import {
   ButtonContainer,
   ContentContainer,
@@ -36,16 +34,19 @@ export const PloggingSoloProgressPage: FC<PloggingSoloProgressPageProps> = ({ cl
   const { state: isSimulating, setTrue: startSimulate, setFalse: stopSimulate } = useBooleanState(false)
 
   const [courseList, setCourseList] = useState<CourseListType>([])
+
   useEffect(() => {
-    let newCourseList = loadLocalStorage(PLOGGING_COURSE_LIST_KEY)
-    if (newCourseList) {
-      if (courseList.length === 0) {
-        setCourseList(JSON.parse(newCourseList).courseList)
+    getCourseList({}).then((res) => {
+      if (res) {
+        const newCourseList = res.data.result.map((value) => ({
+          id: value.course_id,
+          name: value.title,
+          coordinateList: JSON.parse(value.metadata),
+        }))
+        setCourseList(newCourseList)
       }
-    } else {
-      setCourseList(PLOGGING_COURSE_LIST_SAMPLE.courseList)
-    }
-  }, [courseList, setCourseList])
+    })
+  }, [])
 
   const selectedPloggingCourseItem =
     courseList.filter((courseItem) => courseItem.id === ploggingCourseId).length > 0

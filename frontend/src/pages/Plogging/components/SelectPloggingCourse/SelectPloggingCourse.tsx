@@ -201,8 +201,6 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
           name: value.title,
           coordinateList: JSON.parse(value.metadata),
         }))
-
-        console.log(newCourseList)
         setCourseList(newCourseList)
       }
     })
