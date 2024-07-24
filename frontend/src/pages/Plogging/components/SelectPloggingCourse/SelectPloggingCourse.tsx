@@ -229,7 +229,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
     //   return newCourseList
     // }
     if (sortConditionIndex === 1) {
-      return newCourseList
+      return newCourseList.sort((a, b) => b.id - a.id)
     }
     if (sortConditionIndex === 3) {
       newCourseList.sort((a, b) => getTotalDistance(a.coordinateList) - getTotalDistance(b.coordinateList))
