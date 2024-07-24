@@ -217,17 +217,17 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
       return newCourseList.filter((courseItem) => courseItem?.name && courseItem.name.indexOf(searchKeyword) !== -1)
     }
 
-    if (sortConditionIndex === 0) {
-      newCourseList = []
+    // if (sortConditionIndex === 0) {
+    //   newCourseList = []
 
-      aiRecommendedCourseIdList.forEach((value) => {
-        if (value <= courseList.length) {
-          newCourseList.push(courseList[value - 1])
-        }
-      })
+    //   aiRecommendedCourseIdList.forEach((value) => {
+    //     if (value <= courseList.length) {
+    //       newCourseList.push(courseList[value - 1])
+    //     }
+    //   })
 
-      return newCourseList
-    }
+    //   return newCourseList
+    // }
     if (sortConditionIndex === 1) {
       return newCourseList
     }
