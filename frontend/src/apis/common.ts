@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const OPEN_AI_API_KEY = process.env['REACT_APP_OPENAI_KEY']
-export const API_URL = 'https://togethering.store:443/api/v1'
+export const API_URL = process.env['REACT_APP_API_URL']
 
 // 공통 설정을 위한 axios 인스턴스 생성
 export const commonAxios = axios.create({
