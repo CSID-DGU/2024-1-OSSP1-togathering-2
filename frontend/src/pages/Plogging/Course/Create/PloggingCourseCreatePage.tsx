@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { postCourseCreate } from 'apis/course/postCourseCreate'
 import { Header } from 'components/Header'
 import { MY_COURSE_LIST_KEY, PLOGGING_COURSE_LIST_KEY } from 'constants/common'
 import { AIQuestionList, DEFAULT_SELECT_LIST } from 'constants/course'
@@ -81,19 +82,24 @@ export const PloggingCourseCreatePage: FC<CourseCreateProps> = ({ className }) =
           ...newPloggingCourseList.courseList,
         ],
       }
-      saveLocalStorage(PLOGGING_COURSE_LIST_KEY, JSON.stringify(newPloggingCourseList))
-
-      let myCourseIdList = loadLocalStorage(MY_COURSE_LIST_KEY)
-      if (typeof myCourseIdList !== 'string') {
-        let newMyCourseIdList = [newId]
-        saveLocalStorage(MY_COURSE_LIST_KEY, JSON.stringify(newMyCourseIdList))
-      } else {
-        let newMyCourseIdList = JSON.parse(myCourseIdList) as number[]
-        newMyCourseIdList = [newId, ...newMyCourseIdList]
-        saveLocalStorage(MY_COURSE_LIST_KEY, JSON.stringify(newMyCourseIdList))
-      }
-
-      navigate(-1)
+      postCourseCreate({
+        title: courseName,
+        duration: 0,
+        tag: '태그',
+        time: 0,
+        metadata: JSON.stringify(newCoordinateList),
+      })
+        .then((res) => {
+          if (res) {
+            alert('코스 생성이 완료되었습니다.')
+            navigate(-1)
+          }
+        })
+        .catch((res) => {
+          if (res) {
+            alert(res.response.data.message)
+          }
+        })
       return
     } else {
       let newId = PLOGGING_COURSE_LIST_SAMPLE.courseList.length
