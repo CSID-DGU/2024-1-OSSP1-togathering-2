@@ -262,7 +262,7 @@ export const SelectPloggingCourse: FC<SelectPloggingCourseProps> = ({ className,
         setSortedCourseList(getWashedCourseList(sortConditionIndex))
       }
     }
-  }, [courseList, sortConditionIndex, setSortConditionIndex])
+  }, [courseList, sortConditionIndex, setSortConditionIndex, isSearchResultAvailable])
 
   if (courseList?.length === 0) {
     return (
