@@ -99,6 +99,8 @@ export const PloggingCourseViewer: FC<PloggingCourseViewerProps> = ({
             height: isDetail ? '400px' : '250px',
           }}
           level={4}
+          minLevel={3}
+          maxLevel={5}
         >
           <Polyline
             path={courseCoordinateList}
