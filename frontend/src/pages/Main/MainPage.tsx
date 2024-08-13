@@ -13,6 +13,7 @@ import { LatestMeetingSection } from './components/LatestMeetingSection'
 import { NearbyMeetingSection } from './components/NearbyMeetingSection'
 import { PopularCourseSection } from './components/PopularCourseSection'
 import {
+  ContentButton,
   PloggingMapButton,
   PloggingMapButtonContainer,
   PloggingMapContainer,
@@ -80,7 +81,11 @@ export const MainPage: FC<MainPageProps> = ({ className }) => {
   }, [])
 
   if (!userProfile) {
-    return <Root />
+    return (
+      <Root>
+        <ContentButton onClick={() => navigate('/user/join')}>회원가입</ContentButton>
+      </Root>
+    )
   }
 
   return (
