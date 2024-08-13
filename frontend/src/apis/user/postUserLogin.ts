@@ -7,8 +7,7 @@ type Props = {
 }
 
 type Type = {
-  accessToken: string
-  refreshToken: string
+  access: string
 }
 
 export const postUserLogin = async (value: Props) => {

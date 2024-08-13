@@ -1,7 +1,7 @@
 import { postUserLogin } from 'apis/user/postUserLogin'
 import { Header } from 'components/Header'
 import { TabBar } from 'components/TabBar'
-import { USER_ACCESS_TOKEN_KEY, USER_REFRESH_TOKEN_KEY } from 'constants/user'
+import { USER_ACCESS_TOKEN_KEY } from 'constants/user'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { saveLocalStorage } from 'utils/handleLocalStorage'
@@ -16,8 +16,7 @@ export const UserLoginPage = () => {
     postUserLogin({ username, password })
       .then((res) => {
         if (res) {
-          saveLocalStorage(USER_ACCESS_TOKEN_KEY, res.data.result.accessToken)
-          saveLocalStorage(USER_REFRESH_TOKEN_KEY, res.data.result.refreshToken)
+          saveLocalStorage(USER_ACCESS_TOKEN_KEY, res.data.result.access)
           navigate('/')
         }
       })
