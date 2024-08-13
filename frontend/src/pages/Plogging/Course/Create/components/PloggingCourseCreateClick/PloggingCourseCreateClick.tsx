@@ -110,6 +110,8 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({
       lng: mouseEvent.latLng.getLng(),
     }
 
+    console.log(newCourseCoordinateItem)
+
     tmapRoutePedestrian({
       start: courseCoordinateList[courseCoordinateList.length - 1],
       end: newCourseCoordinateItem,
@@ -207,7 +209,12 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({
                 (value, index) =>
                   (index === 0 || index === courseCoordinateList.length - 1 || courseCoordinateFlagActivate) &&
                   value.isFlag && (
-                    <MapMarker position={value} key={`flag_list_${index}`} clickable={true}>
+                    <MapMarker
+                      position={value}
+                      key={`flag_list_${index}`}
+                      clickable={true}
+                      // image={{ size: { width: 18, height: 18 }, src: '/images/trash_bin.png' }}
+                    >
                       {courseCoordinateFlagActivate && (
                         <MapMarkerContentContainer>
                           {index === 0 && <MapMarkerContentTypo>출발지점</MapMarkerContentTypo>}
