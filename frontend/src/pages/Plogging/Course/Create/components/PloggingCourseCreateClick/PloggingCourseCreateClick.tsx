@@ -5,6 +5,7 @@ import { FC, useState } from 'react'
 import { Map, MapMarker, Polyline } from 'react-kakao-maps-sdk'
 import { CoordinateItemType, CourseCoordinateListType } from 'types/plogging'
 import { AddressSelectOptionListType } from '../../type'
+import { TRASH_BIN_COORDINATE_LIST } from './constant'
 import {
   CourseEditorAlertTypo,
   CourseEditorContainer,
@@ -229,6 +230,16 @@ export const PloggingCourseCreateClick: FC<PloggingCourseCreateClickProps> = ({
                     </MapMarker>
                   )
               )}
+              {TRASH_BIN_COORDINATE_LIST.map((coordinateItem, index) => (
+                <MapMarker
+                  position={coordinateItem}
+                  key={`flag_list_${index}`}
+                  clickable={true}
+                  image={{ size: { width: 18, height: 18 }, src: '/images/trash_bin.png' }}
+                >
+                  {/*  */}
+                </MapMarker>
+              ))}
             </Map>
             <KakaoMapMenuContainer>
               <KakaoMapMenuSwitch value={courseCoordinateFlagActivate} onClick={toggleCourseCoordinateFlagActivate} />

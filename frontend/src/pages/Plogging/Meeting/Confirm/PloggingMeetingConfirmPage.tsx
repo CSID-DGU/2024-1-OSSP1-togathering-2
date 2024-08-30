@@ -175,6 +175,13 @@ export const PloggingMeetingConfirmPage: FC<PloggingMeetingConfirmPageProps> = (
             <StartButton type={'primary'} onClick={onClickStartButton}>
               <StartButtonTypo> 모임 참여하기</StartButtonTypo>
             </StartButton>
+            <StartButton
+              style={{ background: 'white', border: '1px #65a30d solid' }}
+              type={'dashed'}
+              onClick={onClickStartButton}
+            >
+              <StartButtonTypo style={{ color: '#65a30d' }}> 모임 공유하기</StartButtonTypo>
+            </StartButton>
           </ButtonContainer>
         </>
       )}

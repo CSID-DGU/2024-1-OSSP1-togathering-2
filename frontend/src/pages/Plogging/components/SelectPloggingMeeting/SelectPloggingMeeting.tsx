@@ -1,5 +1,6 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { IconSearch } from '@tabler/icons-react'
+import { getGroupList } from 'apis/group/getGroupList'
 import { MEETING_LIST_KEY } from 'constants/common'
 import { ALL_MEETING_LIST_SAMPLE } from 'constants/meeting'
 import { useBooleanState } from 'hooks/useBooleanState'
@@ -179,6 +180,7 @@ export const SelectPloggingMeeting: FC<SelectPloggingMeetingProps> = ({ classNam
         setSortedMeetingList(getWashedMeetingList(sortConditionIndex))
       }
     }
+    getGroupList({})
   }, [meetingList, sortConditionIndex, setSortConditionIndex, searchKeyword, searchCategory])
 
   if (meetingList.length === 0) {
